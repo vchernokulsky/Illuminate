@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL
+namespace Intems.LightPlayer.BL.Commands
 {
-    public class Class1
+    public class BlinkColor
     {
     }
 }
