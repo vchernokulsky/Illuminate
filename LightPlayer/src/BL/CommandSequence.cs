@@ -15,7 +15,7 @@ namespace Intems.LightPlayer.BL
             _commands = new List<Command>();
         }
 
-        private int _curIndex = 0;
+        private int _curIndex = -1;
         public Command GetCommand(TimeSpan time)
         {
             Command result = null;
@@ -23,10 +23,13 @@ namespace Intems.LightPlayer.BL
             lock (_locker)
             {
                 var nextIndex = _curIndex + 1;
-                if (_commands[nextIndex].IsStarteRequired(time))
+                if (nextIndex < _commands.Count)
                 {
-                    _curIndex++;
-                    result = _commands[nextIndex];
+                    if (_commands[nextIndex].IsStarteRequired(time))
+                    {
+                        _curIndex++;
+                        result = _commands[nextIndex];
+                    }
                 }
             }
             return result;
@@ -34,7 +37,7 @@ namespace Intems.LightPlayer.BL
 
         public void PushCommand(Command cmd)
         {
-            
+            _commands.Add(cmd);
         }
     }
 }
