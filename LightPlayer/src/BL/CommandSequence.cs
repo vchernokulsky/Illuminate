@@ -3,14 +3,6 @@ using System.Collections.Generic;
 
 namespace Intems.LightPlayer.BL
 {
-    public class Command  
-    {
-        public bool IsStarted(TimeSpan time)
-        {
-            return true;
-        }
-    }
-
     public class CommandSequence
     {
         private readonly object _locker;
@@ -31,7 +23,7 @@ namespace Intems.LightPlayer.BL
             lock (_locker)
             {
                 var nextIndex = _curIndex + 1;
-                if (_commands[nextIndex].IsStarted(time))
+                if (_commands[nextIndex].IsStarteRequired(time))
                 {
                     _curIndex++;
                     result = _commands[nextIndex];
