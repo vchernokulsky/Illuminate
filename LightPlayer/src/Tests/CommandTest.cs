@@ -1,5 +1,6 @@
 ﻿using System;
 using Intems.LightPlayer.BL;
+using Intems.LightPlayer.BL.Commands;
 using NUnit.Framework;
 
 namespace Tests
@@ -28,12 +29,12 @@ namespace Tests
             var cmd = new Command(startTime, length);
 
             var middle = TimeSpan.FromSeconds(2);
-            Assert.IsTrue(cmd.IsStarteRequired(middle));
+            Assert.IsTrue(cmd.IsStartRequired(middle));
             //bound checks
             var begin = TimeSpan.FromSeconds(0);
-            Assert.IsTrue(cmd.IsStarteRequired(begin));
+            Assert.IsTrue(cmd.IsStartRequired(begin));
             var end = TimeSpan.FromSeconds(4);
-            Assert.IsFalse(cmd.IsStarteRequired(end));
+            Assert.IsFalse(cmd.IsStartRequired(end));
         }
 
         [Test]
@@ -45,9 +46,9 @@ namespace Tests
             var cmd = new Command(startTime, length);
 
             var before = TimeSpan.FromSeconds(0.5);
-            Assert.IsFalse(cmd.IsStarteRequired(before));
+            Assert.IsFalse(cmd.IsStartRequired(before));
             var after = startTime + length + TimeSpan.FromSeconds(0.5);
-            Assert.IsFalse(cmd.IsStarteRequired(after));
+            Assert.IsFalse(cmd.IsStartRequired(after));
         }
     }
 }

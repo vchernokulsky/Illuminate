@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Intems.LightPlayer.BL
+namespace Intems.LightPlayer.BL.Commands
 {
     public class Command
     {
@@ -42,7 +42,7 @@ namespace Intems.LightPlayer.BL
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>
-        public bool IsStarteRequired(TimeSpan time)
+        public bool IsStartRequired(TimeSpan time)
         {
             return (time >= StartTime) && (time < (StartTime + Length));
         }

@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command.cs" />
+    <Compile Include="Commands\Command.cs" />
     <Compile Include="CommandSequence.cs" />
     <Compile Include="Commands\BlinkColor.cs" />
     <Compile Include="Commands\FadeColor.cs" />

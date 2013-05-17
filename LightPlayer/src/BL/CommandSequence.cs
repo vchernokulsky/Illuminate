@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Intems.LightPlayer.BL.Commands;
 
 namespace Intems.LightPlayer.BL
 {
     public class CommandSequence
     {
         private readonly object _locker;
-        private List<Command> _commands;
+        private readonly List<Command> _commands;
 
         public CommandSequence()
         {
@@ -16,7 +17,7 @@ namespace Intems.LightPlayer.BL
         }
 
         private int _curIndex = -1;
-        public Command GetCommand(TimeSpan time)
+        public Command CommandByTime(TimeSpan time)
         {
             Command result = null;
 
@@ -25,7 +26,7 @@ namespace Intems.LightPlayer.BL
                 var nextIndex = _curIndex + 1;
                 if (nextIndex < _commands.Count)
                 {
-                    if (_commands[nextIndex].IsStarteRequired(time))
+                    if (_commands[nextIndex].IsStartRequired(time))
                     {
                         _curIndex++;
                         result = _commands[nextIndex];
@@ -37,7 +38,18 @@ namespace Intems.LightPlayer.BL
 
         public void PushCommand(Command cmd)
         {
-            _commands.Add(cmd);
+            lock (_locker)
+            {
+                _commands.Add(cmd);
+            }
+        }
+
+        public void Clear()
+        {
+            lock (_locker)
+            {
+                _commands.Clear();
+            }
         }
     }
 }
