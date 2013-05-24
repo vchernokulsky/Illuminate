@@ -26,7 +26,7 @@ namespace Intems.LightPlayer.BL.Commands
 
         protected override byte[] GetParams()
         {
-            throw new NotImplementedException();
+            return new byte[] {0x00, _color.R, 0x00, _color.G, 0x00, _color.B};
         }
     }
 }

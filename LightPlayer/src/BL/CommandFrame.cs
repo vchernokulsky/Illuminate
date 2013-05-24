@@ -1,27 +1,26 @@
 ﻿using System;
+using Intems.LightPlayer.BL.Commands;
 
 namespace Intems.LightPlayer.BL
 {
     public class CommandFrame
     {
-        private TimeSpan _startTime;
-        private TimeSpan _length;
-
         public CommandFrame(TimeSpan startTime, TimeSpan length)
         {
-            _startTime = startTime;
-            _length = length;
+            StartTime = startTime;
+            Length = length;
         }
 
-        public TimeSpan StartTime
+        public CommandFrame(TimeSpan startTime, TimeSpan length, Command cmd) : this(startTime, length)
         {
-            get { return _startTime; }
+            Command = cmd;
         }
 
-        public TimeSpan Length
-        {
-            get { return _length; }
-        }
+        public TimeSpan StartTime { get; private set; }
+
+        public TimeSpan Length { get; private set; }
+
+        public Command Command { get; set; }
 
         /// <summary>
         /// Устанавливает временные характеристики команды
@@ -30,8 +29,8 @@ namespace Intems.LightPlayer.BL
         /// <param name="length">Продолжительность команды</param>
         public void SetTime(TimeSpan time, TimeSpan length)
         {
-            _startTime = time;
-            _length = length;
+            StartTime = time;
+            Length = length;
         }
 
         /// <summary>
