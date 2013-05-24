@@ -4,22 +4,22 @@ using Intems.LightPlayer.BL.Commands;
 
 namespace Intems.LightPlayer.BL
 {
-    public class CommandSequence
+    public class FrameSequence
     {
         private readonly object _locker;
-        private readonly List<Command> _commands;
+        private readonly List<CommandFrame> _commands;
 
-        public CommandSequence()
+        public FrameSequence()
         {
             _locker = new object();
 
-            _commands = new List<Command>();
+            _commands = new List<CommandFrame>();
         }
 
         private int _curIndex = -1;
-        public Command CommandByTime(TimeSpan time)
+        public CommandFrame FrameByTime(TimeSpan time)
         {
-            Command result = null;
+            CommandFrame result = null;
 
             lock (_locker)
             {
@@ -36,7 +36,7 @@ namespace Intems.LightPlayer.BL
             return result;
         }
 
-        public void PushCommand(Command cmd)
+        public void Push(CommandFrame cmd)
         {
             lock (_locker)
             {

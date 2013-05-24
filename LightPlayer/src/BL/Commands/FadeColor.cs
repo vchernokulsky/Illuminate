@@ -1,16 +1,29 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using System.Windows.Media;
 
 namespace Intems.LightPlayer.BL.Commands
 {
-    public class FadeColor : ISerializable
+    public class FadeColor : Command
     {
         private Color _startColor;
         private Color _stopColor;
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public FadeColor(TimeSpan startTime, TimeSpan length, Color startColor, Color stopColor) : base(1, (byte) CmdEnum.Fade)
         {
-            throw new System.NotImplementedException();
+            _startColor = startColor;
+            _stopColor = stopColor;
+        }
+
+        public void ChangeColor(Color start, Color stop)
+        {
+            _startColor = start;
+            _stopColor = stop;
+        }
+
+        protected override byte[] GetParams()
+        {
+            throw new NotImplementedException();
         }
     }
 }

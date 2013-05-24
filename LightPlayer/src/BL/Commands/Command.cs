@@ -2,49 +2,34 @@
 
 namespace Intems.LightPlayer.BL.Commands
 {
-    public class Command
+    enum CmdEnum
     {
-        private TimeSpan _startTime;
-        private TimeSpan _length;
+        None,
+        SetColor,
+        Fade,
+        Blink,
+        TurnOn,
+        TurnOff
+    }
 
-        public Command()
-        {}
+    public abstract class Command
+    {
+        protected byte Channel;
+        protected byte Function;
 
-        public Command(TimeSpan startTime, TimeSpan length)
+        protected abstract byte[] GetParams();
+
+        protected Command(byte channel, byte function)
         {
-            _startTime = startTime;
-            _length = length;
+            Channel = channel;
+            Function = function;
         }
 
-        public TimeSpan StartTime
+        public byte[] GetBytes()
         {
-            get { return _startTime; }
-        }
-
-        public TimeSpan Length
-        {
-            get { return _length; }
-        }
-
-        /// <summary>
-        /// Устанавливает временные характеристики команды
-        /// </summary>
-        /// <param name="time">Время старта команды от начала композиции</param>
-        /// <param name="length">Продолжительность команды</param>
-        public void SetTime(TimeSpan time, TimeSpan length)
-        {
-            _startTime = time;
-            _length = length;
-        }
-
-        /// <summary>
-        /// Проверка на начало команды
-        /// </summary>
-        /// <param name="time"></param>
-        /// <returns></returns>
-        public bool IsStartRequired(TimeSpan time)
-        {
-            return (time >= StartTime) && (time < (StartTime + Length));
+            var param = GetParams();
+            var pkg = new Package(Channel, Function, param);
+            return pkg.ToArray();
         }
     }
 }
