@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using Intems.LightPlayer.BL.Commands;
 using Intems.LightPlayer.BL.Helpers;
@@ -32,6 +28,20 @@ namespace Tests
 
             var color = Color.FromRgb(128, 128, 128);
             var cmd = new BlinkColor(1, color, 137);
+
+            var actual = cmd.GetBytes();
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void FadeColorToBytes()
+        {
+            var expected = new Byte[]
+            {0x7e, 1, (byte) CmdEnum.Fade, 0, 128, 0, 128, 0, 128, 0, 255, 0, 255, 0, 255, 0x00, 0x0a, 0x7f};
+
+            var color1 = Color.FromRgb(128, 128, 128);
+            var color2 = Color.FromRgb(255, 255, 255);
+            var cmd = new FadeColor(color1, color2, 10);
 
             var actual = cmd.GetBytes();
             CollectionAssert.AreEqual(expected, actual);

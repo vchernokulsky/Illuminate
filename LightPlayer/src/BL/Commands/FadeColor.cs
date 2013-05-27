@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using System.Windows.Media;
+using Intems.LightPlayer.BL.Helpers;
 
 namespace Intems.LightPlayer.BL.Commands
 {
@@ -8,11 +8,13 @@ namespace Intems.LightPlayer.BL.Commands
     {
         private Color _startColor;
         private Color _stopColor;
+        private short _length;
 
-        public FadeColor(TimeSpan startTime, TimeSpan length, Color startColor, Color stopColor) : base(1, (byte) CmdEnum.Fade)
+        public FadeColor(Color startColor, Color stopColor, short length) : base(1, (byte) CmdEnum.Fade)
         {
             _startColor = startColor;
             _stopColor = stopColor;
+            _length = length;
         }
 
         public void ChangeColor(Color start, Color stop)
@@ -23,7 +25,16 @@ namespace Intems.LightPlayer.BL.Commands
 
         protected override byte[] GetParams()
         {
-            throw new NotImplementedException();
+            var colorBytes1 = new[] { (byte)0x00, _startColor.R, (byte)0x00, _startColor.G, (byte)0x00, _startColor.B };
+            var colorBytes2 = new[] { (byte)0x00, _stopColor.R, (byte)0x00, _stopColor.G, (byte)0x00, _stopColor.B };
+            var lengthBytes = _length.ToBytes();
+
+            var param = new byte[colorBytes1.Length + colorBytes2.Length + lengthBytes.Length];
+            Array.Copy(colorBytes1, param, colorBytes1.Length);
+            Array.Copy(colorBytes2, 0, param, colorBytes1.Length, colorBytes2.Length);
+            Array.Copy(lengthBytes, 0, param, colorBytes1.Length + colorBytes2.Length, lengthBytes.Length);
+
+            return param;
         }
     }
 }
