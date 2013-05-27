@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Tests
 {
     [TestFixture]
-    public class CommandFrameTest
+    public class FrameTest
     {
         [Test]
         public void CreateNewCommand()

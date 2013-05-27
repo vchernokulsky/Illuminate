@@ -1,12 +1,11 @@
 ﻿using System;
 using Intems.LightPlayer.BL;
-using Intems.LightPlayer.BL.Commands;
 using NUnit.Framework;
 
 namespace Tests
 {
     [TestFixture]
-    public class CommandSequenceTest
+    public class FrameSequenceTest
     {
         private Frame CreateComand(double start, double length)
         {
