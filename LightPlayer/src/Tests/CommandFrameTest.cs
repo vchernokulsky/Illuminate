@@ -14,7 +14,7 @@ namespace Tests
             var startTime = TimeSpan.FromSeconds(0);
             var length = TimeSpan.FromSeconds(3.5);
 
-            var cmd = new CommandFrame(startTime, length);
+            var cmd = new Frame(startTime, length);
 
             Assert.AreEqual(startTime, cmd.StartTime);
             Assert.AreEqual(length, cmd.Length);
@@ -26,7 +26,7 @@ namespace Tests
             var startTime = TimeSpan.FromSeconds(0);
             var length = TimeSpan.FromSeconds(4);
 
-            var cmd = new CommandFrame(startTime, length);
+            var cmd = new Frame(startTime, length);
 
             var middle = TimeSpan.FromSeconds(2);
             Assert.IsTrue(cmd.IsStartRequired(middle));
@@ -43,7 +43,7 @@ namespace Tests
             var startTime = TimeSpan.FromSeconds(1);
             var length = TimeSpan.FromSeconds(4);
 
-            var cmd = new CommandFrame(startTime, length);
+            var cmd = new Frame(startTime, length);
 
             var before = TimeSpan.FromSeconds(0.5);
             Assert.IsFalse(cmd.IsStartRequired(before));

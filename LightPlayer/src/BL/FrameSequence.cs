@@ -7,19 +7,19 @@ namespace Intems.LightPlayer.BL
     public class FrameSequence
     {
         private readonly object _locker;
-        private readonly List<CommandFrame> _commands;
+        private readonly List<Frame> _commands;
 
         public FrameSequence()
         {
             _locker = new object();
 
-            _commands = new List<CommandFrame>();
+            _commands = new List<Frame>();
         }
 
         private int _curIndex = -1;
-        public CommandFrame FrameByTime(TimeSpan time)
+        public Frame FrameByTime(TimeSpan time)
         {
-            CommandFrame result = null;
+            Frame result = null;
 
             lock (_locker)
             {
@@ -36,7 +36,7 @@ namespace Intems.LightPlayer.BL
             return result;
         }
 
-        public void Push(CommandFrame cmd)
+        public void Push(Frame cmd)
         {
             lock (_locker)
             {

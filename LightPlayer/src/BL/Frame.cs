@@ -3,15 +3,15 @@ using Intems.LightPlayer.BL.Commands;
 
 namespace Intems.LightPlayer.BL
 {
-    public class CommandFrame
+    public class Frame
     {
-        public CommandFrame(TimeSpan startTime, TimeSpan length)
+        public Frame(TimeSpan startTime, TimeSpan length)
         {
             StartTime = startTime;
             Length = length;
         }
 
-        public CommandFrame(TimeSpan startTime, TimeSpan length, Command cmd) : this(startTime, length)
+        public Frame(TimeSpan startTime, TimeSpan length, Command cmd) : this(startTime, length)
         {
             Command = cmd;
         }

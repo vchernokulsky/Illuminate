@@ -8,9 +8,9 @@ namespace Tests
     [TestFixture]
     public class CommandSequenceTest
     {
-        private CommandFrame CreateComand(double start, double length)
+        private Frame CreateComand(double start, double length)
         {
-            return new CommandFrame(TimeSpan.FromSeconds(start), TimeSpan.FromSeconds(length));
+            return new Frame(TimeSpan.FromSeconds(start), TimeSpan.FromSeconds(length));
         }
 
         [Test]
