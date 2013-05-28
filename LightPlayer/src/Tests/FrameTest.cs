@@ -1,6 +1,5 @@
 ﻿using System;
 using Intems.LightPlayer.BL;
-using Intems.LightPlayer.BL.Commands;
 using NUnit.Framework;
 
 namespace Tests
@@ -9,7 +8,7 @@ namespace Tests
     public class FrameTest
     {
         [Test]
-        public void CreateNewCommand()
+        public void CreateNewFrame()
         {
             var startTime = TimeSpan.FromSeconds(0);
             var length = TimeSpan.FromSeconds(3.5);
@@ -21,7 +20,7 @@ namespace Tests
         }
 
         [Test]
-        public void CommandStartRequired()
+        public void FrameStartRequired()
         {
             var startTime = TimeSpan.FromSeconds(0);
             var length = TimeSpan.FromSeconds(4);
@@ -38,7 +37,7 @@ namespace Tests
         }
 
         [Test]
-        public void CommandStartNotRequired()
+        public void FrameStartNotRequired()
         {
             var startTime = TimeSpan.FromSeconds(1);
             var length = TimeSpan.FromSeconds(4);

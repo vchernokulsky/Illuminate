@@ -7,7 +7,7 @@ namespace Tests
     [TestFixture]
     public class FrameSequenceTest
     {
-        private Frame CreateComand(double start, double length)
+        private Frame CreateFrame(double start, double length)
         {
             return new Frame(TimeSpan.FromSeconds(start), TimeSpan.FromSeconds(length));
         }
@@ -16,7 +16,7 @@ namespace Tests
         public void PushOneCommand()
         {
             var seq = new FrameSequence();
-            var expected = CreateComand(0, 3);
+            var expected = CreateFrame(0, 3);
             seq.Push(expected);
 
             var beginBound = TimeSpan.FromSeconds(0);
@@ -29,8 +29,8 @@ namespace Tests
         public void PushTwoSequencedFrames()
         {
             var seq = new FrameSequence();
-            var cmd1 = CreateComand(0, 2);
-            var cmd2 = CreateComand(2, 3.5);
+            var cmd1 = CreateFrame(0, 2);
+            var cmd2 = CreateFrame(2, 3.5);
             seq.Push(cmd1);
             seq.Push(cmd2);
 
@@ -47,8 +47,8 @@ namespace Tests
         public void GetTargetFrameTwice()
         {
             var seq = new FrameSequence();
-            var cmd1 = CreateComand(1, 3);
-            var cmd2 = CreateComand(4, 2);
+            var cmd1 = CreateFrame(1, 3);
+            var cmd2 = CreateFrame(4, 2);
             seq.Push(cmd1);
             seq.Push(cmd2);
 

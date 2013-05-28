@@ -22,6 +22,8 @@ namespace Intems.LightPlayer.BL
 
         public Command Command { get; set; }
 
+        public event EventHandler FrameChanged;
+
         /// <summary>
         /// Устанавливает временные характеристики команды
         /// </summary>
@@ -31,6 +33,7 @@ namespace Intems.LightPlayer.BL
         {
             StartTime = time;
             Length = length;
+            RaiseFrameChanged();
         }
 
         /// <summary>
@@ -43,5 +46,10 @@ namespace Intems.LightPlayer.BL
             return (time >= StartTime) && (time < (StartTime + Length));
         }
 
+        protected virtual void RaiseFrameChanged()
+        {
+            var handler = FrameChanged;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
     }
 }

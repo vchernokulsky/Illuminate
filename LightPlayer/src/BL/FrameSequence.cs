@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Intems.LightPlayer.BL.Commands;
 
 namespace Intems.LightPlayer.BL
 {
@@ -36,11 +35,12 @@ namespace Intems.LightPlayer.BL
             return result;
         }
 
-        public void Push(Frame cmd)
+        public void Push(Frame frame)
         {
             lock (_locker)
             {
-                _commands.Add(cmd);
+                _commands.Add(frame);
+                frame.FrameChanged += OnFrameChanged;
             }
         }
 
@@ -51,5 +51,11 @@ namespace Intems.LightPlayer.BL
                 _commands.Clear();
             }
         }
+
+        private void OnFrameChanged(object sender, EventArgs eventArgs)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
