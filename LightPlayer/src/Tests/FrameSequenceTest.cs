@@ -26,7 +26,7 @@ namespace Tests
         }
 
         [Test]
-        public void PushTwoSequencedCommands()
+        public void PushTwoSequencedFrames()
         {
             var seq = new FrameSequence();
             var cmd1 = CreateComand(0, 2);
@@ -44,7 +44,7 @@ namespace Tests
         }
 
         [Test]
-        public void GetOneCommandTwice()
+        public void GetTargetFrameTwice()
         {
             var seq = new FrameSequence();
             var cmd1 = CreateComand(1, 3);
