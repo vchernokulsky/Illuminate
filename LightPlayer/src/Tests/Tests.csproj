@@ -37,18 +37,18 @@
     <Reference Include="Rhino.Mocks">
       <HintPath>..\..\lib\Rhino.Mocks.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\lib\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllCommandsTest.cs" />
+    <Compile Include="FrameProcessorTest.cs" />
     <Compile Include="FrameSequenceTest.cs" />
     <Compile Include="FrameTest.cs" />
+    <Compile Include="JsonSerializationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +56,9 @@
       <Project>{67b04b61-b920-4313-8562-c69f27a9a030}</Project>
       <Name>BL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Files\FrameSeq.dat" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

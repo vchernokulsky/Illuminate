@@ -1,13 +1,15 @@
-﻿using System;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 namespace Intems.LightPlayer.BL.Commands
 {
     public class SetColor : Command
     {
-        private readonly Color _color;
+        private Color _color;
+
+        public SetColor() : base(1, (byte)CmdEnum.SetColor)
+        {
+            
+        }
 
         public SetColor(Color color) : base(1, (byte) CmdEnum.SetColor)
         {
@@ -16,12 +18,12 @@ namespace Intems.LightPlayer.BL.Commands
 
         public SetColor(byte red, byte green, byte blue) : this(Color.FromRgb(red, green, blue))
         {
-            _color = new Color { R = red, G = green, B = blue };
         }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public Color Color
         {
-            info.AddValue("_color", _color);
+            get { return _color; }
+            set { _color = value; }
         }
 
         protected override byte[] GetParams()
