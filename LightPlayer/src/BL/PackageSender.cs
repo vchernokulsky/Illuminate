@@ -1,10 +1,17 @@
-﻿namespace Intems.LightPlayer.BL
+﻿using System;
+
+namespace Intems.LightPlayer.BL
 {
-    public class PackageSender
+    public interface IPackageSender
     {
-        public virtual void SendPackage(Package package)
+        void SendPackage(Package package);
+    }
+
+    public class SerialPortSender : IPackageSender
+    {
+        public void SendPackage(Package package)
         {
-            
+            throw new NotImplementedException();
         }
     }
 }
