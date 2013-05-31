@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Windows.Media;
 using Intems.LightPlayer.BL.Helpers;
 
@@ -7,19 +6,22 @@ namespace Intems.LightPlayer.BL.Commands
 {
     public class BlinkColor : Command
     {
-        private const byte Func = (byte)CmdEnum.Blink;
-
         private Color _color;
         private readonly short _frequency;
 
-        public BlinkColor(byte channel) : base(channel, Func)
+        public BlinkColor(byte channel) : base(channel)
         {
         }
 
-        public BlinkColor(byte channel, Color color, short freq) : base(channel, Func)
+        public BlinkColor(byte channel, Color color, short freq) : base(channel)
         {
             _color = color;
             _frequency = freq;
+        }
+
+        public override byte Function
+        {
+            get { return (byte) CmdEnum.Blink; }
         }
 
         protected override byte[] GetParams()

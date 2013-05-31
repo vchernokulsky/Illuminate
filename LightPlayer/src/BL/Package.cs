@@ -1,23 +1,14 @@
 ﻿using System.Collections.Generic;
-using Intems.LightPlayer.BL.Commands;
 
 namespace Intems.LightPlayer.BL
 {
-    internal class Package
+    public class Package
     {
         private readonly List<byte> _body;
 
-        public Package(Command cmd)
-        {
-            
-        }
-
         public Package(byte channel, byte func, byte[] param)
         {
-            _body = new List<byte>();
-            _body.Add(0x7E);
-            _body.Add(channel);
-            _body.Add(func);
+            _body = new List<byte> {0x7E, channel, func};
             _body.AddRange(param);
             _body.Add(0x7F);
         }

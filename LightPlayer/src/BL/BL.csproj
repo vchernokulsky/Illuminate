@@ -48,6 +48,7 @@
     <Compile Include="Commands\SetColor.cs" />
     <Compile Include="Helpers\NumericHelper.cs" />
     <Compile Include="Package.cs" />
+    <Compile Include="PackageSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

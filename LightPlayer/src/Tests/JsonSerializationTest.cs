@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Media;
 using Intems.LightPlayer.BL;
 using Intems.LightPlayer.BL.Commands;
 using NUnit.Framework;
@@ -12,9 +13,10 @@ namespace Tests
         [Test]
         public void SaveFrame()
         {
+            var color = Color.FromRgb(128, 128, 128);
             var frame = new Frame(TimeSpan.FromSeconds(0), TimeSpan.FromMilliseconds(3500))
             {
-                Command = new SetColor(128, 128, 128)
+                Command = new SetColor(1, color)
             };
 
             var s = JsonSerializer.SerializeToString(frame);

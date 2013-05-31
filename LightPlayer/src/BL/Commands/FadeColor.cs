@@ -8,14 +8,30 @@ namespace Intems.LightPlayer.BL.Commands
     {
         private Color _startColor;
         private Color _stopColor;
-        private short _length;
+        private readonly short _length;
 
-        public FadeColor(Color startColor, Color stopColor, short length) : base(1, (byte) CmdEnum.Fade)
+        public FadeColor() : base(DefaultChannel)
+        {
+            _startColor = Colors.Black;
+            _startColor = Colors.Black;
+            _length = 0;
+        }
+
+        public FadeColor(Color startColor, Color stopColor, short length) : base(DefaultChannel)
         {
             _startColor = startColor;
             _stopColor = stopColor;
             _length = length;
         }
+
+        public FadeColor(byte channel, Color startColor, Color stopColor, short length) : base(channel)
+        {
+            _startColor = startColor;
+            _stopColor = stopColor;
+            _length = length;
+        }
+
+        public override byte Function { get { return (byte) CmdEnum.Fade; }  }
 
         public void ChangeColor(Color start, Color stop)
         {

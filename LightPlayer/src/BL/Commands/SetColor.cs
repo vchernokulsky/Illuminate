@@ -4,20 +4,23 @@ namespace Intems.LightPlayer.BL.Commands
 {
     public class SetColor : Command
     {
+        private const byte DefauleChannel = 1;
+
         private Color _color;
 
-        public SetColor() : base(1, (byte)CmdEnum.SetColor)
+        public SetColor() : base(DefauleChannel)
         {
-            
+            _color = Color.FromRgb(255, 255, 255);
         }
 
-        public SetColor(Color color) : base(1, (byte) CmdEnum.SetColor)
+        public SetColor(byte channel, Color color) : base(channel)
         {
             _color = color;
         }
 
-        public SetColor(byte red, byte green, byte blue) : this(Color.FromRgb(red, green, blue))
+        public override byte Function
         {
+            get { return (byte) CmdEnum.SetColor; }
         }
 
         public Color Color

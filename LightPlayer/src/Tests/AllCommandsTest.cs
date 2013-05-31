@@ -15,7 +15,7 @@ namespace Tests
             var expected = new byte[] {0x7e, 1, (byte)CmdEnum.SetColor, 0, 128, 0, 128, 0, 128, 0x7f};
 
             var color = Color.FromRgb(128, 128, 128);
-            var cmd = new SetColor(color);
+            var cmd = new SetColor(1, color);
 
             var actual = cmd.GetBytes();
             CollectionAssert.AreEqual(expected, actual);

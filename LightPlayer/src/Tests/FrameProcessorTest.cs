@@ -20,10 +20,11 @@ namespace Tests
         {
             var span1 = TimeSpan.FromSeconds(0);
             var span2 = TimeSpan.FromSeconds(2.5);
-            var frame = new Frame(span1, span2);
-            _sequence.Push(frame);
+            var expected = new Frame(span1, span2);
+            _sequence.Push(expected);
 
-
+            var processor = new FrameProcessor(_sequence);
+            processor.SetTime(TimeSpan.FromSeconds(1.5));
         }
     }
 }
