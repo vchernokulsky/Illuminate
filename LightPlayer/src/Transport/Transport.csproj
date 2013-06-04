@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{67B04B61-B920-4313-8562-C69F27A9A030}</ProjectGuid>
+    <ProjectGuid>{702F0EE9-EC44-4EC9-98EF-072F68DB33EB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Intems.LightPlayer.BL</RootNamespace>
-    <AssemblyName>BL</AssemblyName>
+    <RootNamespace>Intems.LightPlayer.Transport</RootNamespace>
+    <AssemblyName>Transport</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,33 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NAudio">
-      <HintPath>..\..\lib\NAudio.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="ServiceStack.Text">
-      <HintPath>..\..\lib\ServiceStack.Text.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Frame.cs" />
-    <Compile Include="Commands\Command.cs" />
-    <Compile Include="FrameProcessor.cs" />
-    <Compile Include="FrameSequence.cs" />
-    <Compile Include="Commands\BlinkColor.cs" />
-    <Compile Include="Commands\FadeColor.cs" />
-    <Compile Include="CommandBuilder.cs" />
-    <Compile Include="Commands\SetColor.cs" />
-    <Compile Include="Helpers\NumericHelper.cs" />
+    <Compile Include="IPackageSender.cs" />
+    <Compile Include="Package.cs" />
+    <Compile Include="PackageSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Transport\Transport.csproj">
-      <Project>{702f0ee9-ec44-4ec9-98ef-072f68db33eb}</Project>
-      <Name>Transport</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -2,6 +2,8 @@
 using System.Windows.Media;
 using Intems.LightPlayer.BL;
 using Intems.LightPlayer.BL.Commands;
+using Intems.LightPlayer.Transport;
+using NAudio.Wave;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -66,7 +68,43 @@ namespace Tests
             using (_repository.Playback())
             {
                 process.SetTime(TimeSpan.FromSeconds(0.1));
-                process.SetTime(TimeSpan.FromSeconds(2.6));
+                process.SetTime(TimeSpan.FromSeconds(2.6)); 
+            }
+        }
+
+        [Test]
+        public void ProcessOneFrameOnShortTimeInterval()
+        {
+            var frame = CreateFrame(0, 3);
+            _sequence.Push(frame);
+
+            var process = new FrameProcessor(_sender, _sequence);
+            using (_repository.Record())
+            {
+                var pkg1 = new Package(frame.Command.GetBytes());
+                _sender.Expect(x => x.SendPackage(pkg1)).Repeat.Once();
+            }
+            using (_repository.Playback())
+            {
+                process.SetTime(TimeSpan.FromSeconds(0.1));
+                process.SetTime(TimeSpan.FromSeconds(0.5));
+                process.SetTime(TimeSpan.FromSeconds(0.8));
+            }
+        }
+
+        [Test]
+        public void StartFeameProcessingTest()
+        {
+            var player = _repository.DynamicMock<IWavePlayer>();
+            var process = new FrameProcessor(_sender, player, _sequence);
+
+            using (_repository.Record())
+            {
+                player.Expect(x => x.Play()).Repeat.Once();
+            }
+            using (_repository.Playback())
+            {
+                process.Start();
             }
         }
     }

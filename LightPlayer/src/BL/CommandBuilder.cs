@@ -1,4 +1,6 @@
-﻿namespace Intems.LightPlayer.BL
+﻿using Intems.LightPlayer.Transport;
+
+namespace Intems.LightPlayer.BL
 {
     enum CmdEnum
     {
