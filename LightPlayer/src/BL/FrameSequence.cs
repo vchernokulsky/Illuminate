@@ -6,14 +6,16 @@ namespace Intems.LightPlayer.BL
     public class FrameSequence
     {
         private readonly object _locker;
-        private readonly List<Frame> _commands;
 
         public FrameSequence()
         {
             _locker = new object();
-
-            _commands = new List<Frame>();
+            _frames = new List<Frame>();
         }
+
+        private List<Frame> _frames;
+        public List<Frame> Frames {get { return _frames; } set { _frames = value; }}
+
 
         private int _curIndex = -1;
         public Frame FrameByTime(TimeSpan time)
@@ -23,12 +25,12 @@ namespace Intems.LightPlayer.BL
             lock (_locker)
             {
                 var nextIndex = _curIndex + 1;
-                if (nextIndex < _commands.Count)
+                if (nextIndex < _frames.Count)
                 {
-                    if (_commands[nextIndex].IsStartRequired(time))
+                    if (_frames[nextIndex].IsStartRequired(time))
                     {
                         _curIndex++;
-                        result = _commands[nextIndex];
+                        result = _frames[nextIndex];
                     }
                 }
             }
@@ -39,7 +41,7 @@ namespace Intems.LightPlayer.BL
         {
             lock (_locker)
             {
-                _commands.Add(frame);
+                _frames.Add(frame);
                 frame.FrameChanged += OnFrameChanged;
             }
         }
@@ -48,7 +50,7 @@ namespace Intems.LightPlayer.BL
         {
             lock (_locker)
             {
-                _commands.Clear();
+                _frames.Clear();
             }
         }
 

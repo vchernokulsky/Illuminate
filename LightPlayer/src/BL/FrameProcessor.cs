@@ -9,7 +9,8 @@ namespace Intems.LightPlayer.BL
     {
         private readonly object _locker = new object();
 
-        private readonly Timer _timer;
+        private readonly double TimeInterval = 40;
+        private readonly Timer  _timer;
 
         private IWavePlayer _player;
         private readonly IPackageSender _sender;
@@ -17,7 +18,7 @@ namespace Intems.LightPlayer.BL
 
         public FrameProcessor(IPackageSender sender, FrameSequence sequence)
         {
-            _timer = new Timer();
+            _timer = new Timer(TimeInterval);
             _timer.Elapsed += OnTimerElapsed;
 
             _sender = sender;
@@ -29,9 +30,11 @@ namespace Intems.LightPlayer.BL
             _player = player;
         }
 
+        private double _trackLen; 
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
-            
+            _trackLen += TimeInterval;
+            SetTime(TimeSpan.FromMilliseconds(_trackLen));
         }
 
         public void SetTime(TimeSpan time)
@@ -49,6 +52,8 @@ namespace Intems.LightPlayer.BL
         public void Start()
         {
             _player.Play();
+
+            _trackLen = 0;
             _timer.Start();
         }
     }

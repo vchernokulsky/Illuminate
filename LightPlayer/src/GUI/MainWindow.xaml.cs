@@ -43,5 +43,10 @@ namespace Intems.LightPlayer.GUI
             if (dlg.ShowDialog().Value)
                 ((MainViewModel)DataContext).AudioFileName = dlg.FileName;
         }
+
+        private void OnBtnStop_Click(object sender, RoutedEventArgs e)
+        {
+            _player.Stop();
+        }
     }
 }

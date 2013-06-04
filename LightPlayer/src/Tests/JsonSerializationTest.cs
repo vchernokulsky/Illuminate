@@ -14,12 +14,19 @@ namespace Tests
         public void SaveFrame()
         {
             var color = Color.FromRgb(128, 128, 128);
-            var frame = new Frame(TimeSpan.FromSeconds(0), TimeSpan.FromMilliseconds(3500))
+            var frame1 = new Frame(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(3.5))
             {
                 Command = new SetColor(1, color)
             };
+            var frame2 = new Frame(TimeSpan.FromSeconds(3.5), TimeSpan.FromSeconds(2))
+            {
+                Command = new SetColor(1, color)
+            };
+            var seq = new FrameSequence();
+            seq.Push(frame1);
+            seq.Push(frame2);
 
-            var s = JsonSerializer.SerializeToString(frame);
+            var s = JsonSerializer.SerializeToString(seq);
             Console.WriteLine(s);
         }
 

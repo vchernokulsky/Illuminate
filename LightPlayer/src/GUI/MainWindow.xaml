@@ -9,7 +9,9 @@
         <TextBox HorizontalAlignment="Left" Height="23" Margin="10,22,0,0" VerticalAlignment="Top" Width="370"
                  TextWrapping="Wrap" Text="{Binding AudioFileName}" />
         <Button Content="Choose" HorizontalAlignment="Left" Margin="400,22,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.067,-0.25" Height="23" Click="OnBtnChoose_Click"/>
+        
         <Button Content="Start" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="OnBtnStart_Click"/>
+        <Button Content="Stop" HorizontalAlignment="Left" Margin="120,127,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="OnBtnStop_Click"/>
 
     </Grid>
 </Window>
