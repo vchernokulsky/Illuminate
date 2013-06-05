@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+﻿using System;
 using System.Windows;
 using Intems.LightPlayer.BL;
 using Intems.LightPlayer.Transport;
@@ -14,7 +14,7 @@ namespace Intems.LightPlayer.GUI
     {
         private FrameSequence _sequence = new FrameSequence();
         private IWavePlayer   _player = new WaveOutEvent();
-        private IPackageSender _sender = new SerialPortSender(null);
+        private IPackageSender _sender = new FakePackageSender();
 
         private FrameProcessor _processor;
 
@@ -27,16 +27,6 @@ namespace Intems.LightPlayer.GUI
             _processor = new FrameProcessor(_sender, _player, _sequence);
         }
 
-        private void OnBtnStart_Click(object sender, RoutedEventArgs e)
-        {
-            var vm = (MainViewModel) DataContext;
-
-            IWaveProvider provider = new AudioFileReader(vm.AudioFileName);
-            _player.Init(provider);
-
-            _processor.Start();
-        }
-
         private void OnBtnChoose_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new OpenFileDialog();
@@ -44,9 +34,23 @@ namespace Intems.LightPlayer.GUI
                 ((MainViewModel)DataContext).AudioFileName = dlg.FileName;
         }
 
+        private void OnBtnStart_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = (MainViewModel)DataContext;
+
+            if (!String.IsNullOrEmpty(vm.AudioFileName))
+            {
+                IWaveProvider provider = new AudioFileReader(vm.AudioFileName);
+                _player.Init(provider);
+                //start processing composition
+                _processor.AudioReader = provider;
+                _processor.Start();
+            }
+        }
+
         private void OnBtnStop_Click(object sender, RoutedEventArgs e)
         {
-            _player.Stop();
+            _processor.Stop();
         }
     }
 }

@@ -8,7 +8,8 @@ namespace Intems.LightPlayer.Transport
         private readonly SerialPort _port;
 
         public SerialPortSender()
-        {}
+        {
+        }
 
         public SerialPortSender(SerialPort port)
         {

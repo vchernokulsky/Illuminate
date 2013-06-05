@@ -18,7 +18,7 @@ namespace Intems.LightPlayer.BL
 
 
         private int _curIndex = -1;
-        public Frame FrameByTime(TimeSpan time)
+        public  Frame FrameByTime(TimeSpan time)
         {
             Frame result = null;
 

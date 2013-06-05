@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Timers;
 using Intems.LightPlayer.Transport;
 using NAudio.Wave;
@@ -9,7 +10,7 @@ namespace Intems.LightPlayer.BL
     {
         private readonly object _locker = new object();
 
-        private readonly double TimeInterval = 40;
+        private readonly double TimeInterval = 50;
         private readonly Timer  _timer;
 
         private IWavePlayer _player;
@@ -30,19 +31,28 @@ namespace Intems.LightPlayer.BL
             _player = player;
         }
 
-        private double _trackLen; 
+        private TimeSpan prevTime = TimeSpan.FromSeconds(0);
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            _trackLen += TimeInterval;
-            SetTime(TimeSpan.FromMilliseconds(_trackLen));
-        }
-
-        public void SetTime(TimeSpan time)
         {
             lock (_locker)
             {
-                var frame = _sequence.FrameByTime(time);
-                if (frame == null) return;
+                var time = ((AudioFileReader) AudioReader).CurrentTime;
+                SetTime(time);
+            }
+        }
+
+
+        public AudioFileReader AudioReader { get; set; }
+
+        public void SetTime(TimeSpan time)
+        {
+            var frame = _sequence.FrameByTime(time);
+            if (frame != null)
+            {
+                Console.WriteLine("Track time: {0}s", time.TotalSeconds);
+                Console.WriteLine("Diff: {0}s", (time - prevTime).TotalSeconds);
+                prevTime = time;
+                //---
 
                 var pkg = new Package(frame.Command.GetBytes());
                 _sender.SendPackage(pkg);
@@ -51,10 +61,14 @@ namespace Intems.LightPlayer.BL
 
         public void Start()
         {
-            _player.Play();
-
-            _trackLen = 0;
             _timer.Start();
+            _player.Play();
+        }
+
+        public void Stop()
+        {
+            _timer.Stop();
+            _player.Stop();
         }
     }
 }
