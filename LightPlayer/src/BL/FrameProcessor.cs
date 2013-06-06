@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Timers;
 using Intems.LightPlayer.Transport;
 using NAudio.Wave;
@@ -36,7 +35,13 @@ namespace Intems.LightPlayer.BL
         {
             lock (_locker)
             {
-                var time = ((AudioFileReader) AudioReader).CurrentTime;
+                var time = prevTime;
+
+                if (AudioReader != null)
+                    time = AudioReader.CurrentTime;
+                else
+                    time += TimeSpan.FromMilliseconds(TimeInterval);
+
                 SetTime(time);
             }
         }
@@ -49,11 +54,8 @@ namespace Intems.LightPlayer.BL
             var frame = _sequence.FrameByTime(time);
             if (frame != null)
             {
-                Console.WriteLine("Track time: {0}s", time.TotalSeconds);
-                Console.WriteLine("Diff: {0}s", (time - prevTime).TotalSeconds);
-                prevTime = time;
+                Console.WriteLine("{0}", (time - prevTime).TotalSeconds);
                 //---
-
                 var pkg = new Package(frame.Command.GetBytes());
                 _sender.SendPackage(pkg);
             }
@@ -62,13 +64,15 @@ namespace Intems.LightPlayer.BL
         public void Start()
         {
             _timer.Start();
-            _player.Play();
+            if(_player != null)
+                _player.Play();
         }
 
         public void Stop()
         {
             _timer.Stop();
-            _player.Stop();
+            if(_player != null)
+                _player.Stop();
         }
     }
 }

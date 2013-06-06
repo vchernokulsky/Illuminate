@@ -4,24 +4,26 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{67B04B61-B920-4313-8562-C69F27A9A030}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{88A96004-3514-45EA-AFB8-908416F77238}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Intems.LightPlayer.BL</RootNamespace>
-    <AssemblyName>BL</AssemblyName>
+    <RootNamespace>Spike</RootNamespace>
+    <AssemblyName>Spike</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,32 +32,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NAudio">
+    <Reference Include="NAudio, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\NAudio.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="ServiceStack.Text">
-      <HintPath>..\..\lib\ServiceStack.Text.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Frame.cs" />
-    <Compile Include="Commands\Command.cs" />
-    <Compile Include="FrameProcessor.cs" />
-    <Compile Include="FrameSequence.cs" />
-    <Compile Include="Commands\BlinkColor.cs" />
-    <Compile Include="Commands\FadeColor.cs" />
-    <Compile Include="CommandBuilder.cs" />
-    <Compile Include="Commands\SetColor.cs" />
-    <Compile Include="Helpers\MemoryLog.cs" />
-    <Compile Include="Helpers\NumericHelper.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BL\BL.csproj">
+      <Project>{67B04B61-B920-4313-8562-C69F27A9A030}</Project>
+      <Name>BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Transport\Transport.csproj">
-      <Project>{702f0ee9-ec44-4ec9-98ef-072f68db33eb}</Project>
+      <Project>{702F0EE9-EC44-4EC9-98EF-072F68DB33EB}</Project>
       <Name>Transport</Name>
     </ProjectReference>
   </ItemGroup>
