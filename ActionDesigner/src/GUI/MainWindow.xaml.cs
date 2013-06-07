@@ -7,9 +7,14 @@ namespace Intems.LightDesigner.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private void InitData()
+        {}
+
         public MainWindow()
         {
             InitializeComponent();
+
+            InitData();
         }
     }
 }

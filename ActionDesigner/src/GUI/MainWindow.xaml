@@ -12,9 +12,9 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                   FontSize="14" Text="{Binding StartTime}"/>
+                                   FontSize="14" Text="{Binding FrameBegin}"/>
                         <TextBox Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                 FontSize="14" Text="{Binding Length}"/>
+                                 FontSize="14" Text="{Binding FrameLength}"/>
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
