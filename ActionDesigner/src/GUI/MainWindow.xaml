@@ -3,19 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <ItemsControl ItemsSource="{Binding Frames}">
-            <DataTemplate>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                               FontSize="14" Text="{Binding StartTime}"/>
-                    <TextBox Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                             FontSize="14" Text="{Binding Length}"/>
-                </Grid>
-            </DataTemplate>
+        <ItemsControl ItemsSource="{Binding FrameViews}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                   FontSize="14" Text="{Binding StartTime}"/>
+                        <TextBox Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                 FontSize="14" Text="{Binding Length}"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
         </ItemsControl>
     </Grid>
 </Window>
