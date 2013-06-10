@@ -1,5 +1,4 @@
-﻿using System;
-using Intems.LightPlayer.Transport;
+﻿using Intems.LightPlayer.Transport;
 
 namespace Intems.LightPlayer.BL.Commands
 {
@@ -24,8 +23,7 @@ namespace Intems.LightPlayer.BL.Commands
 
         protected abstract byte[] GetParams();
 
-        public virtual byte Function { get; private set; }
-
+        public abstract byte Function { get; }
 
         public byte Channel { get; set; }
 

@@ -2,7 +2,7 @@
 
 namespace Intems.LightPlayer.BL
 {
-    enum CmdEnum
+    public enum CmdEnum
     {
         None,
         SetColor,

@@ -16,9 +16,9 @@ namespace Intems.LightPlayer.BL
             Command = cmd;
         }
 
-        public TimeSpan StartTime { get; private set; }
+        public TimeSpan StartTime { get; set; }
 
-        public TimeSpan Length { get; private set; }
+        public TimeSpan Length { get; set; }
 
         public Command Command { get; set; }
 

@@ -3,19 +3,30 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <ItemsControl ItemsSource="{Binding FrameViews}">
+        <ItemsControl ItemsSource="{Binding FrameViews}" HorizontalAlignment="Left">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                   FontSize="14" Text="{Binding FrameBegin}"/>
-                        <TextBox Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                 FontSize="14" Text="{Binding FrameLength}"/>
-                    </Grid>
+                    <Border BorderThickness="2" BorderBrush="Blue">
+                        <Grid Margin="5,5,5,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,10,0"
+                                       FontSize="14" Text="{Binding FrameBegin}"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch"
+                                     FontSize="14" Text="{Binding FrameLength}"/>
+                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                       Text="{Binding CmdType}" TextAlignment="Center"/>
+                            <Rectangle Grid.Row="2" Grid.ColumnSpan="2" MinWidth="50" MinHeight="20"
+                                       Fill="{Binding Color}"/>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
