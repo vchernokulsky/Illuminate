@@ -40,7 +40,8 @@ namespace Intems.LightDesigner.GUI.ViewModels
                     byte[] bytes = _frame.Command.GetBytes();
                     color = Color.FromRgb(bytes[10], bytes[12], bytes[14]);
                 }
-                return new SolidColorBrush(color.HasValue ? color.Value : Colors.White);
+                var result = color.HasValue ? new SolidColorBrush(color.Value) : null;
+                return result;
             }
         }
 
