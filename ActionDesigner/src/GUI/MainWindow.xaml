@@ -21,10 +21,12 @@
                                        FontSize="14" Text="{Binding FrameBegin}"/>
                             <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch"
                                      FontSize="14" Text="{Binding FrameLength}"/>
-                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                        Text="{Binding CmdType}" TextAlignment="Center"/>
-                            <Rectangle Grid.Row="2" Grid.ColumnSpan="2" MinWidth="50" MinHeight="20"
-                                       Fill="{Binding Color}"/>
+                            <Rectangle Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1" MinWidth="50" MinHeight="20"
+                                       Fill="{Binding FillBrush1}"/>
+                            <Rectangle Grid.Row="2" Grid.Column="1" MinWidth="50" MinHeight="20"
+                                       Fill="{Binding FillBrush2}"/>
                         </Grid>
                     </Border>
                 </DataTemplate>

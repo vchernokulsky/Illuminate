@@ -23,18 +23,18 @@ namespace Intems.LightDesigner.GUI
             for (int i = 0; i < 20; i++)
             {
                 Command cmd = null;
-                int cmdType = rnd.Next(2);
+                int cmdType = rnd.Next(3);
                 int length = rnd.Next(1, 15);
                 switch (cmdType)
                 {
                     case 0:
-                        cmd = new SetColor(1, Color.FromRgb(128, 128, 128));
+                        cmd = new SetColor(1, RandColor(rnd));
                         break;
                     case 1:
-                        cmd = new FadeColor(1, Color.FromRgb(21, 100, 50), Color.FromRgb(255,255,255), (short) length);
+                        cmd = new FadeColor(1, RandColor(rnd), RandColor(rnd), (short)length);
                         break;
                     case 2:
-                        cmd = new BlinkColor(1, Color.FromRgb(125, 18, 90), (short) length);
+                        cmd = new BlinkColor(1, RandColor(rnd), (short)length);
                         break;
                 }
                 var frame = new Frame(TimeSpan.FromSeconds(_commonLength), TimeSpan.FromSeconds(length), cmd);
@@ -42,6 +42,11 @@ namespace Intems.LightDesigner.GUI
                 _commonLength += length;
             }
             _model = new FrameListModel {FrameViews = frameModels};
+        }
+
+        private static Color RandColor(Random rnd)
+        {
+            return Color.FromRgb((byte)rnd.Next(255), (byte)rnd.Next(255), (byte)rnd.Next(255));
         }
 
         public MainWindow()
