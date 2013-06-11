@@ -15,6 +15,11 @@ namespace Intems.LightDesigner.GUI
     {
         private FrameListModel _model;
 
+        private static Color RandColor(Random rnd)
+        {
+            return Color.FromRgb((byte)rnd.Next(255), (byte)rnd.Next(255), (byte)rnd.Next(255));
+        }
+
         private int _commonLength;
         private void InitData()
         {
@@ -42,11 +47,6 @@ namespace Intems.LightDesigner.GUI
                 _commonLength += length;
             }
             _model = new FrameListModel {FrameViews = frameModels};
-        }
-
-        private static Color RandColor(Random rnd)
-        {
-            return Color.FromRgb((byte)rnd.Next(255), (byte)rnd.Next(255), (byte)rnd.Next(255));
         }
 
         public MainWindow()
