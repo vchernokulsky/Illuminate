@@ -31,13 +31,25 @@ namespace Intems.LightPlayer.BL.Commands
             _length = length;
         }
 
-        public override byte Function { get { return (byte) CmdEnum.Fade; }  }
+        public Color StartColor
+        {
+            get { return _startColor; }
+            set { _startColor = value; }
+        }
+
+        public Color StopColor
+        {
+            get { return _stopColor; }
+            set { _stopColor = value; }
+        }
 
         public void ChangeColor(Color start, Color stop)
         {
             _startColor = start;
             _stopColor = stop;
         }
+
+        public override byte Function { get { return (byte) CmdEnum.Fade; }  }
 
         protected override byte[] GetParams()
         {

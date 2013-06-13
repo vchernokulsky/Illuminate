@@ -1,4 +1,5 @@
-﻿using Intems.LightPlayer.Transport;
+﻿using System.Windows.Media;
+using Intems.LightPlayer.Transport;
 
 namespace Intems.LightPlayer.BL.Commands
 {
@@ -21,11 +22,11 @@ namespace Intems.LightPlayer.BL.Commands
             Channel = channel;
         }
 
-        protected abstract byte[] GetParams();
-
         public abstract byte Function { get; }
 
         public byte Channel { get; set; }
+
+        protected abstract byte[] GetParams();
 
         public byte[] GetBytes()
         {

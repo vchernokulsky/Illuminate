@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using System.Windows;
 using System.Windows.Media;
 using Intems.LightPlayer.BL;
 using Intems.LightPlayer.BL.Commands;
@@ -15,22 +17,30 @@ namespace Intems.LightDesigner.GUI.ViewModels
             _frame = frame;
         }
 
-        public Brush FillBrush1
+        public Color FillBrush1
         {
             get
             {
-                var color = Color.FromRgb(128, 128, 128);
-                if ((_frame.Command is SetColor)||(_frame.Command is BlinkColor))
+                byte[] bytes = _frame.Command.GetBytes();
+                var color = Color.FromRgb(bytes[4], bytes[6], bytes[8]);
+                return color;
+            }
+            set
+            {
+                if ((_frame.Command is SetColor) || (_frame.Command is BlinkColor))
                 {
-                    byte[] bytes = _frame.Command.GetBytes();
-                    color = Color.FromRgb(bytes[4], bytes[6], bytes[8]);
+                    var type = _frame.Command.GetType();
+                    type.InvokeMember("Color", BindingFlags.SetProperty, null, _frame.Command, new object[] {value});
                 }
-
-                return new SolidColorBrush(color);
+                if (_frame.Command is FadeColor)
+                {
+                    var type = _frame.Command.GetType();
+                    type.InvokeMember("StartColor", BindingFlags.SetProperty, null, _frame.Command, new object[] { value });
+                }
             }
         }
 
-        public Brush FillBrush2
+        public Color FillBrush2
         {
             get
             {
@@ -40,8 +50,15 @@ namespace Intems.LightDesigner.GUI.ViewModels
                     byte[] bytes = _frame.Command.GetBytes();
                     color = Color.FromRgb(bytes[10], bytes[12], bytes[14]);
                 }
-                var result = color.HasValue ? new SolidColorBrush(color.Value) : null;
-                return result;
+                return color.HasValue ? color.Value : Colors.White;
+            }
+            set
+            {
+                if (_frame.Command is FadeColor)
+                {
+                    var type = _frame.Command.GetType();
+                    type.InvokeMember("StopColor", BindingFlags.SetProperty, null, _frame.Command, new object[] { value });
+                }
             }
         }
 
@@ -62,6 +79,17 @@ namespace Intems.LightDesigner.GUI.ViewModels
                         result = "COLOR BLINK";
                         break;
                 }
+                return result;
+            }
+        }
+
+        public Visibility FadeVisibility
+        {
+            get
+            {
+                var result = Visibility.Collapsed;
+                if (_frame.Command is FadeColor)
+                    result = Visibility.Visible;
                 return result;
             }
         }

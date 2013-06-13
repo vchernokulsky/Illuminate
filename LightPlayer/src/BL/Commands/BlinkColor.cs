@@ -19,6 +19,12 @@ namespace Intems.LightPlayer.BL.Commands
             _frequency = freq;
         }
 
+        public Color Color
+        {
+            get { return _color; }
+            set { _color = value; }
+        }
+
         public override byte Function
         {
             get { return (byte) CmdEnum.Blink; }

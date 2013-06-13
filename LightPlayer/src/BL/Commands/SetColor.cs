@@ -18,15 +18,15 @@ namespace Intems.LightPlayer.BL.Commands
             _color = color;
         }
 
-        public override byte Function
-        {
-            get { return (byte) CmdEnum.SetColor; }
-        }
-
         public Color Color
         {
             get { return _color; }
             set { _color = value; }
+        }
+
+        public override byte Function
+        {
+            get { return (byte) CmdEnum.SetColor; }
         }
 
         protected override byte[] GetParams()

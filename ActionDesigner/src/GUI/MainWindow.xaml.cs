@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using Intems.LightDesigner.GUI.ViewModels;
 using Intems.LightPlayer.BL;
 using Intems.LightPlayer.BL.Commands;
+using Microsoft.Win32;
+using Xceed.Wpf.Toolkit;
 
 namespace Intems.LightDesigner.GUI
 {
@@ -55,6 +59,17 @@ namespace Intems.LightDesigner.GUI
 
             InitData();
             DataContext = _model;
+        }
+
+        private void OnRectangleMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            var rect = sender as Rectangle;
+            if (rect != null)
+            {
+//                var picker = new ColorPicker(){};
+//                picker.Visibility = Visibility.Visible;
+//                picker.SelectedColor
+            }
         }
     }
 }
