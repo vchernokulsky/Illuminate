@@ -16,7 +16,6 @@ namespace Intems.LightPlayer.BL
         private List<Frame> _frames;
         public List<Frame> Frames {get { return _frames; } set { _frames = value; }}
 
-
         private int _curIndex = -1;
         public  Frame FrameByTime(TimeSpan time)
         {
@@ -54,9 +53,10 @@ namespace Intems.LightPlayer.BL
             }
         }
 
-        private void OnFrameChanged(object sender, EventArgs eventArgs)
+        private void OnFrameChanged(object sender, FrameEventArgs eventArgs)
         {
-            throw new NotImplementedException();
+            var frame = sender as Frame;
+            Console.WriteLine(frame);
         }
 
     }

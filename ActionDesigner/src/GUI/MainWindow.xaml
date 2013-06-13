@@ -24,9 +24,9 @@
                                      FontSize="14" Text="{Binding FrameLength}"/>
                             <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                        Text="{Binding CmdType}" TextAlignment="Center"/>
-                            <xctk:ColorPicker Grid.Row="2" Grid.Column="0" MinWidth="50" MinHeight="20"
+                            <xctk:ColorPicker Grid.Row="2" Grid.Column="0" MinWidth="50" MinHeight="20" Width="80"
                                               SelectedColor="{Binding FillBrush1}"/>
-                            <xctk:ColorPicker Grid.Row="2" Grid.Column="1" MinWidth="50" MinHeight="20"
+                            <xctk:ColorPicker Grid.Row="2" Grid.Column="1" MinWidth="50" MinHeight="20" Width="80"
                                               SelectedColor="{Binding FillBrush2}" Visibility="{Binding FadeVisibility}"/>
                         </Grid>
                     </Border>

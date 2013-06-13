@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Intems.LightPlayer.BL;
 
 namespace Intems.LightDesigner.GUI.ViewModels
 {
@@ -13,6 +14,13 @@ namespace Intems.LightDesigner.GUI.ViewModels
                 _frames = value;
                 RaisePropertyChanged("FrameListModel");
             }
+        }
+
+        private readonly FrameSequence _sequence = new FrameSequence();
+        public void Add(Frame frame)
+        {
+            _sequence.Push(frame);
+            _frames.Add(new FrameModel(frame));
         }
     }
 }

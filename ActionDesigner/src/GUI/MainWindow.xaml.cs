@@ -17,7 +17,7 @@ namespace Intems.LightDesigner.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private FrameListModel _model;
+        private FrameListModel _model = new FrameListModel();
 
         private static Color RandColor(Random rnd)
         {
@@ -47,10 +47,9 @@ namespace Intems.LightDesigner.GUI
                         break;
                 }
                 var frame = new Frame(TimeSpan.FromSeconds(_commonLength), TimeSpan.FromSeconds(length), cmd);
-                frameModels.Add(new FrameModel(frame));
+                _model.Add(frame);
                 _commonLength += length;
             }
-            _model = new FrameListModel {FrameViews = frameModels};
         }
 
         public MainWindow()

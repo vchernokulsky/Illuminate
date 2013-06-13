@@ -3,8 +3,15 @@ using Intems.LightPlayer.BL.Commands;
 
 namespace Intems.LightPlayer.BL
 {
+    public class FrameEventArgs : EventArgs
+    {
+        public TimeSpan Delta { get; set; }
+    }
+
     public class Frame
     {
+        private TimeSpan _length;
+
         public Frame(TimeSpan startTime, TimeSpan length)
         {
             StartTime = startTime;
@@ -16,13 +23,21 @@ namespace Intems.LightPlayer.BL
             Command = cmd;
         }
 
-        public TimeSpan StartTime { get; set; }
-
-        public TimeSpan Length { get; set; }
-
         public Command Command { get; set; }
 
-        public event EventHandler FrameChanged;
+        public TimeSpan StartTime { get; set; }
+
+        public TimeSpan Length
+        {
+            get { return _length; }
+            set
+            {
+                _length = value;
+                RaiseFrameChanged(value - _length);
+            }
+        }
+
+        public event EventHandler<FrameEventArgs> FrameChanged;
 
         /// <summary>
         /// Устанавливает временные характеристики команды
@@ -31,9 +46,11 @@ namespace Intems.LightPlayer.BL
         /// <param name="length">Продолжительность команды</param>
         public void SetTime(TimeSpan time, TimeSpan length)
         {
+            var delta = length - Length;
+
             StartTime = time;
             Length = length;
-            RaiseFrameChanged();
+            RaiseFrameChanged(delta);
         }
 
         /// <summary>
@@ -46,10 +63,10 @@ namespace Intems.LightPlayer.BL
             return (time >= StartTime) && (time < (StartTime + Length));
         }
 
-        protected virtual void RaiseFrameChanged()
+        protected virtual void RaiseFrameChanged(TimeSpan delta)
         {
             var handler = FrameChanged;
-            if (handler != null) handler(this, EventArgs.Empty);
+            if (handler != null) handler(this, new FrameEventArgs {Delta = delta});
         }
     }
 }
