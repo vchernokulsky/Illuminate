@@ -3,8 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <ScrollViewer>
-        <ItemsControl ItemsSource="{Binding FrameViews}" HorizontalAlignment="Left">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal">
+            <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
+                    x:Name="_btnSet" Tag="1" Content="SET" Click="OnAddBtn_Click"/>
+            <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
+                    x:Name="_btnFade" Tag="2" Content="FADE" Click="OnAddBtn_Click"/>            
+            <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
+                    x:Name="_btnBlink" Tag="3" Content="BLINK" Click="OnAddBtn_Click"/>
+        </StackPanel>
+        
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding FrameViews}" HorizontalAlignment="Left">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="2" BorderBrush="Blue">

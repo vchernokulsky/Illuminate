@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Data;
+using System.Windows.Media;
 using Intems.LightPlayer.BL;
+using Intems.LightPlayer.BL.Commands;
 
 namespace Intems.LightDesigner.GUI.ViewModels
 {
@@ -26,6 +29,17 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
         public void Add(Frame frame)
         {
+            _sequence.Push(frame);
+            _frames.Add(new FrameModel(frame));
+        }
+
+        public void PushBack()
+        {
+            var lastFrame = _frames.Last();
+            var startTime = lastFrame.FrameBegin + lastFrame.FrameLength;
+            var length = TimeSpan.FromSeconds(5);
+
+            var frame = new Frame(startTime, length){Command = new SetColor(1, Colors.Red)};
             _sequence.Push(frame);
             _frames.Add(new FrameModel(frame));
         }

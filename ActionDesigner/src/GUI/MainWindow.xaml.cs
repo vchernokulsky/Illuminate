@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using Intems.LightDesigner.GUI.ViewModels;
-using Intems.LightPlayer.BL;
 using Intems.LightPlayer.BL.Commands;
+using Frame = Intems.LightPlayer.BL.Frame;
 
 namespace Intems.LightDesigner.GUI
 {
@@ -24,8 +25,7 @@ namespace Intems.LightDesigner.GUI
         private void InitData()
         {
             var rnd = new Random();
-            var frameModels = new List<FrameModel>();
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 5; i++)
             {
                 Command cmd = null;
                 int cmdType = rnd.Next(3);
@@ -54,6 +54,16 @@ namespace Intems.LightDesigner.GUI
 
             InitData();
             DataContext = _model;
+        }
+
+        private void OnAddBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            if ((CmdEnum)btn.Tag == CmdEnum.SetColor)
+            {
+                
+            }
+            _model.PushBack();
         }
     }
 }
