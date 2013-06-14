@@ -11,6 +11,7 @@ namespace Intems.LightPlayer.BL
     public class Frame
     {
         private TimeSpan _length;
+        private TimeSpan _startTime;
 
         public Frame(TimeSpan startTime, TimeSpan length)
         {
@@ -25,15 +26,20 @@ namespace Intems.LightPlayer.BL
 
         public Command Command { get; set; }
 
-        public TimeSpan StartTime { get; set; }
+        public TimeSpan StartTime
+        {
+            get { return _startTime; }
+            set { _startTime = value; }
+        }
 
         public TimeSpan Length
         {
             get { return _length; }
             set
             {
+                var delta = value - _length;
                 _length = value;
-                RaiseFrameChanged(value - _length);
+                RaiseFrameChanged(delta);
             }
         }
 

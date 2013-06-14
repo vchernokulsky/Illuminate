@@ -13,8 +13,14 @@ namespace Intems.LightPlayer.BL
             _frames = new List<Frame>();
         }
 
+        public event EventHandler SequenceChanged;
+
         private List<Frame> _frames;
-        public List<Frame> Frames {get { return _frames; } set { _frames = value; }}
+        public List<Frame> Frames
+        {
+            get { return _frames; }
+            set { _frames = value; }
+        }
 
         private int _curIndex = -1;
         public  Frame FrameByTime(TimeSpan time)
@@ -56,8 +62,22 @@ namespace Intems.LightPlayer.BL
         private void OnFrameChanged(object sender, FrameEventArgs eventArgs)
         {
             var frame = sender as Frame;
-            Console.WriteLine(frame);
+            if (frame != null)
+            {
+                var idx = _frames.IndexOf(frame);
+                for (int i = idx+1; i < _frames.Count; i++)
+                {
+                    var delta = eventArgs.Delta;
+                    _frames[i].StartTime += delta;
+                }
+                RaiseSequenceChanged();
+            }
         }
 
+        private void RaiseSequenceChanged()
+        {
+            var handler = SequenceChanged;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
     }
 }

@@ -8,13 +8,14 @@ using CmdEnum = Intems.LightPlayer.BL.CmdEnum;
 
 namespace Intems.LightDesigner.GUI.ViewModels
 {
-    public class FrameModel :BaseViewModel
+    public class FrameModel : BaseViewModel
     {
         private readonly Frame _frame;
 
         public FrameModel(Frame frame)
         {
             _frame = frame;
+            _frame.FrameChanged += OnFrameChanged;
         }
 
         public Color FillBrush1
@@ -104,6 +105,12 @@ namespace Intems.LightDesigner.GUI.ViewModels
         {
             get { return _frame.Length; }
             set { _frame.Length = value; }
+        }
+
+        private void OnFrameChanged(object sender, FrameEventArgs e)
+        {
+//            RaisePropertyChanged("FrameBegin");
+//            RaisePropertyChanged("FrameLength");
         }
     }
 }
