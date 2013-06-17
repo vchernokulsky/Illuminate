@@ -14,6 +14,7 @@ namespace Intems.LightDesigner.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const short TicksPerSec = 10;
         private readonly FrameListModel _model = new FrameListModel();
 
         private static Color RandColor(Random rnd)
@@ -59,11 +60,24 @@ namespace Intems.LightDesigner.GUI
         private void OnAddBtn_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            if ((CmdEnum)btn.Tag == CmdEnum.SetColor)
+            if (btn == null) return;
+
+            Command cmd = null;
+            var cmdEnum = (CmdEnum) Int32.Parse(btn.Tag.ToString());
+            switch (cmdEnum)
             {
-                
+                case CmdEnum.Fade:
+                    cmd = new FadeColor(Colors.Black, Colors.Black, 2*TicksPerSec);
+                    break;
+                case CmdEnum.Blink:
+                    cmd = new BlinkColor(1, Colors.Black, 50);
+                    break;
+                case CmdEnum.SetColor:
+                    cmd = new SetColor(1, Colors.Black);
+                    break;
             }
-            _model.PushBack();
+            if(cmd != null)
+                _model.PushBack(cmd);
         }
     }
 }

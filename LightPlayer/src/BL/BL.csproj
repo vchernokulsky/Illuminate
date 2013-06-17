@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Frame.cs" />
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="FrameBuilder.cs" />
     <Compile Include="FrameProcessor.cs" />
     <Compile Include="FrameSequence.cs" />
     <Compile Include="Commands\BlinkColor.cs" />

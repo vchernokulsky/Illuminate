@@ -15,16 +15,16 @@ namespace Intems.LightPlayer.BL.Commands
 
     public abstract class Command
     {
-        protected static byte DefaultChannel = 1;
+        public static byte DefaultChannel = 1;
 
         protected Command(byte channel)
         {
             Channel = channel;
         }
 
-        public abstract byte Function { get; }
-
         public byte Channel { get; set; }
+
+        public abstract byte Function { get; }
 
         protected abstract byte[] GetParams();
 

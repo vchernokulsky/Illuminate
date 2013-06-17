@@ -33,13 +33,13 @@ namespace Intems.LightDesigner.GUI.ViewModels
             _frames.Add(new FrameModel(frame));
         }
 
-        public void PushBack()
+        public void PushBack(Command cmd)
         {
             var lastFrame = _frames.Last();
             var startTime = lastFrame.FrameBegin + lastFrame.FrameLength;
-            var length = TimeSpan.FromSeconds(5);
+            var length = TimeSpan.FromSeconds(cmd.Length);
 
-            var frame = new Frame(startTime, length){Command = new SetColor(1, Colors.Red)};
+            var frame = new Frame(startTime, length){Command = cmd};
             _sequence.Push(frame);
             _frames.Add(new FrameModel(frame));
         }

@@ -12,7 +12,7 @@
             <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
                     x:Name="_btnSet" Tag="1" Content="SET" Click="OnAddBtn_Click"/>
             <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
-                    x:Name="_btnFade" Tag="2" Content="FADE" Click="OnAddBtn_Click"/>            
+                    x:Name="_btnFade" Tag="2" Content="FADE" Click="OnAddBtn_Click"/>
             <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
                     x:Name="_btnBlink" Tag="3" Content="BLINK" Click="OnAddBtn_Click"/>
         </StackPanel>
