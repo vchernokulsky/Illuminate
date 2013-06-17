@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Media;
 using Intems.LightPlayer.BL;
 using Intems.LightPlayer.BL.Commands;
-using CmdEnum = Intems.LightPlayer.BL.CmdEnum;
 
 namespace Intems.LightDesigner.GUI.ViewModels
 {

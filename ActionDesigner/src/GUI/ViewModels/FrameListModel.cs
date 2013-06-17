@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Data;
-using System.Windows.Media;
 using Intems.LightPlayer.BL;
-using Intems.LightPlayer.BL.Commands;
 
 namespace Intems.LightDesigner.GUI.ViewModels
 {
@@ -14,8 +12,11 @@ namespace Intems.LightDesigner.GUI.ViewModels
         private readonly ObservableCollection<FrameModel> _frames;
         private readonly FrameSequence _sequence;
 
+        private FrameBuilder _builder;
+
         public FrameListModel()
         {
+            _builder = new FrameBuilder();
             _frames = new ObservableCollection<FrameModel>();
             _sequence = new FrameSequence();
             _sequence.SequenceChanged += OnSequenceChanged;
@@ -33,13 +34,12 @@ namespace Intems.LightDesigner.GUI.ViewModels
             _frames.Add(new FrameModel(frame));
         }
 
-        public void PushBack(Command cmd)
+        public void PushBack(LightPlayer.BL.Commands.CmdEnum cmd)
         {
             var lastFrame = _frames.Last();
             var startTime = lastFrame.FrameBegin + lastFrame.FrameLength;
-            var length = TimeSpan.FromSeconds(cmd.Length);
+            var frame = _builder.CreateFrameByCmdEnum(cmd, startTime);
 
-            var frame = new Frame(startTime, length){Command = cmd};
             _sequence.Push(frame);
             _frames.Add(new FrameModel(frame));
         }

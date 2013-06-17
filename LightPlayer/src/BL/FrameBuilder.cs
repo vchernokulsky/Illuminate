@@ -7,6 +7,7 @@ namespace Intems.LightPlayer.BL
     public class FrameBuilder
     {
         const int TicksPerSec = 10;
+
         protected readonly TimeSpan DefaultLength;
 
         public FrameBuilder()

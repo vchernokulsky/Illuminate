@@ -1,5 +1,4 @@
-﻿using System.Windows.Media;
-using Intems.LightPlayer.Transport;
+﻿using Intems.LightPlayer.Transport;
 
 namespace Intems.LightPlayer.BL.Commands
 {
