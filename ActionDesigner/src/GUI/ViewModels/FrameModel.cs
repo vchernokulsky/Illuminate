@@ -108,8 +108,6 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
         private void OnFrameChanged(object sender, FrameEventArgs e)
         {
-//            RaisePropertyChanged("FrameBegin");
-//            RaisePropertyChanged("FrameLength");
         }
     }
 }

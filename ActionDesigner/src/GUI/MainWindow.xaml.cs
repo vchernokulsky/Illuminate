@@ -14,9 +14,6 @@ namespace Intems.LightDesigner.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const short TicksPerSec = 10;
-        private const short DefaultFadeLenInSec = 2;
-
         private readonly FrameListModel _model = new FrameListModel();
 
         private static Color RandColor(Random rnd)
@@ -66,6 +63,11 @@ namespace Intems.LightDesigner.GUI
 
             var cmdEnum = (CmdEnum) Int32.Parse(btn.Tag.ToString());
            _model.PushBack(cmdEnum);
+        }
+
+        private void OnSaveBtnClick(object sender, RoutedEventArgs e)
+        {
+            _model.SaveToFile();
         }
     }
 }

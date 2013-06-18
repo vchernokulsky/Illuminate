@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Data;
 using Intems.LightPlayer.BL;
+using ServiceStack.Text;
 
 namespace Intems.LightDesigner.GUI.ViewModels
 {
@@ -48,6 +50,26 @@ namespace Intems.LightDesigner.GUI.ViewModels
         {
             var view = CollectionViewSource.GetDefaultView(_frames);
             view.Refresh();
+        }
+
+        public void SaveToFile()
+        {
+            try
+            {
+                var stream = new FileStream("composition.json", FileMode.Create, FileAccess.Write, FileShare.Read);
+                using (stream)
+                {
+                    var s = TypeSerializer.Dump(_sequence);
+                    //JsonSerializer.SerializeToStream(_sequence, _sequence.GetType(), stream);
+                    TextWriter tw = new StreamWriter(stream);
+                    tw.Write(s);
+                    tw.Flush();
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
     }
 }
