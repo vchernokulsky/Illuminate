@@ -51,6 +51,16 @@ namespace Intems.LightPlayer.BL
             }
         }
 
+        public void ChangeFrame(Frame oldFrame, Frame newFrame)
+        {
+            lock (_locker)
+            {
+                var idx = _frames.IndexOf(oldFrame);
+                if (idx >= 0)
+                    _frames[idx] = newFrame
+            }
+        }
+
         public void Clear()
         {
             lock (_locker)

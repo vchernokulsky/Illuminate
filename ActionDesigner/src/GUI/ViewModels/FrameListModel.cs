@@ -11,55 +11,52 @@ namespace Intems.LightDesigner.GUI.ViewModels
 {
     public class FrameListModel : BaseViewModel
     {
-        private readonly ObservableCollection<FrameModel> _frames;
-        private readonly FrameSequence _sequence;
+        private readonly FrameSequence _frameSequence;
+        private readonly ObservableCollection<FrameModel> _frameModels;
 
-        private FrameBuilder _builder;
+        private readonly FrameBuilder _builder;
 
         public FrameListModel()
         {
             _builder = new FrameBuilder();
-            _frames = new ObservableCollection<FrameModel>();
-            _sequence = new FrameSequence();
-            _sequence.SequenceChanged += OnSequenceChanged;
+            _frameModels = new ObservableCollection<FrameModel>();
+            _frameSequence = new FrameSequence();
+            _frameSequence.SequenceChanged += OnFrameSequenceChanged;
         }
 
-        public IList<FrameModel> FrameViews
+        public IList<FrameModel> FrameModels
         {
-            get { return _frames; }
+            get { return _frameModels; }
         }
-
 
         public void Add(Frame frame)
         {
-            _sequence.Push(frame);
-            _frames.Add(new FrameModel(frame));
+            _frameSequence.Push(frame);
+
+            //добавляем модель для отображения
+            var frameModel = new FrameModel(frame);
+            _frameModels.Add(frameModel);
         }
 
         public void PushBack(LightPlayer.BL.Commands.CmdEnum cmd)
         {
-            var lastFrame = _frames.Last();
-            var startTime = lastFrame.FrameBegin + lastFrame.FrameLength;
+            var startTime = CalculateFrameStartTime();
             var frame = _builder.CreateFrameByCmdEnum(cmd, startTime);
+            _frameSequence.Push(frame);
 
-            _sequence.Push(frame);
-            _frames.Add(new FrameModel(frame));
+            //добавляем модель для отображения
+            var frameModel = new FrameModel(frame);
+            _frameModels.Add(frameModel);
         }
 
-        private void OnSequenceChanged(object sender, EventArgs e)
-        {
-            var view = CollectionViewSource.GetDefaultView(_frames);
-            view.Refresh();
-        }
-
-        public void SaveToFile()
+        public void SaveToFile(string fileName)
         {
             try
             {
-                var stream = new FileStream("composition.json", FileMode.Create, FileAccess.Write, FileShare.Read);
+                var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read);
                 using (stream)
                 {
-                    var s = TypeSerializer.Dump(_sequence);
+                    var s = TypeSerializer.Dump(_frameSequence);
                     //JsonSerializer.SerializeToStream(_sequence, _sequence.GetType(), stream);
                     TextWriter tw = new StreamWriter(stream);
                     tw.Write(s);
@@ -70,6 +67,29 @@ namespace Intems.LightDesigner.GUI.ViewModels
             {
                 Console.WriteLine(exception);
             }
+        }
+
+        public void ConvertFrame(FrameModel model, Frame frame)
+        {
+            int idx = _frameModels.IndexOf(model);
+            if(idx >= 0)
+            {
+                _frameSequence.ChangeFrame(model.Frame, frame);
+                _frameModels[idx] = new FrameModel(frame);
+            }
+        }
+
+        private void OnFrameSequenceChanged(object sender, EventArgs eventArgs)
+        {
+            var view = CollectionViewSource.GetDefaultView(_frameModels);
+            view.Refresh();
+        }
+
+        private TimeSpan CalculateFrameStartTime()
+        {
+            var lastFrame = _frameModels.Last();
+            var startTime = lastFrame.FrameBegin + lastFrame.FrameLength;
+            return startTime;
         }
     }
 }

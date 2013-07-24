@@ -14,8 +14,10 @@ namespace Intems.LightDesigner.GUI.ViewModels
         public FrameModel(Frame frame)
         {
             _frame = frame;
-            _frame.FrameChanged += OnFrameChanged;
         }
+
+        //только для чтения
+        public Frame Frame { get { return _frame; } }
 
         public Color FillBrush1
         {
@@ -104,10 +106,6 @@ namespace Intems.LightDesigner.GUI.ViewModels
         {
             get { return _frame.Length; }
             set { _frame.Length = value; }
-        }
-
-        private void OnFrameChanged(object sender, FrameEventArgs e)
-        {
         }
     }
 }

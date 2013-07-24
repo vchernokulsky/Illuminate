@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Intems.LightDesigner.GUI.ViewModels;
 using Intems.LightPlayer.BL.Commands;
-using Frame = Intems.LightPlayer.BL.Frame;
 
 namespace Intems.LightDesigner.GUI
 {
@@ -42,7 +41,7 @@ namespace Intems.LightDesigner.GUI
                         cmd = new BlinkColor(1, RandColor(rnd), (short)length);
                         break;
                 }
-                var frame = new Frame(TimeSpan.FromSeconds(_commonLength), TimeSpan.FromSeconds(length), cmd);
+                var frame = new LightPlayer.BL.Frame(TimeSpan.FromSeconds(_commonLength), TimeSpan.FromSeconds(length), cmd);
                 _model.Add(frame);
                 _commonLength += length;
             }
@@ -56,7 +55,7 @@ namespace Intems.LightDesigner.GUI
             DataContext = _model;
         }
 
-        private void OnAddBtn_Click(object sender, RoutedEventArgs e)
+        private void OnAddButtonClick(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
             if (btn == null) return;
@@ -67,7 +66,22 @@ namespace Intems.LightDesigner.GUI
 
         private void OnSaveBtnClick(object sender, RoutedEventArgs e)
         {
-            _model.SaveToFile();
+            var name = "composition.json";
+            _model.SaveToFile(name);
+        }
+
+        private void OnCellRightMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            var element = sender as FrameworkElement;
+            if (element != null)
+            {
+                var model = element.Tag as FrameModel;
+                if (model != null)
+                {
+                    var frame = new LightPlayer.BL.Frame(model.FrameBegin, model.FrameLength, new FadeColor()){};
+                    _model.ConvertFrame(model, frame);
+                }
+            }
         }
     }
 }
