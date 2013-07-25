@@ -16,9 +16,31 @@ namespace Intems.LightDesigner.GUI.ViewModels
             _frame = frame;
         }
 
-        //только для чтения
+        //поля для связи с логикой
         public Frame Frame { get { return _frame; } }
 
+        public string CmdType
+        {
+            get
+            {
+                var result = String.Empty;
+                switch (_frame.Command.Function)
+                {
+                    case (byte)CmdEnum.SetColor:
+                        result = "SET COLOR";
+                        break;
+                    case (byte)CmdEnum.Fade:
+                        result = "COLOR FADE";
+                        break;
+                    case (byte)CmdEnum.Blink:
+                        result = "COLOR BLINK";
+                        break;
+                }
+                return result;
+            }
+        }
+
+        //поля для binding'а на формах
         public Color FillBrush1
         {
             get
@@ -64,27 +86,6 @@ namespace Intems.LightDesigner.GUI.ViewModels
             }
         }
 
-        public string CmdType
-        {
-            get
-            {
-                var result = String.Empty;
-                switch (_frame.Command.Function)
-                {
-                    case (byte)CmdEnum.SetColor:
-                        result = "SET COLOR";
-                        break;
-                    case (byte)CmdEnum.Fade:
-                        result = "COLOR FADE";
-                        break;
-                    case (byte)CmdEnum.Blink:
-                        result = "COLOR BLINK";
-                        break;
-                }
-                return result;
-            }
-        }
-
         public Visibility FadeVisibility
         {
             get
@@ -96,7 +97,6 @@ namespace Intems.LightDesigner.GUI.ViewModels
             }
         }
 
-        // Time
         public TimeSpan FrameBegin
         {
             get { return _frame.StartTime; }

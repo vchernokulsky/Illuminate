@@ -29,6 +29,40 @@ namespace Intems.LightDesigner.GUI.ViewModels
             get { return _frameModels; }
         }
 
+        #region COMMAND PROPERTIES
+
+        public FrameConvertCommand ToSetColor
+        {
+            get
+            {
+                var action = new Action<string, FrameModel>((s, fm) => { });
+                var cmd = new FrameConvertCommand("", action);
+                return cmd;
+            }
+        }
+
+        public FrameConvertCommand ToFadeColor
+        {
+            get
+            {
+                var action = new Action<string, FrameModel>((s, fm) => { });
+                var cmd = new FrameConvertCommand("", action);
+                return cmd;
+            }
+        }
+
+        public FrameConvertCommand ToBlinkColor
+        {
+            get
+            {
+                var action = new Action<string, FrameModel>((s, fm) => { });
+                var cmd = new FrameConvertCommand("", action);
+                return cmd;
+            }
+        }
+
+        #endregion
+
         public void Add(Frame frame)
         {
             _frameSequence.Push(frame);
@@ -79,6 +113,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
             }
         }
 
+        //PRIVATE METHODS
         private void OnFrameSequenceChanged(object sender, EventArgs eventArgs)
         {
             var view = CollectionViewSource.GetDefaultView(_frameModels);

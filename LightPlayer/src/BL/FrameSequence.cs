@@ -51,13 +51,44 @@ namespace Intems.LightPlayer.BL
             }
         }
 
-        public void ChangeFrame(Frame oldFrame, Frame newFrame)
+        public void ChangeFrame(Frame target, Frame newFrame)
         {
             lock (_locker)
             {
-                var idx = _frames.IndexOf(oldFrame);
+                var idx = _frames.IndexOf(target);
                 if (idx >= 0)
-                    _frames[idx] = newFrame
+                {
+                    _frames[idx] = newFrame;
+                    newFrame.FrameChanged += OnFrameChanged;
+                }
+            }
+        }
+
+        public void InsertAfter(Frame target, Frame newFrame)
+        {
+            lock (_locker)
+            {
+                var idx = _frames.IndexOf(target);
+                if (idx >= 0)
+                {
+                    _frames.Insert(idx + 1, newFrame);
+                    newFrame.FrameChanged += OnFrameChanged;
+                    //RaiseSequenceChanged();
+                }
+            }
+        }
+
+        public void InserBefore(Frame target, Frame newFrame)
+        {
+            lock (_locker)
+            {
+                var idx = _frames.IndexOf(target);
+                if (idx >= 0)
+                {
+                    _frames.Insert(idx, newFrame);
+                    newFrame.FrameChanged += OnFrameChanged;
+                    //RaiseSequenceChanged();
+                }
             }
         }
 
@@ -69,6 +100,7 @@ namespace Intems.LightPlayer.BL
             }
         }
 
+        //PRIVATE METHODS
         private void OnFrameChanged(object sender, FrameEventArgs eventArgs)
         {
             var frame = sender as Frame;

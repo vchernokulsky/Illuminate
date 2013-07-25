@@ -83,5 +83,14 @@ namespace Intems.LightDesigner.GUI
                 }
             }
         }
+
+        private void OnMenuItemClick(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            if (menuItem != null)
+            {
+                var cmd = menuItem.Tag.ToString();
+            }
+        }
     }
 }
