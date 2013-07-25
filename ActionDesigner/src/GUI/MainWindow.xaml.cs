@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using Intems.LightDesigner.GUI.ViewModels;
 using Intems.LightPlayer.BL.Commands;
@@ -68,29 +67,6 @@ namespace Intems.LightDesigner.GUI
         {
             var name = "composition.json";
             _model.SaveToFile(name);
-        }
-
-        private void OnCellRightMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            var element = sender as FrameworkElement;
-            if (element != null)
-            {
-                var model = element.Tag as FrameModel;
-                if (model != null)
-                {
-                    var frame = new LightPlayer.BL.Frame(model.FrameBegin, model.FrameLength, new FadeColor()){};
-                    _model.ConvertFrame(model, frame);
-                }
-            }
-        }
-
-        private void OnMenuItemClick(object sender, RoutedEventArgs e)
-        {
-            var menuItem = sender as MenuItem;
-            if (menuItem != null)
-            {
-                var cmd = menuItem.Tag.ToString();
-            }
         }
     }
 }

@@ -43,15 +43,9 @@
 
                             <Grid.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="Set color" 
-                                              Command="{Binding ToSetColor, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" 
-                                              CommandParameter="{Binding .}"/>
-                                    <MenuItem Header="Fade color" 
-                                              Command="{Binding ToFadeColor, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" 
-                                              CommandParameter="{Binding .}"/>
-                                    <MenuItem Header="Blink color" 
-                                              Command="{Binding ToFadeColor, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" 
-                                              CommandParameter="{Binding .}"/>
+                                    <MenuItem Header="Set color" Command="{Binding ToSetColor}" CommandParameter="{Binding .}"/>
+                                    <MenuItem Header="Fade color" Command="{Binding ToFadeColor}" CommandParameter="{Binding .}"/>
+                                    <MenuItem Header="Blink color" Command="{Binding ToFadeColor}" CommandParameter="{Binding .}"/>
                                 </ContextMenu>
                             </Grid.ContextMenu>
 

@@ -19,8 +19,8 @@ namespace Intems.LightDesigner.GUI.ViewModels
         public FrameListModel()
         {
             _builder = new FrameBuilder();
-            _frameModels = new ObservableCollection<FrameModel>();
             _frameSequence = new FrameSequence();
+            _frameModels = new ObservableCollection<FrameModel>();
             _frameSequence.SequenceChanged += OnFrameSequenceChanged;
         }
 
@@ -29,46 +29,13 @@ namespace Intems.LightDesigner.GUI.ViewModels
             get { return _frameModels; }
         }
 
-        #region COMMAND PROPERTIES
-
-        public FrameConvertCommand ToSetColor
-        {
-            get
-            {
-                var action = new Action<string, FrameModel>((s, fm) => { });
-                var cmd = new FrameConvertCommand("", action);
-                return cmd;
-            }
-        }
-
-        public FrameConvertCommand ToFadeColor
-        {
-            get
-            {
-                var action = new Action<string, FrameModel>((s, fm) => { });
-                var cmd = new FrameConvertCommand("", action);
-                return cmd;
-            }
-        }
-
-        public FrameConvertCommand ToBlinkColor
-        {
-            get
-            {
-                var action = new Action<string, FrameModel>((s, fm) => { });
-                var cmd = new FrameConvertCommand("", action);
-                return cmd;
-            }
-        }
-
-        #endregion
-
         public void Add(Frame frame)
         {
             _frameSequence.Push(frame);
 
             //добавляем модель для отображения
             var frameModel = new FrameModel(frame);
+            frameModel.ModelChanged += OnFrameSequenceChanged;
             _frameModels.Add(frameModel);
         }
 
@@ -80,6 +47,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
             //добавляем модель для отображения
             var frameModel = new FrameModel(frame);
+            frameModel.ModelChanged += OnFrameSequenceChanged;
             _frameModels.Add(frameModel);
         }
 

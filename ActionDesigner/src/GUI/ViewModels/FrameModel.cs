@@ -9,16 +9,76 @@ namespace Intems.LightDesigner.GUI.ViewModels
 {
     public class FrameModel : BaseViewModel
     {
-        private readonly Frame _frame;
+        private Frame _frame;
 
         public FrameModel(Frame frame)
         {
             _frame = frame;
         }
 
-        //поля для связи с логикой
-        public Frame Frame { get { return _frame; } }
+        public event EventHandler ModelChanged;
+        private void RaiseModelChanged()
+        {
+            var handler = ModelChanged;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
 
+        #region COMMAND PROPERTIES
+
+        public FrameConvertCommand ToSetColor
+        {
+            get
+            {
+                var action = new Action<FrameModel>(
+                    fm =>
+                    {
+                        var cmd = new SetColor(1, fm.FillBrush1);
+                        fm.Frame.Command = cmd;
+                        RaiseModelChanged();
+                    });
+                var convertCommand = new FrameConvertCommand(action);
+                return convertCommand;
+            }
+        }
+
+        public FrameConvertCommand ToFadeColor
+        {
+            get
+            {
+                var action = new Action<FrameModel>(
+                    fm =>
+                    {
+                        var length = (short) fm.FrameLength.TotalSeconds;
+                        var cmd = new FadeColor(1, fm.FillBrush1, fm.FillBrush2, length);
+                        fm.Frame.Command = cmd;
+                        RaiseModelChanged();
+                    });
+                var convertCommand = new FrameConvertCommand(action);
+                return convertCommand;
+            }
+        }
+
+        public FrameConvertCommand ToBlinkColor
+        {
+            get
+            {
+//                var action = new Action<string, FrameModel>((s, fm) => { });
+//                var cmd = new FrameConvertCommand(action);
+//                return cmd;
+                return null;
+            }
+        }
+
+        #endregion
+
+        //поля для связи с логикой
+        public Frame Frame
+        {
+            get { return _frame; }
+            set { _frame = value; }
+        }
+
+        //поля для binding'а на формах
         public string CmdType
         {
             get
@@ -40,7 +100,6 @@ namespace Intems.LightDesigner.GUI.ViewModels
             }
         }
 
-        //поля для binding'а на формах
         public Color FillBrush1
         {
             get

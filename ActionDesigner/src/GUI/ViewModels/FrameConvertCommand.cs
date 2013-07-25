@@ -5,12 +5,10 @@ namespace Intems.LightDesigner.GUI.ViewModels
 {
     public class FrameConvertCommand : ICommand
     {
-        private readonly Action<string, FrameModel> _action;
-        private readonly string _cmdType;
+        private readonly Action<FrameModel> _action;
 
-        public FrameConvertCommand(string cmdType, Action<string, FrameModel> action)
+        public FrameConvertCommand(Action<FrameModel> action)
         {
-            _cmdType = cmdType;
             _action = action;
         }
 
@@ -23,7 +21,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
         public void Execute(object parameter)
         {
             var model = parameter as FrameModel;
-            _action(_cmdType, model);
+            _action(model);
         }
 
         public event EventHandler CanExecuteChanged;
