@@ -28,7 +28,7 @@ namespace Tests
         {
             var span1 = TimeSpan.FromSeconds(time1);
             var span2 = TimeSpan.FromSeconds(time2);
-            var frame = new Frame(span1, span2) { Command = new SetColor(1, Color.FromRgb(128, 128, 128)) };
+            var frame = new Frame(span1, span2) { Command = new SetColor(Color.FromRgb(128, 128, 128)){Channel = 1} };
             return frame;
         }
 

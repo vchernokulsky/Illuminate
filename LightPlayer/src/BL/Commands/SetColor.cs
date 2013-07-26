@@ -1,32 +1,38 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
+using Intems.LightPlayer.BL.Helpers;
 
 namespace Intems.LightPlayer.BL.Commands
 {
+    [Serializable]
     public class SetColor : Command
     {
         private const byte DefauleChannel = 1;
 
-        private Color _color;
+        private ColorSerializable _color;
 
-        public SetColor() : base(DefauleChannel)
+        public SetColor()
         {
             _color = Color.FromRgb(255, 255, 255);
         }
 
-        public SetColor(byte channel, Color color) : base(channel)
+        public SetColor(Color color)
         {
             _color = color;
+        }
+
+        public override byte Channel { get; set; }
+
+        public override byte Function
+        {
+            get { return (byte)CmdEnum.SetColor; }
+            set {}
         }
 
         public Color Color
         {
             get { return _color; }
             set { _color = value; }
-        }
-
-        public override byte Function
-        {
-            get { return (byte) CmdEnum.SetColor; }
         }
 
         protected override byte[] GetParams()

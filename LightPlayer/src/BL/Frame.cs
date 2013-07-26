@@ -8,10 +8,15 @@ namespace Intems.LightPlayer.BL
         public TimeSpan Delta { get; set; }
     }
 
+    [Serializable]
     public class Frame
     {
         private TimeSpan _length;
         private TimeSpan _startTime;
+
+        public Frame()
+        {
+        }
 
         public Frame(TimeSpan startTime, TimeSpan length)
         {

@@ -31,13 +31,13 @@ namespace Intems.LightDesigner.GUI
                 switch (cmdType)
                 {
                     case 0:
-                        cmd = new SetColor(1, RandColor(rnd));
+                        cmd = new SetColor(RandColor(rnd)){Channel = 1};
                         break;
                     case 1:
                         cmd = new FadeColor(1, RandColor(rnd), RandColor(rnd), (short)length);
                         break;
                     case 2:
-                        cmd = new BlinkColor(1, RandColor(rnd), (short)length);
+                        cmd = new BlinkColor(RandColor(rnd), (short)length){Channel = 1};
                         break;
                 }
                 var frame = new LightPlayer.BL.Frame(TimeSpan.FromSeconds(_commonLength), TimeSpan.FromSeconds(length), cmd);
@@ -65,7 +65,7 @@ namespace Intems.LightDesigner.GUI
 
         private void OnSaveBtnClick(object sender, RoutedEventArgs e)
         {
-            var name = "composition.json";
+            var name = "composition.dat";
             _model.SaveToFile(name);
         }
     }

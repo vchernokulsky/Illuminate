@@ -16,11 +16,11 @@ namespace Tests
             var color = Color.FromRgb(128, 128, 128);
             var frame1 = new Frame(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(3.5))
             {
-                Command = new SetColor(1, color)
+                Command = new SetColor(color){Channel = 1}
             };
             var frame2 = new Frame(TimeSpan.FromSeconds(3.5), TimeSpan.FromSeconds(2))
             {
-                Command = new SetColor(1, color)
+                Command = new SetColor(color){Channel = 1}
             };
             var seq = new FrameSequence();
             seq.Push(frame1);

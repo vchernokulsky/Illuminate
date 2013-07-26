@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Intems.LightPlayer.Transport
+namespace Intems.LightPlayer.Transport.Stubs
 {
     public class FakePackageSender : IPackageSender
     {
@@ -15,7 +15,8 @@ namespace Intems.LightPlayer.Transport
         public void SendPackage(Package package)
         {
             var dt = DateTime.Now;
-            _writer.WriteLine(dt.ToString("mm:ss.fff"));
+            _writer.Write(dt.ToString("mm:ss.fff") + "    :    ");
+            _writer.WriteLine(package.ToString());
             _writer.Flush();
         }
     }

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using Intems.LightPlayer.BL;
 using Intems.LightPlayer.BL.Commands;
 using Intems.LightPlayer.Transport;
+using Intems.LightPlayer.Transport.Stubs;
 using Microsoft.Win32;
 using NAudio.Wave;
 using ServiceStack.Text;
@@ -18,7 +19,7 @@ namespace Intems.LightPlayer.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private FrameSequence _sequence = new FrameSequence();
+        private FrameSequence _sequence;
         private IWavePlayer   _player = new WaveOutEvent();
         private IPackageSender _sender = new FakePackageSender();
 
@@ -31,7 +32,7 @@ namespace Intems.LightPlayer.GUI
             {
                 var frame = new Frame(TimeSpan.FromSeconds(i * 0.5), TimeSpan.FromSeconds(0.5))
                 {
-                    Command = new SetColor(1, Color.FromRgb(128, 128, 128))
+                    Command = new SetColor(Color.FromRgb(128, 128, 128)){Channel = 1}
                 };
                 seq.Push(frame);
             }
@@ -41,20 +42,20 @@ namespace Intems.LightPlayer.GUI
         {
             InitializeComponent();
 
-            InitSequence(ref _sequence);
+            //InitSequence(ref _sequence);
 
             DataContext = new MainViewModel();
             _processor = new FrameProcessor(_sender, _player, _sequence);
         }
 
-        private void OnBtnAudioChoose_Click(object sender, RoutedEventArgs e)
+        private void OnBtnAudioChooseClick(object sender, RoutedEventArgs e)
         {
-            var dlg = new OpenFileDialog();
+            var dlg = new OpenFileDialog {Filter = "Аудио файлы(*.mp3, *.wav)|*.mp3;*.wav"};
             if (dlg.ShowDialog().Value)
                 ((MainViewModel)DataContext).AudioFileName = dlg.FileName;
         }
 
-        private void OnBtnFrameChoose_Click(object sender, RoutedEventArgs e)
+        private void OnBtnFrameChooseClick(object sender, RoutedEventArgs e)
         {
             var vm = (MainViewModel)DataContext;
 
@@ -64,8 +65,13 @@ namespace Intems.LightPlayer.GUI
                 vm.FramesFileName = dlg.FileName;
                 try
                 {
-                    var sr = new StreamReader(vm.FramesFileName);
-                    _sequence = JsonSerializer.DeserializeFromReader<FrameSequence>(sr);
+                    //var sr = new StreamReader(vm.FramesFileName);
+                    //_sequence = JsonSerializer.DeserializeFromReader<FrameSequence>(sr);
+                    using (Stream stream = new FileStream(vm.FramesFileName, FileMode.Open))
+                    {
+                        var bf = new BinaryFormatter();
+                        _sequence = (FrameSequence)bf.Deserialize(stream);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -73,7 +79,6 @@ namespace Intems.LightPlayer.GUI
                 }
             }
         }
-
 
         private void OnBtnStart_Click(object sender, RoutedEventArgs e)
         {
@@ -85,7 +90,7 @@ namespace Intems.LightPlayer.GUI
 
                 //start processing composition
                 _processor.AudioReader = provider;
-                _processor.Start();
+                _processor.Start(_sequence);
             }
         }
 

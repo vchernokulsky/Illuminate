@@ -3,9 +3,13 @@ using System.Collections.Generic;
 
 namespace Intems.LightPlayer.BL
 {
+    [Serializable]
     public class FrameSequence
     {
         private readonly object _locker;
+        private int _curIndex = -1;
+
+        private List<Frame> _frames;
 
         public FrameSequence()
         {
@@ -15,14 +19,12 @@ namespace Intems.LightPlayer.BL
 
         public event EventHandler SequenceChanged;
 
-        private List<Frame> _frames;
         public List<Frame> Frames
         {
             get { return _frames; }
             set { _frames = value; }
         }
 
-        private int _curIndex = -1;
         public  Frame FrameByTime(TimeSpan time)
         {
             Frame result = null;

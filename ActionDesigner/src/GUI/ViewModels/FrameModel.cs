@@ -7,9 +7,15 @@ using Intems.LightPlayer.BL.Commands;
 
 namespace Intems.LightDesigner.GUI.ViewModels
 {
+    [Serializable]
     public class FrameModel : BaseViewModel
     {
         private Frame _frame;
+
+        public FrameModel()
+        {
+            _frame = null;
+        }
 
         public FrameModel(Frame frame)
         {
@@ -32,7 +38,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
                 var action = new Action<FrameModel>(
                     fm =>
                     {
-                        var cmd = new SetColor(1, fm.FillBrush1);
+                        var cmd = new SetColor(fm.FillBrush1){Channel = 1};
                         fm.Frame.Command = cmd;
                         RaiseModelChanged();
                     });

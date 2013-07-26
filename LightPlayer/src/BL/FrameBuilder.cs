@@ -22,13 +22,13 @@ namespace Intems.LightPlayer.BL
             switch (cmdEnum)
             {
                 case CmdEnum.SetColor:
-                    cmd = new SetColor(Command.DefaultChannel, Colors.Black);
+                    cmd = new SetColor(Colors.Black){Channel = Command.DefaultChannel};
                     break;
                 case CmdEnum.Fade:
                     cmd = new FadeColor(Command.DefaultChannel, Colors.Black, Colors.Black, (short)(DefaultLength.TotalSeconds * TicksPerSec));
                     break;
                 case CmdEnum.Blink:
-                    cmd = new BlinkColor(Command.DefaultChannel, Colors.Black, 50);
+                    cmd = new BlinkColor(Colors.Black, 50){Channel = Command.DefaultChannel};
                     break;
             }
             if(cmd != null)

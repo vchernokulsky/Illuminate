@@ -14,7 +14,7 @@ namespace Intems.LightPlayer.BL
 
         private IWavePlayer _player;
         private readonly IPackageSender _sender;
-        private readonly FrameSequence _sequence;
+        private FrameSequence _sequence;
 
         public FrameProcessor(IPackageSender sender, FrameSequence sequence)
         {
@@ -66,6 +66,12 @@ namespace Intems.LightPlayer.BL
             _timer.Start();
             if(_player != null)
                 _player.Play();
+        }
+
+        public void Start(FrameSequence sequence)
+        {
+            _sequence = sequence;
+            Start();
         }
 
         public void Stop()

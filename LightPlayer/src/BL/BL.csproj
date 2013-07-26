@@ -51,6 +51,7 @@
     <Compile Include="Commands\SetColor.cs" />
     <Compile Include="Helpers\ColorHelper.cs" />
     <Compile Include="Helpers\MemoryLog.cs" />
+    <Compile Include="Helpers\MyColor.cs" />
     <Compile Include="Helpers\NumericHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

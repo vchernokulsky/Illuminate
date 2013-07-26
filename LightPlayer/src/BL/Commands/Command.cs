@@ -1,4 +1,5 @@
-﻿using Intems.LightPlayer.Transport;
+﻿using System;
+using Intems.LightPlayer.Transport;
 
 namespace Intems.LightPlayer.BL.Commands
 {
@@ -12,21 +13,18 @@ namespace Intems.LightPlayer.BL.Commands
         TurnOff
     }
 
+    [Serializable]
     public abstract class Command
     {
         public static byte DefaultChannel = 1;
 
-        protected Command(byte channel)
-        {
-            Channel = channel;
-        }
+        public abstract byte Channel { get; set; }
 
-        public byte Channel { get; set; }
-
-        public abstract byte Function { get; }
+        public abstract byte Function { get; set; }
 
         protected abstract byte[] GetParams();
 
+        //comman methods for all inheritance
         public byte[] GetBytes()
         {
             var param = GetParams();

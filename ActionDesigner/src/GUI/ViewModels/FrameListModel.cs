@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Data;
 using Intems.LightPlayer.BL;
-using ServiceStack.Text;
 
 namespace Intems.LightDesigner.GUI.ViewModels
 {
     public class FrameListModel : BaseViewModel
     {
         private readonly FrameSequence _frameSequence;
-        private readonly ObservableCollection<FrameModel> _frameModels;
 
+        [NonSerialized]
+        private readonly ObservableCollection<FrameModel> _frameModels;
+        [NonSerialized]
         private readonly FrameBuilder _builder;
 
         public FrameListModel()
@@ -55,14 +57,15 @@ namespace Intems.LightDesigner.GUI.ViewModels
         {
             try
             {
-                var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read);
-                using (stream)
+                using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read))
                 {
-                    var s = TypeSerializer.Dump(_frameSequence);
-                    //JsonSerializer.SerializeToStream(_sequence, _sequence.GetType(), stream);
-                    TextWriter tw = new StreamWriter(stream);
-                    tw.Write(s);
-                    tw.Flush();
+                    //var s = TypeSerializer.Dump(_frameSequence);
+                    //JsonSerializer.SerializeToStream(_frameSequence, _frameSequence.GetType(), stream);
+                    //TextWriter tw = new StreamWriter(stream);
+                    _frameSequence.SequenceChanged -= OnFrameSequenceChanged;
+                    var bf = new BinaryFormatter();
+                    bf.Serialize(stream, _frameSequence);
+                    _frameSequence.SequenceChanged += OnFrameSequenceChanged;
                 }
             }
             catch (Exception exception)

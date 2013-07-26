@@ -4,31 +4,40 @@ using Intems.LightPlayer.BL.Helpers;
 
 namespace Intems.LightPlayer.BL.Commands
 {
+    [Serializable]
     public class FadeColor : Command
     {
-        private Color _startColor;
-        private Color _stopColor;
+        private ColorSerializable _startColor;
+        private ColorSerializable _stopColor;
         private short _length;
 
-        public FadeColor() : base(DefaultChannel)
+        public FadeColor()
         {
             _startColor = Colors.Black;
             _startColor = Colors.Black;
             _length = 0;
         }
 
-        public FadeColor(Color startColor, Color stopColor, short length) : base(DefaultChannel)
+        public FadeColor(Color startColor, Color stopColor, short length)
         {
             _startColor = startColor;
             _stopColor = stopColor;
             _length = length;
         }
 
-        public FadeColor(byte channel, Color startColor, Color stopColor, short length) : base(channel)
+        public FadeColor(byte channel, Color startColor, Color stopColor, short length)
         {
             _startColor = startColor;
             _stopColor = stopColor;
             _length = length;
+        }
+
+        public override byte Channel { get; set; }
+
+        public override byte Function
+        {
+            get { return (byte)CmdEnum.Fade; }
+            set {}
         }
 
         public Color StartColor
@@ -53,11 +62,6 @@ namespace Intems.LightPlayer.BL.Commands
         {
             _startColor = start;
             _stopColor = stop;
-        }
-
-        public override byte Function
-        {
-            get { return (byte) CmdEnum.Fade; }
         }
 
         protected override byte[] GetParams()

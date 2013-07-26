@@ -4,19 +4,28 @@ using Intems.LightPlayer.BL.Helpers;
 
 namespace Intems.LightPlayer.BL.Commands
 {
+    [Serializable]
     public class BlinkColor : Command
     {
-        private Color _color;
-        private readonly short _frequency;
+        private ColorSerializable _color;
+        private short _frequency;
 
-        public BlinkColor(byte channel) : base(channel)
+        public BlinkColor()
         {
         }
 
-        public BlinkColor(byte channel, Color color, short freq) : base(channel)
+        public BlinkColor(Color color, short freq)
         {
             _color = color;
             _frequency = freq;
+        }
+
+        public override byte Channel { get; set; }
+
+        public override byte Function
+        {
+            get { return (byte)CmdEnum.Blink; }
+            set {}
         }
 
         public Color Color
@@ -25,9 +34,10 @@ namespace Intems.LightPlayer.BL.Commands
             set { _color = value; }
         }
 
-        public override byte Function
+        public short Frequency
         {
-            get { return (byte) CmdEnum.Blink; }
+            get { return _frequency; }
+            set { _frequency = value; }
         }
 
         protected override byte[] GetParams()
