@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.IO.Ports;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Media;
@@ -21,7 +22,8 @@ namespace Intems.LightPlayer.GUI
     {
         private FrameSequence _sequence;
         private IWavePlayer   _player = new WaveOutEvent();
-        private IPackageSender _sender = new FakePackageSender();
+        //private IPackageSender _sender = new FakePackageSender();
+        private IPackageSender _sender = null;
 
         private FrameProcessor _processor;
 
@@ -45,6 +47,11 @@ namespace Intems.LightPlayer.GUI
             //InitSequence(ref _sequence);
 
             DataContext = new MainViewModel();
+
+            var port = new SerialPort("COM5", 115200, Parity.None, 8, StopBits.One);
+            port.Open();
+
+            _sender = new SerialPortSender(port);
             _processor = new FrameProcessor(_sender, _player, _sequence);
         }
 

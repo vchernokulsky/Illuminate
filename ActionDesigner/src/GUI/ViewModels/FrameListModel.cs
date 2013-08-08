@@ -11,10 +11,10 @@ namespace Intems.LightDesigner.GUI.ViewModels
 {
     public class FrameListModel : BaseViewModel
     {
-        private readonly FrameSequence _frameSequence;
+        private FrameSequence _frameSequence;
 
         [NonSerialized]
-        private readonly ObservableCollection<FrameModel> _frameModels;
+        private ObservableCollection<FrameModel> _frameModels;
         [NonSerialized]
         private readonly FrameBuilder _builder;
 
@@ -53,6 +53,16 @@ namespace Intems.LightDesigner.GUI.ViewModels
             _frameModels.Add(frameModel);
         }
 
+        public void ConvertFrame(FrameModel model, Frame frame)
+        {
+            int idx = _frameModels.IndexOf(model);
+            if (idx >= 0)
+            {
+                _frameSequence.ChangeFrame(model.Frame, frame);
+                _frameModels[idx] = new FrameModel(frame);
+            }
+        }
+
         public void SaveToFile(string fileName)
         {
             try
@@ -74,13 +84,20 @@ namespace Intems.LightDesigner.GUI.ViewModels
             }
         }
 
-        public void ConvertFrame(FrameModel model, Frame frame)
+        public void LoadFromFile(string fileName)
         {
-            int idx = _frameModels.IndexOf(model);
-            if(idx >= 0)
+            using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                _frameSequence.ChangeFrame(model.Frame, frame);
-                _frameModels[idx] = new FrameModel(frame);
+                var bf = new BinaryFormatter();
+                var obj = bf.Deserialize(stream);
+
+                _frameSequence = obj as FrameSequence;
+                if (_frameSequence != null)
+                {
+                    _frameModels.Clear();
+                    foreach (var frame in _frameSequence.Frames)
+                        _frameModels.Add(new FrameModel(frame));
+                }
             }
         }
 
@@ -93,6 +110,8 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
         private TimeSpan CalculateFrameStartTime()
         {
+            if (_frameModels.Count <= 0) return TimeSpan.FromSeconds(0);
+
             var lastFrame = _frameModels.Last();
             var startTime = lastFrame.FrameBegin + lastFrame.FrameLength;
             return startTime;

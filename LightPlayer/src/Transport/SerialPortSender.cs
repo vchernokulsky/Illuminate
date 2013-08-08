@@ -24,6 +24,8 @@ namespace Intems.LightPlayer.Transport
                 {
                     var buffer = package.ToArray();
                     _port.Write(buffer, 0, buffer.Length);
+
+                    Console.WriteLine(package.ToString());
                 }
             }
             catch (Exception ex)

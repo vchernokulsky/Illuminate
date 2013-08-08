@@ -118,7 +118,7 @@ namespace Intems.LightPlayer.BL
             }
         }
 
-        private void RaiseSequenceChanged()
+        public void RaiseSequenceChanged()
         {
             var handler = SequenceChanged;
             if (handler != null) handler(this, EventArgs.Empty);

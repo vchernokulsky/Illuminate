@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Intems.LightDesigner.GUI.ViewModels;
 using Intems.LightPlayer.BL.Commands;
+using Microsoft.Win32;
 
 namespace Intems.LightDesigner.GUI
 {
@@ -67,6 +69,13 @@ namespace Intems.LightDesigner.GUI
         {
             var name = "composition.dat";
             _model.SaveToFile(name);
+        }
+
+        private void OnLoadBtnClick(object sender, RoutedEventArgs e)
+        {
+            var openDlg = new OpenFileDialog();
+            if (openDlg.ShowDialog().Value)
+                _model.LoadFromFile(openDlg.FileName);
         }
     }
 }
