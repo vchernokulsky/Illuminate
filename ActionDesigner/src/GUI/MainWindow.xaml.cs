@@ -1,7 +1,10 @@
 ﻿using System;
+using System.CodeDom.Compiler;
+using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Intems.LightDesigner.GUI.ViewModels;
 using Intems.LightPlayer.BL.Commands;
@@ -76,6 +79,17 @@ namespace Intems.LightDesigner.GUI
             var openDlg = new OpenFileDialog();
             if (openDlg.ShowDialog().Value)
                 _model.LoadFromFile(openDlg.FileName);
+        }
+
+        private void OnCellClick(object sender, MouseButtonEventArgs e)
+        {
+            var curCell = sender as Grid;
+            if (curCell != null)
+            {
+                var frameModel = curCell.Tag as FrameModel;
+                if (frameModel != null)
+                    frameModel.IsSelected = true;
+            }
         }
     }
 }

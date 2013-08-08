@@ -69,9 +69,6 @@ namespace Intems.LightDesigner.GUI.ViewModels
             {
                 using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read))
                 {
-                    //var s = TypeSerializer.Dump(_frameSequence);
-                    //JsonSerializer.SerializeToStream(_frameSequence, _frameSequence.GetType(), stream);
-                    //TextWriter tw = new StreamWriter(stream);
                     _frameSequence.SequenceChanged -= OnFrameSequenceChanged;
                     var bf = new BinaryFormatter();
                     bf.Serialize(stream, _frameSequence);
@@ -91,12 +88,14 @@ namespace Intems.LightDesigner.GUI.ViewModels
                 var bf = new BinaryFormatter();
                 var obj = bf.Deserialize(stream);
 
-                _frameSequence = obj as FrameSequence;
-                if (_frameSequence != null)
+                var sequence = obj as FrameSequence;
+                if (sequence != null)
                 {
                     _frameModels.Clear();
-                    foreach (var frame in _frameSequence.Frames)
-                        _frameModels.Add(new FrameModel(frame));
+                    _frameSequence.Clear();
+
+                    foreach (var frame in sequence.Frames) Add(frame);
+                    //_frameSequence.SequenceChanged += OnFrameSequenceChanged;
                 }
             }
         }

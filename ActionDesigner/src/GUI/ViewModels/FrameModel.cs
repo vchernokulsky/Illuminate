@@ -11,6 +11,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
     public class FrameModel : BaseViewModel
     {
         private Frame _frame;
+        private bool _isSelected;
 
         public FrameModel()
         {
@@ -171,6 +172,16 @@ namespace Intems.LightDesigner.GUI.ViewModels
         {
             get { return _frame.Length; }
             set { _frame.Length = value; }
+        }
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                RaiseModelChanged();
+            }
         }
     }
 }
