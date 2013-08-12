@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.IO.Ports;
 
 namespace Intems.LightPlayer.Transport
@@ -7,10 +8,14 @@ namespace Intems.LightPlayer.Transport
     {
         private readonly SerialPort _port;
 
+#if DEBUG
+        private readonly StreamWriter _writer;
+
         public SerialPortSender()
         {
+            _writer = new StreamWriter("send.log");
         }
-
+#endif
         public SerialPortSender(SerialPort port)
         {
             _port = port;
@@ -25,7 +30,7 @@ namespace Intems.LightPlayer.Transport
                     var buffer = package.ToArray();
                     _port.Write(buffer, 0, buffer.Length);
 
-                    Console.WriteLine(package.ToString());
+                    WriteLog(package);
                 }
             }
             catch (Exception ex)
@@ -33,6 +38,16 @@ namespace Intems.LightPlayer.Transport
                 Console.WriteLine(ex);
                 throw;
             }
+        }
+
+        private void WriteLog(Package package)
+        {
+#if DEBUG
+            var dt = DateTime.Now;
+            _writer.Write(dt.ToString("mm:ss.fff") + "    :    ");
+            _writer.WriteLine(package.ToString());
+            _writer.Flush();
+#endif
         }
     }
 }

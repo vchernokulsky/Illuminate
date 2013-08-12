@@ -1,17 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.IO.Ports;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
-using System.Windows.Media;
 using Intems.LightPlayer.BL;
-using Intems.LightPlayer.BL.Commands;
 using Intems.LightPlayer.Transport;
 using Intems.LightPlayer.Transport.Stubs;
 using Microsoft.Win32;
 using NAudio.Wave;
-using ServiceStack.Text;
-using Frame = Intems.LightPlayer.BL.Frame;
 
 namespace Intems.LightPlayer.GUI
 {
@@ -21,38 +18,33 @@ namespace Intems.LightPlayer.GUI
     public partial class MainWindow : Window
     {
         private FrameSequence _sequence;
-        private IWavePlayer   _player = new WaveOutEvent();
-        //private IPackageSender _sender = new FakePackageSender();
-        private IPackageSender _sender = null;
+        private IPackageSender _sender;
 
-        private FrameProcessor _processor;
+        private readonly IWavePlayer _player = new WaveOutEvent();
 
-
-        private static void InitSequence(ref FrameSequence seq)
-        {
-            for (int i = 0; i < 100; i++)
-            {
-                var frame = new Frame(TimeSpan.FromSeconds(i * 0.5), TimeSpan.FromSeconds(0.5))
-                {
-                    Command = new SetColor(Color.FromRgb(128, 128, 128)){Channel = 1}
-                };
-                seq.Push(frame);
-            }
-        }
+        private readonly FrameProcessor _processor;
 
         public MainWindow()
         {
             InitializeComponent();
-
-            //InitSequence(ref _sequence);
-
+            InitializePackageSender();
             DataContext = new MainViewModel();
-
-            var port = new SerialPort("COM5", 115200, Parity.None, 8, StopBits.One);
-            port.Open();
-
-            _sender = new SerialPortSender(port);
             _processor = new FrameProcessor(_sender, _player, _sequence);
+        }
+
+        private void InitializePackageSender()
+        {
+            if (SerialPort.GetPortNames().Contains("COM5"))
+            {
+                var port = new SerialPort("COM5", 115200, Parity.None, 8, StopBits.One);
+                port.Open();
+                _sender = new SerialPortSender(port);
+            }
+            else
+            {
+                _sender = new FakePackageSender();
+                Console.WriteLine("Sender stub was create because can't find target COM port");
+            }
         }
 
         private void OnBtnAudioChooseClick(object sender, RoutedEventArgs e)
@@ -72,8 +64,6 @@ namespace Intems.LightPlayer.GUI
                 vm.FramesFileName = dlg.FileName;
                 try
                 {
-                    //var sr = new StreamReader(vm.FramesFileName);
-                    //_sequence = JsonSerializer.DeserializeFromReader<FrameSequence>(sr);
                     using (Stream stream = new FileStream(vm.FramesFileName, FileMode.Open))
                     {
                         var bf = new BinaryFormatter();
