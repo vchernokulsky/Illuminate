@@ -9,10 +9,11 @@ namespace Intems.LightPlayer.BL
     {
         private readonly object _locker = new object();
 
-        private readonly double TimeInterval = 50;
-        private readonly Timer  _timer;
+        private readonly Timer _timer;
 
-        private IWavePlayer _player;
+        private const double TimeInterval = 100;
+
+        private readonly IWavePlayer _player;
         private readonly IPackageSender _sender;
         private FrameSequence _sequence;
 
