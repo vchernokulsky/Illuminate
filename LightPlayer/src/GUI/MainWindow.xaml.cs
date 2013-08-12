@@ -38,7 +38,7 @@ namespace Intems.LightPlayer.GUI
             {
                 var port = new SerialPort("COM5", 115200, Parity.None, 8, StopBits.One);
                 port.Open();
-                _sender = new SerialPortSender(port);
+                _sender = new SerialportSender(port);
             }
             else
             {

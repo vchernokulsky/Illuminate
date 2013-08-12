@@ -70,8 +70,9 @@ namespace Intems.LightDesigner.GUI
 
         private void OnSaveBtnClick(object sender, RoutedEventArgs e)
         {
-            var name = "composition.dat";
-            _model.SaveToFile(name);
+            var saveDlg = new SaveFileDialog(){CheckFileExists = true, OverwritePrompt = true, DefaultExt = "*.cmps"};
+            if (saveDlg.ShowDialog().Value)
+                _model.SaveToFile(saveDlg.FileName);
         }
 
         private void OnLoadBtnClick(object sender, RoutedEventArgs e)
@@ -88,7 +89,7 @@ namespace Intems.LightDesigner.GUI
             {
                 var frameModel = curCell.Tag as FrameModel;
                 if (frameModel != null)
-                    frameModel.IsSelected = true;
+                    frameModel.IsSelected ^= true;
             }
         }
     }

@@ -65,12 +65,15 @@
                             <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,10,0"
                                        FontSize="14" Text="{Binding FrameBegin}"/>
                             <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch"
-                                     FontSize="14" Text="{Binding FrameLength}"/>
+                                     FontSize="14" Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" 
+                                     Text="{Binding FrameLength}"/>
                             <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                        Text="{Binding CmdType}" TextAlignment="Center"/>
                             <xctk:ColorPicker Grid.Row="2" Grid.Column="0" MinWidth="50" MinHeight="20" Width="80"
+                                              Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}"
                                               SelectedColor="{Binding FillBrush1}"/>
                             <xctk:ColorPicker Grid.Row="2" Grid.Column="1" MinWidth="50" MinHeight="20" Width="80"
+                                              Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}"
                                               SelectedColor="{Binding FillBrush2}" Visibility="{Binding FadeVisibility}"/>
                         </Grid>
                     </Border>

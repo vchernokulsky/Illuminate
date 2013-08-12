@@ -6,15 +6,48 @@
         xmlns:Gui="clr-namespace:Intems.LightPlayer.GUI" mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" d:DataContext="{d:DesignInstance Gui:MainViewModel}">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,22,0,0" VerticalAlignment="Top" Width="370"
-                 TextWrapping="Wrap" Text="{Binding AudioFileName}" />
-        <Button Content="Choose" HorizontalAlignment="Left" Margin="400,22,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.067,-0.25" Height="23" Click="OnBtnAudioChooseClick"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,65,0,0" VerticalAlignment="Top" Width="370"
-                 TextWrapping="Wrap" Text="{Binding FramesFileName}" />
-        <Button Content="Choose" HorizontalAlignment="Left" Margin="400,65,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.067,-0.25" Height="23" Click="OnBtnFrameChooseClick"/>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- -->
+            <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="MP3 file:"/>
+            <TextBox Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Stretch" Height="23" VerticalAlignment="Center"
+                     TextWrapping="Wrap" Text="{Binding AudioFileName}" />
+            <Button Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" 
+                    Content="Choose" Click="OnBtnAudioChooseClick"/>
 
-        <Button Content="Start" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="OnBtnStart_Click"/>
-        <Button Content="Stop" HorizontalAlignment="Left" Margin="120,127,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="OnBtnStop_Click"/>
+            <!-- -->
+            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Light schema:"/>
+            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                     TextWrapping="Wrap" Text="{Binding FramesFileName}" />
+            <Button Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" 
+                    Content="Choose" Click="OnBtnFrameChooseClick"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" MinHeight="23" 
+                    Content="Start" Click="OnBtnStart_Click"/>
+            <Button Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" MinHeight="23" 
+                    Content="Stop" Click="OnBtnStop_Click"/>
+        </Grid>
+
     </Grid>
 </Window>
