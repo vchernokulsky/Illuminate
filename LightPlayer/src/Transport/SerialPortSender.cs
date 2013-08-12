@@ -4,19 +4,19 @@ using System.IO.Ports;
 
 namespace Intems.LightPlayer.Transport
 {
-    public class SerialPortSender : IPackageSender
+    public class SerialportSender : IPackageSender
     {
         private readonly SerialPort _port;
 
 #if DEBUG
         private readonly StreamWriter _writer;
 
-        public SerialPortSender()
+        public SerialportSender()
         {
             _writer = new StreamWriter("send.log");
         }
 #endif
-        public SerialPortSender(SerialPort port)
+        public SerialportSender(SerialPort port)
         {
             _port = port;
         }
