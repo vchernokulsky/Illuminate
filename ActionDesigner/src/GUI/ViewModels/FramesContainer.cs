@@ -57,8 +57,16 @@ namespace Intems.LightDesigner.GUI.ViewModels
         public void InsertAfter(FrameView currentView, IEnumerable<Frame> frames)
         {
             var idx = _sequence.Frames.IndexOf(currentView.Frame);
-            if(idx >= 0)
-                _sequence.Frames.InsertRange(idx + 1, frames);
+            if(idx >= 0 && _buffer.Count > 0)
+                _sequence.Frames.InsertRange(idx + 1, _buffer);
+
+            foreach (var frame in _buffer)
+            {
+                var frameView = new FrameView(frame);
+                frameView.ModelChanged += OnSequenceChanged;
+                _frameViews.Insert(++idx, frameView);
+            }
+            _sequence.UpdateFrom(currentView.Frame);
         }
 
         //работа с фреймами и буфером фреймов
@@ -89,7 +97,10 @@ namespace Intems.LightDesigner.GUI.ViewModels
         {
             _buffer.Clear();
             foreach (var model in FrameViews.Where(model => model.IsSelected))
-                _buffer.Add(model.Frame);
+            {
+                var frameClone = (Frame)model.Frame.Clone();
+                _buffer.Add(frameClone);
+            }
         }
 
         public void ConvertFrame(FrameView view, Frame frame)

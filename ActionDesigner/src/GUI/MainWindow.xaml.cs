@@ -36,7 +36,7 @@ namespace Intems.LightDesigner.GUI
 
         private void OnSaveBtnClick(object sender, RoutedEventArgs e)
         {
-            var saveDlg = new SaveFileDialog(){CheckFileExists = true, OverwritePrompt = true, DefaultExt = "*.cmps"};
+            var saveDlg = new SaveFileDialog() {Filter = "Pcap file|*.cmps", DefaultExt = "*.cmps", AddExtension = true};
             if (saveDlg.ShowDialog().Value)
                 _viewModel.SaveToFile(saveDlg.FileName);
         }
@@ -51,33 +51,37 @@ namespace Intems.LightDesigner.GUI
         private void OnCellClick(object sender, MouseButtonEventArgs e)
         {
             var curCell = sender as Grid;
-            if (curCell != null)
+            if (curCell == null) return;
+
+            var frameView = curCell.Tag as FrameView;
+            if (frameView == null) return;
+
+            _viewModel.CurrentView = frameView;
+            switch (Keyboard.Modifiers)
             {
-                var frameView = curCell.Tag as FrameView;
-                if (frameView != null)
-                {
-                    switch (Keyboard.Modifiers)
-                    {
-                        case ModifierKeys.Shift:
-                            _viewModel.SelectGroup(frameView);
-                            break;
+                case ModifierKeys.Shift:
+                    _viewModel.SelectGroup(frameView);
+                    break;
 
-                        case ModifierKeys.None:
-                            _viewModel.ClearSelection();
-                            frameView.IsSelected ^= true;
-                            break;
+                case ModifierKeys.Control:
+                    frameView.IsSelected ^= true;
+                    break;
 
-                        case ModifierKeys.Control:
-                            frameView.IsSelected ^= true;
-                            break;
-                    }
-                }
+                case ModifierKeys.None:
+                    _viewModel.ClearSelection();
+                    frameView.IsSelected ^= true;
+                    break;
             }
         }
 
         private void OnCopyButtonClick(object sender, RoutedEventArgs e)
         {
             _viewModel.CopySelected();
+        }
+
+        private void OnPasteButtonClick(object sender, RoutedEventArgs e)
+        {
+            _viewModel.InsertAfter(_viewModel.CurrentView, null);
         }
     }
 }

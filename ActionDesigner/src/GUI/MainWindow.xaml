@@ -36,6 +36,8 @@
                         x:Name="_btnBlink" Tag="3" Content="BLINK" Click="OnAddButtonClick"/>
                 <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="10,0,0,0" MinHeight="20" 
                         x:Name="_btnCopy" Tag="4" Content="COPY" Click="OnCopyButtonClick"/>
+                <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,0,0" MinHeight="20" 
+                        x:Name="_btnPaste" Tag="5" Content="PASTE" Click="OnPasteButtonClick"/>
             </StackPanel>
             <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button HorizontalAlignment="Right" MinWidth="80" MinHeight="20"

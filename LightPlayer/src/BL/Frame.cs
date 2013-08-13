@@ -9,7 +9,7 @@ namespace Intems.LightPlayer.BL
     }
 
     [Serializable]
-    public class Frame
+    public class Frame : ICloneable
     {
         private TimeSpan _length;
         private TimeSpan _startTime;
@@ -94,6 +94,12 @@ namespace Intems.LightPlayer.BL
         {
             var handler = FrameChanged;
             if (handler != null) handler(this, new FrameEventArgs {Delta = delta});
+        }
+
+        public object Clone()
+        {
+            var clone = new Frame(StartTime, Length, Command);
+            return clone;
         }
     }
 }

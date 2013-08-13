@@ -52,6 +52,14 @@ namespace Intems.LightPlayer.BL
             }
         }
 
+        public void UpdateFrom(Frame frame)
+        {
+            var idx = _frames.IndexOf(frame);
+            for (int i = idx + 1; i < _frames.Count; i++)
+                _frames[i].StartTime = _frames[i - 1].StartTime + _frames[i-1].Length;
+            RaiseSequenceChanged();
+        }
+
         public void Push(Frame frame)
         {
             lock (_locker)
