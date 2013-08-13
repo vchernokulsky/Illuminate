@@ -42,12 +42,18 @@ namespace Intems.LightPlayer.BL.Commands
             set {}
         }
 
+        /// <summary>
+        /// Начальный цвет fade'а
+        /// </summary>
         public Color StartColor
         {
             get { return _startColor; }
             set { _startColor = value; }
         }
 
+        /// <summary>
+        /// Конечный цвет fade'а
+        /// </summary>
         public Color StopColor
         {
             get { return _stopColor; }
@@ -55,7 +61,7 @@ namespace Intems.LightPlayer.BL.Commands
         }
 
         /// <summary>
-        /// Fade length in seconds
+        /// Длительность fade'а в секундах
         /// </summary>
         public short Length
         {

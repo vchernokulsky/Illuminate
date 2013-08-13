@@ -16,7 +16,8 @@ namespace Intems.LightPlayer.Transport
         {
             _port = port;
 #if DEBUG
-            _writer = new StreamWriter("send.log");
+            var parentDir = Directory.GetParent(@"..\");
+            _writer = new StreamWriter(Path.Combine(parentDir.FullName, "send.log"));
 #endif
         }
 
