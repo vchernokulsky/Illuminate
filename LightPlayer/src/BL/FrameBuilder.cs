@@ -25,7 +25,8 @@ namespace Intems.LightPlayer.BL
                     cmd = new SetColor(Colors.Black){Channel = Command.DefaultChannel};
                     break;
                 case CmdEnum.Fade:
-                    cmd = new FadeColor(Command.DefaultChannel, Colors.Black, Colors.Black, (short)(DefaultLength.TotalSeconds * TicksPerSec));
+                    var length = (short)(DefaultLength.TotalSeconds * TicksPerSec);
+                    cmd = new FadeColor(Colors.Black, Colors.Black, length){Channel = Command.DefaultChannel};
                     break;
                 case CmdEnum.Blink:
                     cmd = new BlinkColor(Colors.Black, 50){Channel = Command.DefaultChannel};

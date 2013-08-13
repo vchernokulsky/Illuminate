@@ -41,7 +41,6 @@ namespace Intems.LightDesigner.GUI.ViewModels
         public void Add(Frame frame)
         {
             _sequence.Push(frame);
-
             //добавляем модель для отображения
             var frameModel = new FrameView(frame);
             frameModel.ModelChanged += OnSequenceChanged;
@@ -52,12 +51,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
         {
             var startTime = CalculateFrameStartTime();
             var frame = _builder.CreateFrameByCmdEnum(cmd, startTime);
-            _sequence.Push(frame);
-
-            //добавляем модель для отображения
-            var frameModel = new FrameView(frame);
-            frameModel.ModelChanged += OnSequenceChanged;
-            _frameViews.Add(frameModel);
+            Add(frame);
         }
 
         public void InsertAfter(FrameView currentView, IEnumerable<Frame> frames)

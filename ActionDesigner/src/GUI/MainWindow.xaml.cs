@@ -55,7 +55,6 @@ namespace Intems.LightDesigner.GUI
         {
             InitializeComponent();
 
-            InitData();
             DataContext = _viewModel;
         }
 
