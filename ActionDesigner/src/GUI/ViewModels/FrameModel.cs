@@ -70,9 +70,6 @@ namespace Intems.LightDesigner.GUI.ViewModels
         {
             get
             {
-//                var action = new Action<string, FrameModel>((s, fm) => { });
-//                var cmd = new FrameConvertCommand(action);
-//                return cmd;
                 return null;
             }
         }
