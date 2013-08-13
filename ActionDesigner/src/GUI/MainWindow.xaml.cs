@@ -1,7 +1,4 @@
 ﻿using System;
-using System.CodeDom.Compiler;
-using System.Diagnostics;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
