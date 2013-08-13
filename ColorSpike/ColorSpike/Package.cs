@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
-namespace ColorSpike
+namespace Intems.Illuminate.HardwareTester
 {
     internal class Package
     {
@@ -27,5 +28,20 @@ namespace ColorSpike
         {
             get { return _body.Count; }
         }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            foreach (var b in _body)
+            {
+                sb.Append(b.ToString("X"));
+                sb.Append(' ');
+            }
+            var lastIdx = _body.Count - 1;
+            sb.Remove(lastIdx, 1);
+
+            return sb.ToString();
+        }
+
     }
 }

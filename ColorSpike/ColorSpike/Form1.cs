@@ -203,7 +203,6 @@ namespace Intems.Illuminate.HardwareTester
         {
             var param = CreateCommonParams();
             var pkg = new Package(1, (byte)_cmdEnum, param);
-
             Console.WriteLine(pkg);
 
             if (!_useUdpProtocol)
@@ -332,7 +331,7 @@ namespace Intems.Illuminate.HardwareTester
             else
             {
                 SetConfigState();
-                txtAddrAndPort.Text = String.Empty;
+                _addrAndPort = String.Empty;
             }
         }
     }
