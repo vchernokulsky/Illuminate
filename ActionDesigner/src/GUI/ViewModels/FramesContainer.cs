@@ -70,7 +70,19 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
         public void SelectGroup(FrameView frameView)
         {
-            var idx = FrameViews.TakeWhile(view => !view.IsSelected).Count();
+            var firstIdx = FrameViews.TakeWhile(view => !view.IsSelected).Count();
+            var secondIdx = FrameViews.IndexOf(frameView);
+
+            if (firstIdx < secondIdx)
+            {
+                for (int i = firstIdx; i <= secondIdx; i++)
+                    FrameViews[i].IsSelected = true;
+            }
+            else
+            {
+                for (int i = secondIdx; i < firstIdx; i++)
+                    FrameViews[i].IsSelected = true;
+            }
         }
 
         public void CopySelected()
