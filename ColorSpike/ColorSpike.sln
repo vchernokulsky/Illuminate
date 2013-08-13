@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorSpike", "ColorSpike\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdpRecv", "UdpRecv\UdpRecv.csproj", "{1106D316-CC20-4BDB-8D5B-D4A399D55915}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "..\LightPlayer\src\BL\BL.csproj", "{67B04B61-B920-4313-8562-C69F27A9A030}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{1106D316-CC20-4BDB-8D5B-D4A399D55915}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1106D316-CC20-4BDB-8D5B-D4A399D55915}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1106D316-CC20-4BDB-8D5B-D4A399D55915}.Release|x86.ActiveCfg = Release|Any CPU
+		{67B04B61-B920-4313-8562-C69F27A9A030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67B04B61-B920-4313-8562-C69F27A9A030}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67B04B61-B920-4313-8562-C69F27A9A030}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{67B04B61-B920-4313-8562-C69F27A9A030}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{67B04B61-B920-4313-8562-C69F27A9A030}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{67B04B61-B920-4313-8562-C69F27A9A030}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67B04B61-B920-4313-8562-C69F27A9A030}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67B04B61-B920-4313-8562-C69F27A9A030}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{67B04B61-B920-4313-8562-C69F27A9A030}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{67B04B61-B920-4313-8562-C69F27A9A030}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

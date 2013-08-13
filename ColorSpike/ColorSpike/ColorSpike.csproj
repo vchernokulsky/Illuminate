@@ -8,8 +8,8 @@
     <ProjectGuid>{7FEBC157-0785-4580-9637-EFD9F559ACFE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ColorSpike</RootNamespace>
-    <AssemblyName>ColorSpike</AssemblyName>
+    <RootNamespace>Intems.Illuminate.HardwareTester</RootNamespace>
+    <AssemblyName>HardwareTester</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -43,6 +43,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CmdBuilder.cs" />
     <Compile Include="CommandBuilder.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

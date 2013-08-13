@@ -4,12 +4,15 @@ using System.Drawing;
 using System.IO.Ports;
 using System.Net;
 using System.Net.Sockets;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using ColorSpike;
 
-namespace ColorSpike
+namespace Intems.Illuminate.HardwareTester
 {
     public partial class Form1 : Form
     {
+        private const string IPAddrAndPort = @"^((?:2[0-5]{2}|1\d{2}|[1-9]\d|[1-9])\.(?:(?:2[0-5]{2}|1\d{2}|[1-9]\d|\d)\.){2}(?:2[0-5]{2}|1\d{2}|[1-9]\d|\d)):(\d|[1-9]\d|[1-9]\d{2,3}|[1-5]\d{4}|6[0-4]\d{3}|654\d{2}|655[0-2]\d|6553[0-5])$";
         private SerialPort _port;
 
         private bool _useUdpProtocol;
@@ -199,26 +202,31 @@ namespace ColorSpike
         private void OnBtnSend_Click(object sender, EventArgs e)
         {
             var param = CreateCommonParams();
+            var pkg = new Package(1, (byte)_cmdEnum, param);
+
+            Console.WriteLine(pkg);
 
             if (!_useUdpProtocol)
             {
-                var pkg = new Package(1, (byte) _cmdEnum, param);
+
                 if (_port != null && _port.IsOpen)
                     _port.Write(pkg.ToArray(), 0, pkg.Length);
             }
             else
             {
-                if (String.IsNullOrEmpty(txtAddrAndPort.Text))
+                if (!String.IsNullOrEmpty(txtAddrAndPort.Text))
                 {
-                    MessageBox.Show("Enter IP addr and port in format: xxx.xxx.xxx.xxx:PORTNUM");
-                    return;
+                    var regex = new Regex(IPAddrAndPort);
+                    if (regex.IsMatch(_addrAndPort))
+                    {
+                        var ep = CreateIPEndPoint();
+                        var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                        socket.SendTo(pkg.ToArray(), ep);
+                        return;
+                    }
                 }
-                var ep = CreateIPEndPoint();
-                var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-                var pkg = new Package(1, (byte)_cmdEnum, param);
-                socket.SendTo(pkg.ToArray(), ep);
+                MessageBox.Show("Enter IPv4 addr and port in format: XXX.XXX.XXX.XXX:PORTNUM");
             }
-
         }
 
         private IPEndPoint CreateIPEndPoint()
@@ -324,7 +332,6 @@ namespace ColorSpike
             else
             {
                 SetConfigState();
-                _addrAndPort = String.Empty;
                 txtAddrAndPort.Text = String.Empty;
             }
         }

@@ -1,4 +1,4 @@
-﻿namespace ColorSpike
+﻿namespace Intems.Illuminate.HardwareTester
 {
     partial class Form1
     {
