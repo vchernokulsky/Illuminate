@@ -17,7 +17,7 @@ namespace Intems.LightDesigner.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly FrameListModel _model = new FrameListModel();
+        private readonly FramesContainer _viewModel = new FramesContainer();
 
         private static Color RandColor(Random rnd)
         {
@@ -46,7 +46,7 @@ namespace Intems.LightDesigner.GUI
                         break;
                 }
                 var frame = new LightPlayer.BL.Frame(TimeSpan.FromSeconds(_commonLength), TimeSpan.FromSeconds(length), cmd);
-                _model.Add(frame);
+                _viewModel.Add(frame);
                 _commonLength += length;
             }
         }
@@ -56,7 +56,7 @@ namespace Intems.LightDesigner.GUI
             InitializeComponent();
 
             InitData();
-            DataContext = _model;
+            DataContext = _viewModel;
         }
 
         private void OnAddButtonClick(object sender, RoutedEventArgs e)
@@ -65,21 +65,21 @@ namespace Intems.LightDesigner.GUI
             if (btn == null) return;
 
             var cmdEnum = (CmdEnum) Int32.Parse(btn.Tag.ToString());
-           _model.PushBack(cmdEnum);
+           _viewModel.PushBack(cmdEnum);
         }
 
         private void OnSaveBtnClick(object sender, RoutedEventArgs e)
         {
             var saveDlg = new SaveFileDialog(){CheckFileExists = true, OverwritePrompt = true, DefaultExt = "*.cmps"};
             if (saveDlg.ShowDialog().Value)
-                _model.SaveToFile(saveDlg.FileName);
+                _viewModel.SaveToFile(saveDlg.FileName);
         }
 
         private void OnLoadBtnClick(object sender, RoutedEventArgs e)
         {
             var openDlg = new OpenFileDialog();
             if (openDlg.ShowDialog().Value)
-                _model.LoadFromFile(openDlg.FileName);
+                _viewModel.LoadFromFile(openDlg.FileName);
         }
 
         private void OnCellClick(object sender, MouseButtonEventArgs e)
@@ -87,10 +87,31 @@ namespace Intems.LightDesigner.GUI
             var curCell = sender as Grid;
             if (curCell != null)
             {
-                var frameModel = curCell.Tag as FrameModel;
-                if (frameModel != null)
-                    frameModel.IsSelected ^= true;
+                var frameView = curCell.Tag as FrameView;
+                if (frameView != null)
+                {
+                    switch (Keyboard.Modifiers)
+                    {
+                        case ModifierKeys.Shift:
+                            _viewModel.SelectGroup(frameView);
+                            break;
+
+                        case ModifierKeys.None:
+                            _viewModel.ClearSelection();
+                            frameView.IsSelected ^= true;
+                            break;
+
+                        case ModifierKeys.Control:
+                            frameView.IsSelected ^= true;
+                            break;
+                    }
+                }
             }
+        }
+
+        private void OnCopyButtonClick(object sender, RoutedEventArgs e)
+        {
+            _viewModel.CopySelected();
         }
     }
 }

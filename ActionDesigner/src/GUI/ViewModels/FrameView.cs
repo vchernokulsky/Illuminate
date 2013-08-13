@@ -9,17 +9,17 @@ using Intems.LightPlayer.BL.Commands;
 namespace Intems.LightDesigner.GUI.ViewModels
 {
     [Serializable]
-    public class FrameModel : BaseViewModel
+    public class FrameView : BaseViewModel
     {
         private Frame _frame;
         private bool _isSelected;
 
-        public FrameModel()
+        public FrameView()
         {
             _frame = null;
         }
 
-        public FrameModel(Frame frame)
+        public FrameView(Frame frame)
         {
             _frame = frame;
         }
@@ -31,13 +31,13 @@ namespace Intems.LightDesigner.GUI.ViewModels
             if (handler != null) handler(this, EventArgs.Empty);
         }
 
-        #region COMMAND PROPERTIES
+        #region ACTION COMMAND PROPERTIES
 
         public FrameConvertCommand ToSetColor
         {
             get
             {
-                var action = new Action<FrameModel>(
+                var action = new Action<FrameView>(
                     fm =>
                     {
                         var cmd = new SetColor(fm.FillBrush1){Channel = 1};
@@ -53,7 +53,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
         {
             get
             {
-                var action = new Action<FrameModel>(
+                var action = new Action<FrameView>(
                     fm =>
                     {
                         var length = (short) fm.FrameLength.TotalSeconds;

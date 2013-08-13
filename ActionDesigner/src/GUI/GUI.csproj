@@ -57,7 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToSelectionBackground.cs" />
     <Compile Include="ActionCommands\FrameConvertCommand.cs" />
-    <Compile Include="ViewModels\FrameModel.cs" />
+    <Compile Include="ViewModels\FrameView.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,7 +67,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\FrameListModel.cs" />
+    <Compile Include="ViewModels\FramesContainer.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

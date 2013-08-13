@@ -75,7 +75,6 @@ namespace Intems.LightPlayer.BL
                 {
                     _frames.Insert(idx + 1, newFrame);
                     newFrame.FrameChanged += OnFrameChanged;
-                    //RaiseSequenceChanged();
                 }
             }
         }
@@ -89,7 +88,6 @@ namespace Intems.LightPlayer.BL
                 {
                     _frames.Insert(idx, newFrame);
                     newFrame.FrameChanged += OnFrameChanged;
-                    //RaiseSequenceChanged();
                 }
             }
         }
