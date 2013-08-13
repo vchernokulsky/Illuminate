@@ -44,6 +44,14 @@ namespace Intems.LightPlayer.BL
             return result;
         }
 
+        public void Rewind()
+        {
+            lock (_locker)
+            {
+                _curIndex = -1;
+            }
+        }
+
         public void Push(Frame frame)
         {
             lock (_locker)
@@ -61,32 +69,6 @@ namespace Intems.LightPlayer.BL
                 if (idx >= 0)
                 {
                     _frames[idx] = newFrame;
-                    newFrame.FrameChanged += OnFrameChanged;
-                }
-            }
-        }
-
-        public void InsertAfter(Frame target, Frame newFrame)
-        {
-            lock (_locker)
-            {
-                var idx = _frames.IndexOf(target);
-                if (idx >= 0)
-                {
-                    _frames.Insert(idx + 1, newFrame);
-                    newFrame.FrameChanged += OnFrameChanged;
-                }
-            }
-        }
-
-        public void InserBefore(Frame target, Frame newFrame)
-        {
-            lock (_locker)
-            {
-                var idx = _frames.IndexOf(target);
-                if (idx >= 0)
-                {
-                    _frames.Insert(idx, newFrame);
                     newFrame.FrameChanged += OnFrameChanged;
                 }
             }

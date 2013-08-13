@@ -57,7 +57,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
                     fm =>
                     {
                         var length = (short) fm.FrameLength.TotalSeconds;
-                        var cmd = new FadeColor(1, fm.FillBrush1, fm.FillBrush2, length);
+                        var cmd = new FadeColor(fm.FillBrush1, fm.FillBrush2, length){Channel = Command.DefaultChannel};
                         fm.Frame.Command = cmd;
                         RaiseModelChanged();
                     });

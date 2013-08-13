@@ -25,15 +25,6 @@ namespace Intems.LightPlayer.BL.Commands
             _length = length;
         }
 
-        public FadeColor(byte channel, Color startColor, Color stopColor, short length)
-        {
-            Channel = channel;
-
-            _startColor = startColor;
-            _stopColor = stopColor;
-            _length = length;
-        }
-
         public override sealed byte Channel { get; set; }
 
         public override byte Function
