@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
+using Intems.LightDesigner.GUI.ActionCommands;
 using Intems.LightPlayer.BL;
 using Intems.LightPlayer.BL.Commands;
 

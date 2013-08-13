@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
+using Intems.LightDesigner.GUI.ViewModels;
 
-namespace Intems.LightDesigner.GUI.ViewModels
+namespace Intems.LightDesigner.GUI.ActionCommands
 {
     public class FrameConvertCommand : ICommand
     {
@@ -14,7 +15,6 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
         public bool CanExecute(object parameter)
         {
-//            var canExecute = parameter is FrameModel;
             return true;
         }
 

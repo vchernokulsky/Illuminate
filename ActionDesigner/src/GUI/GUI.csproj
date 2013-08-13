@@ -56,7 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToSelectionBackground.cs" />
-    <Compile Include="ViewModels\FrameConvertCommand.cs" />
+    <Compile Include="ActionCommands\FrameConvertCommand.cs" />
     <Compile Include="ViewModels\FrameModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
