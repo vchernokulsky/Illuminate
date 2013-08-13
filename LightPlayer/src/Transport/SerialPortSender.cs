@@ -10,15 +10,14 @@ namespace Intems.LightPlayer.Transport
 
 #if DEBUG
         private readonly StreamWriter _writer;
-
-        public SerialportSender()
-        {
-            _writer = new StreamWriter("send.log");
-        }
 #endif
+
         public SerialportSender(SerialPort port)
         {
             _port = port;
+#if DEBUG
+            _writer = new StreamWriter("send.log");
+#endif
         }
 
         public void SendPackage(Package package)

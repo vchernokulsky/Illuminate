@@ -31,20 +31,25 @@ namespace Intems.LightPlayer.BL
 
         public Command Command { get; set; }
 
+        /// <summary>
+        /// Время начала фрейма (временной интервал от начала композиции)
+        /// </summary>
         public TimeSpan StartTime
         {
             get { return _startTime; }
             set { _startTime = value; }
         }
 
+        /// <summary>
+        /// Длина фрейма (временной интервал)
+        /// </summary>
         public TimeSpan Length
         {
             get { return _length; }
             set
             {
-                var delta = value - _length;
+                UpdateFrameLength(value);
                 _length = value;
-                RaiseFrameChanged(delta);
             }
         }
 
@@ -74,7 +79,18 @@ namespace Intems.LightPlayer.BL
             return (time >= StartTime) && (time < (StartTime + Length));
         }
 
-        protected virtual void RaiseFrameChanged(TimeSpan delta)
+        private void UpdateFrameLength(TimeSpan newFrameLength)
+        {
+            //меняем длину фэйда
+            var fadeCmd = Command as FadeColor;
+            if (fadeCmd != null)
+                fadeCmd.Length = (short)newFrameLength.TotalSeconds;
+
+            var delta = newFrameLength - _length;
+            RaiseFrameChanged(delta);
+        }
+
+        private void RaiseFrameChanged(TimeSpan delta)
         {
             var handler = FrameChanged;
             if (handler != null) handler(this, new FrameEventArgs {Delta = delta});

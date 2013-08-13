@@ -27,12 +27,14 @@ namespace Intems.LightPlayer.BL.Commands
 
         public FadeColor(byte channel, Color startColor, Color stopColor, short length)
         {
+            Channel = channel;
+
             _startColor = startColor;
             _stopColor = stopColor;
             _length = length;
         }
 
-        public override byte Channel { get; set; }
+        public override sealed byte Channel { get; set; }
 
         public override byte Function
         {
@@ -52,6 +54,9 @@ namespace Intems.LightPlayer.BL.Commands
             set { _stopColor = value; }
         }
 
+        /// <summary>
+        /// Fade length in seconds
+        /// </summary>
         public short Length
         {
             get { return _length; }
@@ -68,7 +73,7 @@ namespace Intems.LightPlayer.BL.Commands
         {
             var colorBytes1 = new[] { (byte)0x00, _startColor.R, (byte)0x00, _startColor.G, (byte)0x00, _startColor.B };
             var colorBytes2 = new[] { (byte)0x00, _stopColor.R, (byte)0x00, _stopColor.G, (byte)0x00, _stopColor.B };
-            var lengthBytes = _length.ToBytes();
+            var lengthBytes = ((short)(_length * 10)).ToBytes();
 
             var param = new byte[colorBytes1.Length + colorBytes2.Length + lengthBytes.Length];
             Array.Copy(colorBytes1, param, colorBytes1.Length);
