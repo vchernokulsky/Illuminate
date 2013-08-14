@@ -7,8 +7,8 @@ namespace Intems.LightPlayer.BL.Commands
     [Serializable]
     public class FadeColor : Command
     {
-        private ColorSerializable _startColor;
-        private ColorSerializable _stopColor;
+        private CustomColor _startColor;
+        private CustomColor _stopColor;
         private short _length;
 
         public FadeColor()

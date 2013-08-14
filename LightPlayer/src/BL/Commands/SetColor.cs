@@ -7,9 +7,7 @@ namespace Intems.LightPlayer.BL.Commands
     [Serializable]
     public class SetColor : Command
     {
-        private const byte DefauleChannel = 1;
-
-        private ColorSerializable _color;
+        private CustomColor _color;
 
         public SetColor()
         {

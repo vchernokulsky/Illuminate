@@ -4,14 +4,14 @@ using System.Windows.Media;
 namespace Intems.LightPlayer.BL.Helpers
 {
     [Serializable]
-    public struct ColorSerializable
+    public struct CustomColor
     {
         public byte A;
         public byte R;
         public byte G;
         public byte B;
 
-        public ColorSerializable(byte a, byte r, byte g, byte b)
+        public CustomColor(byte a, byte r, byte g, byte b)
         {
             A = a;
             R = r;
@@ -19,17 +19,17 @@ namespace Intems.LightPlayer.BL.Helpers
             B = b;
         }
 
-        public ColorSerializable(Color color)
+        public CustomColor(Color color)
             : this(color.A, color.R, color.G, color.B)
         {
         }
 
-        public static implicit operator ColorSerializable(Color color)
+        public static implicit operator CustomColor(Color color)
         {
-            return new ColorSerializable(color);
+            return new CustomColor(color);
         }
 
-        public static implicit operator Color(ColorSerializable colour)
+        public static implicit operator Color(CustomColor colour)
         {
             return Color.FromArgb(colour.A, colour.R, colour.G, colour.B);
         }

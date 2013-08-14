@@ -33,7 +33,7 @@ namespace Intems.LightDesigner.GUI
 
         private void OnSaveBtnClick(object sender, RoutedEventArgs e)
         {
-            var saveDlg = new SaveFileDialog() {Filter = "Pcap file|*.cmps", DefaultExt = "*.cmps", AddExtension = true};
+            var saveDlg = new SaveFileDialog() {Filter = "Light composition file|*.cmps", DefaultExt = "*.cmps", AddExtension = true};
             if (saveDlg.ShowDialog().Value)
                 _viewModel.SaveToFile(saveDlg.FileName);
         }

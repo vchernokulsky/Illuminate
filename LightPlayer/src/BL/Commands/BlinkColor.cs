@@ -7,7 +7,7 @@ namespace Intems.LightPlayer.BL.Commands
     [Serializable]
     public class BlinkColor : Command
     {
-        private ColorSerializable _color;
+        private CustomColor _color;
         private short _frequency;
 
         public BlinkColor()
