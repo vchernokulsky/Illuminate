@@ -13,6 +13,7 @@ namespace Intems.LightDesigner.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string TargetFileFilter = "Light composition file|*.cmps";
         private readonly FramesContainer _viewModel = new FramesContainer();
 
         public MainWindow()
@@ -33,14 +34,14 @@ namespace Intems.LightDesigner.GUI
 
         private void OnSaveBtnClick(object sender, RoutedEventArgs e)
         {
-            var saveDlg = new SaveFileDialog() {Filter = "Light composition file|*.cmps", DefaultExt = "*.cmps", AddExtension = true};
+            var saveDlg = new SaveFileDialog {Filter = TargetFileFilter, DefaultExt = "*.cmps", AddExtension = true};
             if (saveDlg.ShowDialog().Value)
                 _viewModel.SaveToFile(saveDlg.FileName);
         }
 
         private void OnLoadBtnClick(object sender, RoutedEventArgs e)
         {
-            var openDlg = new OpenFileDialog();
+            var openDlg = new OpenFileDialog(){Filter = TargetFileFilter};
             if (openDlg.ShowDialog().Value)
                 _viewModel.LoadFromFile(openDlg.FileName);
         }
