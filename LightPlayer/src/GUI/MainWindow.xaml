@@ -3,8 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Gui="clr-namespace:Intems.LightPlayer.GUI" mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" d:DataContext="{d:DesignInstance Gui:MainViewModel}">
+        xmlns:Gui="clr-namespace:Intems.LightPlayer.GUI"
+        xmlns:ViewModels="clr-namespace:Intems.LightPlayer.GUI.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525" d:DataContext="{d:DesignInstance ViewModels:MainViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -23,7 +25,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             
-            <!-- -->
+            <!-- Выбор композиции -->
             <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,5,0"
                        Text="MP3 file:"/>
             <TextBox Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10,10,5,10"
@@ -31,13 +33,26 @@
             <Button Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" 
                     Content="Choose" Click="OnBtnAudioChooseClick"/>
 
-            <!-- -->
-            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,5,0"
-                       Text="Light schema:"/>
-            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10, 10, 5, 10"
-                     TextWrapping="Wrap" Text="{Binding FramesFileName}" />
-            <Button Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" 
-                    Content="Choose" Click="OnBtnFrameChooseClick"/>
+            <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                          ItemsSource="{Binding Devices}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Tag="{Binding .}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,5,0"
+                                       Text="Light schema:"/>
+                            <TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10, 10, 5, 10"
+                                     TextWrapping="Wrap" Text="{Binding CompositionFile}" />
+                            <Button Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" 
+                                    Content="Choose" Tag="{Binding .}" Click="OnBtnFrameChooseClick"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Grid>
 
         <Grid Grid.Row="2">

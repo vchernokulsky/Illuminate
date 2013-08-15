@@ -1,6 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 
-namespace Intems.LightPlayer.GUI
+namespace Intems.LightPlayer.GUI.ViewModels
 {
     internal abstract class BaseViewModel : INotifyPropertyChanged
     {
@@ -16,6 +17,12 @@ namespace Intems.LightPlayer.GUI
 
     internal class MainViewModel : BaseViewModel
     {
+        public MainViewModel()
+        {
+            _devices = new List<DeviceViewModel>();
+            _devices.Add(new DeviceViewModel());
+        }
+
         private string _audioFileName;
         public string AudioFileName
         {
@@ -23,11 +30,11 @@ namespace Intems.LightPlayer.GUI
             set { _audioFileName = value; RaisePropertyChanged("AudioFileName"); }
         }
 
-        private string _framesFileName;
-        public string FramesFileName
+        private ICollection<DeviceViewModel> _devices;
+        public  ICollection<DeviceViewModel> Devices
         {
-            get { return _framesFileName; }
-            set { _framesFileName = value; RaisePropertyChanged("FramesFileName"); }
+            get { return _devices; }
+            set { _devices = value; RaisePropertyChanged("Devices"); }
         }
     }
 }

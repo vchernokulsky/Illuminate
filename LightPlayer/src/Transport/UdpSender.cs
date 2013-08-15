@@ -4,16 +4,15 @@ using System.Net.Sockets;
 
 namespace Intems.LightPlayer.Transport
 {
-    class UdpSender : IPackageSender
+    public class UdpSender : IPackageSender
     {
         private readonly Socket _socket;
         private readonly IPEndPoint _endPoint;
 
-        public UdpSender(string ipAddr, string port)
+        public UdpSender(string ipAddr, int port)
         {
             var remoteAddr = IPAddress.Parse(ipAddr);
-            var remotePort = Int32.Parse(port);
-            _endPoint = new IPEndPoint(remoteAddr, remotePort);
+            _endPoint = new IPEndPoint(remoteAddr, port);
 
             _socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         }
@@ -31,6 +30,16 @@ namespace Intems.LightPlayer.Transport
                     Console.WriteLine(ex);
                 }
             }
+        }
+
+        public string Address
+        {
+            get { return _endPoint.Address.MapToIPv4().ToString(); }
+        }
+
+        public int Port
+        {
+            get { return _endPoint.Port; }
         }
     }
 }

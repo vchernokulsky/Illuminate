@@ -4,7 +4,9 @@ using System.IO.Ports;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
+using System.Windows.Controls;
 using Intems.LightPlayer.BL;
+using Intems.LightPlayer.GUI.ViewModels;
 using Intems.LightPlayer.Transport;
 using Intems.LightPlayer.Transport.Stubs;
 using Microsoft.Win32;
@@ -56,15 +58,15 @@ namespace Intems.LightPlayer.GUI
 
         private void OnBtnFrameChooseClick(object sender, RoutedEventArgs e)
         {
-            var vm = (MainViewModel)DataContext;
+            var dev = (DeviceViewModel)((Button) sender).Tag;
 
             var dlg = new OpenFileDialog();
             if (dlg.ShowDialog().Value)
             {
-                vm.FramesFileName = dlg.FileName;
+                dev.CompositionFile = dlg.FileName;
                 try
                 {
-                    using (Stream stream = new FileStream(vm.FramesFileName, FileMode.Open))
+                    using (Stream stream = new FileStream(dev.CompositionFile, FileMode.Open))
                     {
                         var bf = new BinaryFormatter();
                         _sequence = (FrameSequence)bf.Deserialize(stream);

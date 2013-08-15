@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Timers;
 using Intems.LightPlayer.Transport;
 using NAudio.Wave;
@@ -31,12 +33,23 @@ namespace Intems.LightPlayer.BL
             _player = player;
         }
 
-        private TimeSpan prevTime = TimeSpan.FromSeconds(0);
+        private IEnumerable<IPackageSender> _packageSenders;
+        public FrameProcessor(IEnumerable<IPackageSender> senders, IWavePlayer player, FrameSequence sequence)
+        {
+            _timer = new Timer(TimeInterval);
+            _timer.Elapsed += OnTimerElapsed;
+
+            _packageSenders = senders;
+            _sequence = sequence;
+            _player = player;
+        }
+
+        private readonly TimeSpan _prevTime = TimeSpan.FromSeconds(0);
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
             lock (_locker)
             {
-                var time = prevTime;
+                var time = _prevTime;
 
                 if (AudioReader != null)
                     time = AudioReader.CurrentTime;
@@ -47,7 +60,6 @@ namespace Intems.LightPlayer.BL
             }
         }
 
-
         public AudioFileReader AudioReader { get; set; }
 
         public void SetTime(TimeSpan time)
@@ -55,7 +67,7 @@ namespace Intems.LightPlayer.BL
             var frame = _sequence.FrameByTime(time);
             if (frame != null)
             {
-                Console.WriteLine("{0}", (time - prevTime).TotalSeconds);
+                Console.WriteLine("{0}", (time - _prevTime).TotalSeconds);
                 //---
                 var pkg = new Package(frame.Command.GetBytes());
                 _sender.SendPackage(pkg);
