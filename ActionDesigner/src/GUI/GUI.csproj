@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToSelectionBackground.cs" />
     <Compile Include="ActionCommands\FrameConvertCommand.cs" />
+    <Compile Include="Converters\TimeSpanToShortTime.cs" />
     <Compile Include="ViewModels\FrameView.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
