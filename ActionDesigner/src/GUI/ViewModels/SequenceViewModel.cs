@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -9,10 +10,10 @@ using Intems.LightPlayer.BL;
 
 namespace Intems.LightDesigner.GUI.ViewModels
 {
-    public class FramesContainer : BaseViewModel
+    public class SequenceViewModel : BaseViewModel, IEnumerable<FrameViewModel>
     {
         [NonSerialized]
-        private readonly ObservableCollection<FrameView> _frameViews;
+        private readonly ObservableCollection<FrameViewModel> _frameViews;
         [NonSerialized]
         private readonly FrameBuilder _builder;
 
@@ -21,19 +22,29 @@ namespace Intems.LightDesigner.GUI.ViewModels
         //последовательность управляющих фреймов
         private readonly FrameSequence _sequence;
 
-        public FramesContainer()
+        public SequenceViewModel()
         {
             _builder = new FrameBuilder();
             _buffer = new List<Frame>();
-            _frameViews = new ObservableCollection<FrameView>();
+            _frameViews = new ObservableCollection<FrameViewModel>();
 
             _sequence = new FrameSequence();
             _sequence.SequenceChanged += OnSequenceChanged;
         }
 
-        public FrameView CurrentView { get; set; }
+        public IEnumerator<FrameViewModel> GetEnumerator()
+        {
+            return _frameViews.GetEnumerator();
+        }
 
-        public IList<FrameView> FrameViews
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return _frameViews.GetEnumerator();
+        }
+
+        public FrameViewModel CurrentView { get; set; }
+
+        public IList<FrameViewModel> FrameViews
         {
             get { return _frameViews; }
         }
@@ -42,7 +53,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
         {
             _sequence.Push(frame);
             //добавляем модель для отображения
-            var frameModel = new FrameView(frame);
+            var frameModel = new FrameViewModel(frame);
             frameModel.ModelChanged += OnSequenceChanged;
             _frameViews.Add(frameModel);
         }
@@ -54,7 +65,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
             Add(frame);
         }
 
-        public void InsertAfter(FrameView currentView, IEnumerable<Frame> frames)
+        public void InsertAfter(FrameViewModel currentView, IEnumerable<Frame> frames)
         {
             var idx = _sequence.Frames.IndexOf(currentView.Frame);
             if(idx >= 0 && _buffer.Count > 0)
@@ -62,7 +73,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
             foreach (var frame in _buffer)
             {
-                var frameView = new FrameView(frame);
+                var frameView = new FrameViewModel(frame);
                 frameView.ModelChanged += OnSequenceChanged;
                 _frameViews.Insert(++idx, frameView);
             }
@@ -76,7 +87,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
                 view.IsSelected = false;
         }
 
-        public void SelectGroup(FrameView frameView)
+        public void SelectGroup(FrameViewModel frameView)
         {
             var firstIdx = FrameViews.TakeWhile(view => !view.IsSelected).Count();
             var secondIdx = FrameViews.IndexOf(frameView);
@@ -103,13 +114,13 @@ namespace Intems.LightDesigner.GUI.ViewModels
             }
         }
 
-        public void ConvertFrame(FrameView view, Frame frame)
+        public void ConvertFrame(FrameViewModel view, Frame frame)
         {
             int idx = _frameViews.IndexOf(view);
             if (idx >= 0)
             {
                 _sequence.ChangeFrame(view.Frame, frame);
-                _frameViews[idx] = new FrameView(frame);
+                _frameViews[idx] = new FrameViewModel(frame);
             }
         }
 

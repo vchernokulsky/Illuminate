@@ -14,7 +14,7 @@ namespace Intems.LightDesigner.GUI
     public partial class MainWindow : Window
     {
         private const string TargetFileFilter = "Light composition file|*.cmps";
-        private readonly FramesContainer _viewModel = new FramesContainer();
+        private readonly SequenceViewModel _viewModel = new SequenceViewModel();
 
         public MainWindow()
         {
@@ -51,7 +51,7 @@ namespace Intems.LightDesigner.GUI
             var curCell = sender as Grid;
             if (curCell == null) return;
 
-            var frameView = curCell.Tag as FrameView;
+            var frameView = curCell.Tag as FrameViewModel;
             if (frameView == null) return;
 
             _viewModel.CurrentView = frameView;

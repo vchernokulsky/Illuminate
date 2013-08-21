@@ -6,9 +6,9 @@ namespace Intems.LightDesigner.GUI.ActionCommands
 {
     public class FrameConvertCommand : ICommand
     {
-        private readonly Action<FrameView> _action;
+        private readonly Action<FrameViewModel> _action;
 
-        public FrameConvertCommand(Action<FrameView> action)
+        public FrameConvertCommand(Action<FrameViewModel> action)
         {
             _action = action;
         }
@@ -20,7 +20,7 @@ namespace Intems.LightDesigner.GUI.ActionCommands
 
         public void Execute(object parameter)
         {
-            var model = parameter as FrameView;
+            var model = parameter as FrameViewModel;
             _action(model);
         }
 

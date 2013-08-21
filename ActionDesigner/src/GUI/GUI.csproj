@@ -55,10 +55,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\FrameEditor.xaml.cs">
+      <DependentUpon>FrameEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SequenceEditor.xaml.cs">
+      <DependentUpon>SequenceEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BoolToSelectionBackground.cs" />
     <Compile Include="ActionCommands\FrameConvertCommand.cs" />
     <Compile Include="Converters\TimeSpanToShortTime.cs" />
-    <Compile Include="ViewModels\FrameView.cs" />
+    <Compile Include="ViewModels\FrameViewModel.cs" />
+    <Page Include="Controls\FrameEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SequenceEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -68,7 +82,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\FramesContainer.cs" />
+    <Compile Include="ViewModels\SequenceContainerViewModel.cs" />
+    <Compile Include="ViewModels\SequenceViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -7,12 +7,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ViewModels="clr-namespace:Intems.LightDesigner.GUI.ViewModels"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance ViewModels:FramesContainer}"
+        d:DataContext="{d:DesignInstance ViewModels:SequenceViewModel}"
         Title="MainWindow" Height="350" Width="525">
-    <Window.Resources>
-        <Converters:BoolToSelectionBackground x:Key="cellBackgroundConverter" Selected="LightSlateGray" Unselected="White"/>
-        <Converters:TimeSpanToShortTime x:Key="ToShortTimeConverter"/>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -52,41 +48,6 @@
             <ItemsControl ItemsSource="{Binding FrameViews}" HorizontalAlignment="Left">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderThickness="2" BorderBrush="Blue">
-                        <Grid Margin="5,5,5,5" Tag="{Binding .}" MouseLeftButtonDown="OnCellClick" 
-                              Background="{Binding IsSelected, Converter={StaticResource cellBackgroundConverter}}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="Set color" Command="{Binding ToSetColor}" CommandParameter="{Binding .}"/>
-                                    <MenuItem Header="Fade color" Command="{Binding ToFadeColor}" CommandParameter="{Binding .}"/>
-                                    <MenuItem Header="Blink color" Command="{Binding ToFadeColor}" CommandParameter="{Binding .}"/>
-                                </ContextMenu>
-                            </Grid.ContextMenu>
-                            <!-- Разметка ячейки -->
-                            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,10,0"
-                                       FontSize="14" Text="{Binding FrameBegin, Converter={StaticResource ToShortTimeConverter}}"/>
-                            <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch"
-                                     FontSize="14" Text="{Binding FrameLength, Converter={StaticResource ToShortTimeConverter}}"
-                                     Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" />
-                            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                       Text="{Binding CmdType}" TextAlignment="Center"/>
-                            <xctk:ColorPicker Grid.Row="2" Grid.Column="0" MinWidth="20" MinHeight="20" 
-                                              Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}"
-                                              SelectedColor="{Binding FillBrush1}"/>
-                            <xctk:ColorPicker Grid.Row="2" Grid.Column="1" MinWidth="20" MinHeight="20" 
-                                              Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}"
-                                              SelectedColor="{Binding FillBrush2}" Visibility="{Binding FadeVisibility}"/>
-                        </Grid>
-                    </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
