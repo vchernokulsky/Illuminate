@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "..\..\LightPlayer\src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{C18CE312-E9AD-46A1-B1BA-8BDC60CC6994}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{747B31C6-DD63-487D-87DB-B94764CB91BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{9E6F9AB3-F9B7-4A82-B25E-ECEA497A4CB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,8 +23,15 @@ Global
 		{C18CE312-E9AD-46A1-B1BA-8BDC60CC6994}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C18CE312-E9AD-46A1-B1BA-8BDC60CC6994}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C18CE312-E9AD-46A1-B1BA-8BDC60CC6994}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E6F9AB3-F9B7-4A82-B25E-ECEA497A4CB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E6F9AB3-F9B7-4A82-B25E-ECEA497A4CB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E6F9AB3-F9B7-4A82-B25E-ECEA497A4CB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E6F9AB3-F9B7-4A82-B25E-ECEA497A4CB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9E6F9AB3-F9B7-4A82-B25E-ECEA497A4CB3} = {747B31C6-DD63-487D-87DB-B94764CB91BC}
 	EndGlobalSection
 EndGlobal

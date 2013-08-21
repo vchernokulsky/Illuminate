@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Intems.LightDesigner.GUI.ViewModels;
+using Intems.LightPlayer.BL.Commands;
 
 namespace Intems.LightDesigner.GUI.Controls
 {
@@ -20,9 +11,28 @@ namespace Intems.LightDesigner.GUI.Controls
     /// </summary>
     public partial class SequenceEditor : UserControl
     {
+        private SequenceViewModel _viewModel;
+
         public SequenceEditor()
         {
             InitializeComponent();
+        }
+
+        private void OnAddClick(object sender, RoutedEventArgs e)
+        {
+            var viewModel = DataContext as SequenceViewModel;
+            var btn = sender as Button;
+
+            CmdEnum cmd;
+            Enum.TryParse(btn.Tag.ToString(), out cmd);
+            switch (cmd)
+            {
+                case CmdEnum.SetColor:
+                    var frame = new LightPlayer.BL.Frame {Command = new SetColor()};
+                    if (viewModel != null) 
+                        viewModel.Add(frame);
+                    break;
+            }
         }
     }
 }

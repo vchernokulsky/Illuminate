@@ -8,10 +8,25 @@ namespace Intems.LightDesigner.GUI.ViewModels
         private readonly SequenceCollection _sequenceCollection;
 
         private int _sequenceCount;
-        private Dictionary<int, SequenceViewModel> _dictSequence;
+        private readonly Dictionary<int, SequenceViewModel> _sequenceDict;
 
         public SequenceContainerViewModel()
         {
+            _sequenceDict = new Dictionary<int, SequenceViewModel>
+            {
+                {1, new SequenceViewModel()},
+                {2, new SequenceViewModel()}
+            };
+        }
+
+        public IEnumerable<int> Channels
+        {
+            get { return _sequenceDict.Keys; }
+        }
+
+        public IEnumerable<SequenceViewModel> Sequences
+        {
+            get { return _sequenceDict.Values; }
         }
 
         public void CreateNewSequence()
@@ -20,7 +35,8 @@ namespace Intems.LightDesigner.GUI.ViewModels
             _sequenceCollection.Sequences.Add(newSequence);
 
             var sequenceViewModel = new SequenceViewModel();
-            _dictSequence.Add(_sequenceCount++, sequenceViewModel);
+            _sequenceDict.Add(_sequenceCount, sequenceViewModel);
+            _sequenceCount++;
         }
     }
 }

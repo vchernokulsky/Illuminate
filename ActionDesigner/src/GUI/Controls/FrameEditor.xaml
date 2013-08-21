@@ -7,8 +7,8 @@
              xmlns:Converters="clr-namespace:Intems.LightDesigner.GUI.Converters"
              xmlns:ViewModels="clr-namespace:Intems.LightDesigner.GUI.ViewModels"
              mc:Ignorable="d" 
-             d:DataContext="{d:DesignInstance ViewModels:SequenceViewModel}"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DataContext="{d:DesignInstance ViewModels:FrameViewModel}"
+             d:DesignHeight="80" d:DesignWidth="150">
     <UserControl.Resources>
         <Converters:BoolToSelectionBackground x:Key="CellBackgroundConverter" Selected="LightSlateGray" Unselected="White"/>
         <Converters:TimeSpanToShortTime x:Key="ToShortTimeConverter"/>
@@ -27,13 +27,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Set color" Command="{Binding ToSetColor}" CommandParameter="{Binding .}"/>
-                        <MenuItem Header="Fade color" Command="{Binding ToFadeColor}" CommandParameter="{Binding .}"/>
-                        <MenuItem Header="Blink color" Command="{Binding ToFadeColor}" CommandParameter="{Binding .}"/>
-                    </ContextMenu>
-                </Grid.ContextMenu>
+                
                 <!-- Разметка ячейки -->
                 <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,10,0"
                                        FontSize="14" Text="{Binding FrameBegin, Converter={StaticResource ToShortTimeConverter}}"/>
@@ -50,6 +44,5 @@
                                               SelectedColor="{Binding FillBrush2}" Visibility="{Binding FadeVisibility}"/>
             </Grid>
         </Border>
-
     </Grid>
 </UserControl>

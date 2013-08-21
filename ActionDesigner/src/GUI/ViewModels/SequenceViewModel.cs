@@ -13,9 +13,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
     public class SequenceViewModel : BaseViewModel, IEnumerable<FrameViewModel>
     {
         [NonSerialized]
-        private readonly ObservableCollection<FrameViewModel> _frameViews;
-        [NonSerialized]
-        private readonly FrameBuilder _builder;
+        private readonly ObservableCollection<FrameViewModel> _frameViewModels;
 
         private readonly List<Frame> _buffer;
 
@@ -24,9 +22,8 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
         public SequenceViewModel()
         {
-            _builder = new FrameBuilder();
             _buffer = new List<Frame>();
-            _frameViews = new ObservableCollection<FrameViewModel>();
+            _frameViewModels = new ObservableCollection<FrameViewModel>();
 
             _sequence = new FrameSequence();
             _sequence.SequenceChanged += OnSequenceChanged;
@@ -34,80 +31,74 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
         public IEnumerator<FrameViewModel> GetEnumerator()
         {
-            return _frameViews.GetEnumerator();
+            return _frameViewModels.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _frameViews.GetEnumerator();
+            return _frameViewModels.GetEnumerator();
         }
 
         public FrameViewModel CurrentView { get; set; }
 
-        public IList<FrameViewModel> FrameViews
+        public IList<FrameViewModel> FrameViewModels
         {
-            get { return _frameViews; }
+            get { return _frameViewModels; }
         }
 
         public void Add(Frame frame)
         {
-            _sequence.Push(frame);
-            //добавляем модель для отображения
+            //добавляем вьюху
             var frameModel = new FrameViewModel(frame);
             frameModel.ModelChanged += OnSequenceChanged;
-            _frameViews.Add(frameModel);
+            _frameViewModels.Add(frameModel);
+            //добавляем фрейм в последовательность
+            _sequence.Push(frame);
+            _sequence.UpdateFrom(frame);
         }
 
-        public void PushBack(LightPlayer.BL.Commands.CmdEnum cmd)
+        public void InsertAfter(Frame currentFrame, IEnumerable<Frame> frames)
         {
-            var startTime = CalculateFrameStartTime();
-            var frame = _builder.CreateFrameByCmdEnum(cmd, startTime);
-            Add(frame);
-        }
+            var idx = _sequence.Frames.IndexOf(currentFrame);
+            if (idx >= 0 && frames.Any())
+                _sequence.Frames.InsertRange(idx + 1, frames);
 
-        public void InsertAfter(FrameViewModel currentView, IEnumerable<Frame> frames)
-        {
-            var idx = _sequence.Frames.IndexOf(currentView.Frame);
-            if(idx >= 0 && _buffer.Count > 0)
-                _sequence.Frames.InsertRange(idx + 1, _buffer);
-
-            foreach (var frame in _buffer)
+            foreach (var frameView in frames.Select(frame => new FrameViewModel(frame)))
             {
-                var frameView = new FrameViewModel(frame);
                 frameView.ModelChanged += OnSequenceChanged;
-                _frameViews.Insert(++idx, frameView);
+                _frameViewModels.Insert(++idx, frameView);
             }
-            _sequence.UpdateFrom(currentView.Frame);
+            _sequence.UpdateFrom(currentFrame);
         }
 
         //работа с фреймами и буфером фреймов
         public void ClearSelection()
         {
-            foreach (var view in FrameViews)
+            foreach (var view in FrameViewModels)
                 view.IsSelected = false;
         }
 
         public void SelectGroup(FrameViewModel frameView)
         {
-            var firstIdx = FrameViews.TakeWhile(view => !view.IsSelected).Count();
-            var secondIdx = FrameViews.IndexOf(frameView);
+            var firstIdx = FrameViewModels.TakeWhile(view => !view.IsSelected).Count();
+            var secondIdx = FrameViewModels.IndexOf(frameView);
 
             if (firstIdx < secondIdx)
             {
                 for (int i = firstIdx; i <= secondIdx; i++)
-                    FrameViews[i].IsSelected = true;
+                    FrameViewModels[i].IsSelected = true;
             }
             else
             {
                 for (int i = secondIdx; i < firstIdx; i++)
-                    FrameViews[i].IsSelected = true;
+                    FrameViewModels[i].IsSelected = true;
             }
         }
 
         public void CopySelected()
         {
             _buffer.Clear();
-            foreach (var model in FrameViews.Where(model => model.IsSelected))
+            foreach (var model in FrameViewModels.Where(model => model.IsSelected))
             {
                 var frameClone = (Frame)model.Frame.Clone();
                 _buffer.Add(frameClone);
@@ -116,11 +107,11 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
         public void ConvertFrame(FrameViewModel view, Frame frame)
         {
-            int idx = _frameViews.IndexOf(view);
+            int idx = _frameViewModels.IndexOf(view);
             if (idx >= 0)
             {
                 _sequence.ChangeFrame(view.Frame, frame);
-                _frameViews[idx] = new FrameViewModel(frame);
+                _frameViewModels[idx] = new FrameViewModel(frame);
             }
         }
 
@@ -153,7 +144,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
                 var sequence = obj as FrameSequence;
                 if (sequence != null)
                 {
-                    _frameViews.Clear();
+                    _frameViewModels.Clear();
                     _sequence.Clear();
 
                     foreach (var frame in sequence.Frames) Add(frame);
@@ -164,17 +155,17 @@ namespace Intems.LightDesigner.GUI.ViewModels
         //PRIVATE METHODS
         private void OnSequenceChanged(object sender, EventArgs eventArgs)
         {
-            var view = CollectionViewSource.GetDefaultView(_frameViews);
+            var view = CollectionViewSource.GetDefaultView(_frameViewModels);
             view.Refresh();
         }
 
-        private TimeSpan CalculateFrameStartTime()
-        {
-            if (_frameViews.Count <= 0) return TimeSpan.FromSeconds(0);
-
-            var lastFrame = _frameViews.Last();
-            var startTime = lastFrame.FrameBegin + lastFrame.FrameLength;
-            return startTime;
-        }
+//        private TimeSpan CalculateFrameStartTime()
+//        {
+//            if (_frameViewModels.Count <= 0) return TimeSpan.FromSeconds(0);
+//
+//            var lastFrame = _frameViewModels.Last();
+//            var startTime = lastFrame.FrameBegin + lastFrame.FrameLength;
+//            return startTime;
+//        }
     }
 }

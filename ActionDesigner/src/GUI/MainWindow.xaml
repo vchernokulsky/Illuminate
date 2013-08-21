@@ -1,13 +1,12 @@
 ﻿<Window x:Class="Intems.LightDesigner.GUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:Converters="clr-namespace:Intems.LightDesigner.GUI.Converters"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ViewModels="clr-namespace:Intems.LightDesigner.GUI.ViewModels"
+        xmlns:Controls="clr-namespace:Intems.LightDesigner.GUI.Controls"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance ViewModels:SequenceViewModel}"
+        d:DataContext="{d:DesignInstance ViewModels:SequenceContainerViewModel}"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <Grid.RowDefinitions>
@@ -24,18 +23,6 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal">
-                <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
-                        x:Name="_btnSet" Tag="1" Content="SET" Click="OnAddButtonClick"/>
-                <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
-                        x:Name="_btnFade" Tag="2" Content="FADE" Click="OnAddButtonClick"/>
-                <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
-                        x:Name="_btnBlink" Tag="3" Content="BLINK" Click="OnAddButtonClick"/>
-                <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="10,0,0,0" MinHeight="20" 
-                        x:Name="_btnCopy" Tag="4" Content="COPY" Click="OnCopyButtonClick"/>
-                <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,0,0" MinHeight="20" 
-                        x:Name="_btnPaste" Tag="5" Content="PASTE" Click="OnPasteButtonClick"/>
-            </StackPanel>
             <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button HorizontalAlignment="Right" MinWidth="80" MinHeight="20"
                         Content="Save" Click="OnSaveBtnClick" />
@@ -43,14 +30,20 @@
                         Content="Load" Click="OnLoadBtnClick"/>
             </StackPanel>
         </Grid>
-        <!-- Контейнер команд -->
+        <!-- Контейнер каналов управления -->
         <ScrollViewer Grid.Row="1" Grid.Column="1">
-            <ItemsControl ItemsSource="{Binding FrameViews}" HorizontalAlignment="Left">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            <ItemsControl ItemsSource="{Binding Sequences}" HorizontalAlignment="Left">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Controls:SequenceEditor DataContext="{Binding .}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </ScrollViewer>
     </Grid>
 </Window>
