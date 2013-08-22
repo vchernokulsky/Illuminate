@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -15,14 +16,11 @@ namespace Intems.LightDesigner.GUI.ViewModels
         [NonSerialized]
         private readonly ObservableCollection<FrameViewModel> _frameViewModels;
 
-        private readonly List<Frame> _buffer;
-
         //последовательность управляющих фреймов
         private readonly FrameSequence _sequence;
 
         public SequenceViewModel()
         {
-            _buffer = new List<Frame>();
             _frameViewModels = new ObservableCollection<FrameViewModel>();
 
             _sequence = new FrameSequence();
@@ -45,10 +43,10 @@ namespace Intems.LightDesigner.GUI.ViewModels
             get { return _frameViewModels; }
         }
 
-        public void NewFrame(string buttnoTag)
+        public void NewFrame(string buttonTag)
         {
             CmdEnum cmdEnum;
-            CmdEnum.TryParse(buttnoTag, out cmdEnum);
+            CmdEnum.TryParse(buttonTag, out cmdEnum);
 
             if (_frameBuilder != null)
             {
@@ -83,28 +81,37 @@ namespace Intems.LightDesigner.GUI.ViewModels
             _sequence.UpdateFrom(currentFrame);
         }
 
-        //работа с фреймами и буфером фреймов
         public void ClearSelection()
         {
-            foreach (var view in FrameViewModels)
-                view.IsSelected = false;
+            foreach (var viewModel in FrameViewModels)
+                viewModel.IsSelected = false;
         }
-
-        public void SelectGroup(FrameViewModel frameView)
+        public IEnumerable<Frame> SelectGroup(FrameViewModel frameView)
         {
+            var selectedFrames = new List<Frame>();
+
             var firstIdx = FrameViewModels.TakeWhile(view => !view.IsSelected).Count();
             var secondIdx = FrameViewModels.IndexOf(frameView);
 
             if (firstIdx < secondIdx)
             {
                 for (int i = firstIdx; i <= secondIdx; i++)
+                {
                     FrameViewModels[i].IsSelected = true;
+                    selectedFrames.Add(FrameViewModels[i].Frame);
+                }
             }
             else
             {
-                for (int i = secondIdx; i < firstIdx; i++)
+                var queue = new Queue<Frame>();
+                for (int i = secondIdx; i <= firstIdx; i++)
+                {
                     FrameViewModels[i].IsSelected = true;
+                    queue.Enqueue(FrameViewModels[i].Frame);
+                }
+                selectedFrames = queue.ToList();
             }
+            return selectedFrames;
         }
 
         public void CopySelected()

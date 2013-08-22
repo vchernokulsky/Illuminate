@@ -1,10 +1,7 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Intems.LightDesigner.GUI.ViewModels;
-using Intems.LightPlayer.BL.Commands;
-using Frame = Intems.LightPlayer.BL.Frame;
 
 namespace Intems.LightDesigner.GUI.Controls
 {
@@ -29,20 +26,23 @@ namespace Intems.LightDesigner.GUI.Controls
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            var viewModel = DataContext as SequenceViewModel;
+            if (viewModel == null) return;
+
             var curCell = sender as Grid;
             if (curCell == null) return;
 
             var frameView = curCell.Tag as FrameViewModel;
             if (frameView == null) return;
 
-            //_viewModel.CurrentView = frameView;
             switch (Keyboard.Modifiers)
             {
                 case ModifierKeys.Shift:
-                    //_viewModel.SelectGroup(frameView);
+                    viewModel.SelectGroup(frameView);
                     break;
 
                 case ModifierKeys.None:
+                    viewModel.ClearSelection();
                     frameView.IsSelected ^= true;
                     break;
             }
