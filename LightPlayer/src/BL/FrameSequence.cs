@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Intems.LightPlayer.BL
 {
@@ -58,6 +59,11 @@ namespace Intems.LightPlayer.BL
             for (int i = idx + 1; i < _frames.Count; i++)
                 _frames[i].StartTime = _frames[i - 1].StartTime + _frames[i-1].Length;
             RaiseSequenceChanged();
+        }
+
+        public void UpdateAll()
+        {
+            UpdateFrom(_frames.First());
         }
 
         public void Push(Frame frame)

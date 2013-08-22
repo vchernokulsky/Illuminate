@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -7,10 +6,11 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Data;
 using Intems.LightPlayer.BL;
+using Intems.LightPlayer.BL.Commands;
 
 namespace Intems.LightDesigner.GUI.ViewModels
 {
-    public class SequenceViewModel : BaseViewModel, IEnumerable<FrameViewModel>
+    public class SequenceViewModel : BaseViewModel
     {
         [NonSerialized]
         private readonly ObservableCollection<FrameViewModel> _frameViewModels;
@@ -29,21 +29,33 @@ namespace Intems.LightDesigner.GUI.ViewModels
             _sequence.SequenceChanged += OnSequenceChanged;
         }
 
-        public IEnumerator<FrameViewModel> GetEnumerator()
+        private readonly FrameBuilder _frameBuilder;
+        public SequenceViewModel(FrameBuilder builder) : this()
         {
-            return _frameViewModels.GetEnumerator();
+            _frameBuilder = builder;
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        public FrameSequence Sequence
         {
-            return _frameViewModels.GetEnumerator();
+            get { return _sequence; }
         }
-
-        public FrameViewModel CurrentView { get; set; }
 
         public IList<FrameViewModel> FrameViewModels
         {
             get { return _frameViewModels; }
+        }
+
+        public void NewFrame(string buttnoTag)
+        {
+            CmdEnum cmdEnum;
+            CmdEnum.TryParse(buttnoTag, out cmdEnum);
+
+            if (_frameBuilder != null)
+            {
+                var frame = _frameBuilder.CreateFrame(cmdEnum, this);
+                if(frame != null)
+                    Add(frame);
+            }
         }
 
         public void Add(Frame frame)
@@ -54,7 +66,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
             _frameViewModels.Add(frameModel);
             //добавляем фрейм в последовательность
             _sequence.Push(frame);
-            _sequence.UpdateFrom(frame);
+            _sequence.UpdateAll();
         }
 
         public void InsertAfter(Frame currentFrame, IEnumerable<Frame> frames)
@@ -97,12 +109,12 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
         public void CopySelected()
         {
-            _buffer.Clear();
-            foreach (var model in FrameViewModels.Where(model => model.IsSelected))
-            {
-                var frameClone = (Frame)model.Frame.Clone();
-                _buffer.Add(frameClone);
-            }
+//            _buffer.Clear();
+//            foreach (var model in FrameViewModels.Where(model => model.IsSelected))
+//            {
+//                var frameClone = (Frame)model.Frame.Clone();
+//                _buffer.Add(frameClone);
+//            }
         }
 
         public void ConvertFrame(FrameViewModel view, Frame frame)
@@ -158,14 +170,5 @@ namespace Intems.LightDesigner.GUI.ViewModels
             var view = CollectionViewSource.GetDefaultView(_frameViewModels);
             view.Refresh();
         }
-
-//        private TimeSpan CalculateFrameStartTime()
-//        {
-//            if (_frameViewModels.Count <= 0) return TimeSpan.FromSeconds(0);
-//
-//            var lastFrame = _frameViewModels.Last();
-//            var startTime = lastFrame.FrameBegin + lastFrame.FrameLength;
-//            return startTime;
-//        }
     }
 }

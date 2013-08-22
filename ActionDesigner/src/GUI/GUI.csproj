@@ -64,6 +64,7 @@
     <Compile Include="Converters\BoolToSelectionBackground.cs" />
     <Compile Include="ActionCommands\FrameConvertCommand.cs" />
     <Compile Include="Converters\TimeSpanToShortTime.cs" />
+    <Compile Include="FrameBuilder.cs" />
     <Compile Include="ViewModels\FrameViewModel.cs" />
     <Page Include="Controls\FrameEditor.xaml">
       <SubType>Designer</SubType>

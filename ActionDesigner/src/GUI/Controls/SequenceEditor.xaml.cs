@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Intems.LightDesigner.GUI.ViewModels;
 using Intems.LightPlayer.BL.Commands;
+using Frame = Intems.LightPlayer.BL.Frame;
 
 namespace Intems.LightDesigner.GUI.Controls
 {
@@ -11,8 +13,6 @@ namespace Intems.LightDesigner.GUI.Controls
     /// </summary>
     public partial class SequenceEditor : UserControl
     {
-        private SequenceViewModel _viewModel;
-
         public SequenceEditor()
         {
             InitializeComponent();
@@ -23,16 +23,30 @@ namespace Intems.LightDesigner.GUI.Controls
             var viewModel = DataContext as SequenceViewModel;
             var btn = sender as Button;
 
-            CmdEnum cmd;
-            Enum.TryParse(btn.Tag.ToString(), out cmd);
-            switch (cmd)
+            if(btn != null && viewModel != null)
+                viewModel.NewFrame(btn.Tag.ToString());
+        }
+
+        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var curCell = sender as Grid;
+            if (curCell == null) return;
+
+            var frameView = curCell.Tag as FrameViewModel;
+            if (frameView == null) return;
+
+            //_viewModel.CurrentView = frameView;
+            switch (Keyboard.Modifiers)
             {
-                case CmdEnum.SetColor:
-                    var frame = new LightPlayer.BL.Frame {Command = new SetColor()};
-                    if (viewModel != null) 
-                        viewModel.Add(frame);
+                case ModifierKeys.Shift:
+                    //_viewModel.SelectGroup(frameView);
+                    break;
+
+                case ModifierKeys.None:
+                    frameView.IsSelected ^= true;
                     break;
             }
+
         }
     }
 }

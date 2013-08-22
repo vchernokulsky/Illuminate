@@ -9,6 +9,11 @@ namespace Intems.LightPlayer.BL
     {
         private readonly IList<FrameSequence> _sequences;
 
+        public SequenceCollection()
+        {
+            _sequences = new List<FrameSequence>();
+        }
+
         public SequenceCollection(IList<FrameSequence> sequences)
         {
             _sequences = sequences;

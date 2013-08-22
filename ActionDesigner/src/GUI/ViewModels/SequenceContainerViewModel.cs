@@ -7,16 +7,29 @@ namespace Intems.LightDesigner.GUI.ViewModels
     {
         private readonly SequenceCollection _sequenceCollection;
 
-        private int _sequenceCount;
+        private readonly FrameBuilder _frameBuilder;
         private readonly Dictionary<int, SequenceViewModel> _sequenceDict;
 
-        public SequenceContainerViewModel()
+
+        public SequenceContainerViewModel() : this(1)
         {
-            _sequenceDict = new Dictionary<int, SequenceViewModel>
+        }
+
+        public SequenceContainerViewModel(int channelCount)
+        {
+            _sequenceCollection = new SequenceCollection();
+
+            _frameBuilder = new FrameBuilder();
+            _sequenceDict = new Dictionary<int, SequenceViewModel>();
+
+            for (int i = 0; i < channelCount; i++)
             {
-                {1, new SequenceViewModel()},
-                {2, new SequenceViewModel()}
-            };
+                var sequenceViewModel = new SequenceViewModel(_frameBuilder);
+                _frameBuilder.RegisterSequence(i, sequenceViewModel);
+                _sequenceDict.Add(i, sequenceViewModel);
+                //формируем коллекцию последовательностей фреймов
+                _sequenceCollection.Sequences.Add(sequenceViewModel.Sequence);
+            }
         }
 
         public IEnumerable<int> Channels
@@ -27,16 +40,6 @@ namespace Intems.LightDesigner.GUI.ViewModels
         public IEnumerable<SequenceViewModel> Sequences
         {
             get { return _sequenceDict.Values; }
-        }
-
-        public void CreateNewSequence()
-        {
-            var newSequence = new FrameSequence();
-            _sequenceCollection.Sequences.Add(newSequence);
-
-            var sequenceViewModel = new SequenceViewModel();
-            _sequenceDict.Add(_sequenceCount, sequenceViewModel);
-            _sequenceCount++;
         }
     }
 }

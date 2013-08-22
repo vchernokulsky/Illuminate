@@ -7,25 +7,25 @@
              xmlns:Converters="clr-namespace:Intems.LightDesigner.GUI.Converters"
              xmlns:ViewModels="clr-namespace:Intems.LightDesigner.GUI.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="300" 
+             d:DesignHeight="100" 
              d:DataContext="{d:DesignInstance ViewModels:SequenceViewModel}">
     <UserControl.Resources>
         <Converters:BoolToSelectionBackground x:Key="CellBackgroundConverter" Selected="LightSlateGray" Unselected="White"/>
         <Converters:TimeSpanToShortTime x:Key="ToShortTimeConverter"/>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid Margin="0, 0, 3, 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
             <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
                         x:Name="_btnSet" Tag="SetColor" Content="SET" Click="OnAddClick"/>
             <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
-                        x:Name="_btnFade" Tag="Fade" Content="FADE"/>
+                        x:Name="_btnFade" Tag="Fade" Content="FADE" Click="OnAddClick"/>
             <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
-                        x:Name="_btnBlink" Tag="Blink" Content="BLINK"/>
+                        x:Name="_btnBlink" Tag="Blink" Content="BLINK" Click="OnAddClick"/>
         </StackPanel>
 
         <ItemsControl Grid.Row="1" ItemsSource="{Binding FrameViewModels}">
@@ -33,7 +33,8 @@
                 <DataTemplate DataType="ViewModels:FrameViewModel">
                     <Grid>
                         <Border BorderThickness="2" BorderBrush="Blue">
-                            <Grid Margin="5,5,5,5" Tag="{Binding .}" Background="{Binding IsSelected, Converter={StaticResource CellBackgroundConverter}}">
+                            <Grid Margin="5,5,5,5" Tag="{Binding .}" MouseLeftButtonDown="OnMouseLeftButtonDown"
+                                  Background="{Binding IsSelected, Converter={StaticResource CellBackgroundConverter}}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
@@ -45,9 +46,9 @@
                                 </Grid.ColumnDefinitions>
 
                                 <!-- Разметка ячейки -->
-                                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,10,0"
+                                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,0,10,0"
                                        FontSize="14" Text="{Binding FrameBegin, Converter={StaticResource ToShortTimeConverter}}"/>
-                                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch"
+                                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch"
                                      FontSize="14" Text="{Binding FrameLength, Converter={StaticResource ToShortTimeConverter}}"
                                      Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" />
                                 <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"
