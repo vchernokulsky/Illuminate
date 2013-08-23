@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using Intems.LightDesigner.GUI.ActionCommands;
 using Intems.LightPlayer.BL;
@@ -24,6 +25,11 @@ namespace Intems.LightDesigner.GUI.ViewModels
             _frame = frame;
         }
 
+        public FrameViewModel(Frame frame, ActionGroup actionGroup) : this(frame)
+        {
+            _actionGroup = actionGroup;
+        }
+
         public event EventHandler ModelChanged;
         private void RaiseModelChanged()
         {
@@ -31,50 +37,11 @@ namespace Intems.LightDesigner.GUI.ViewModels
             if (handler != null) handler(this, EventArgs.Empty);
         }
 
-        #region ACTION COMMAND PROPERTIES
-
-        public FrameConvertCommand ToSetColor
+        private readonly ActionGroup _actionGroup;
+        public ActionGroup ActionGroup
         {
-            get
-            {
-                var action = new Action<FrameViewModel>(
-                    fm =>
-                    {
-                        var cmd = new SetColor(fm.FillBrush1){Channel = 1};
-                        fm.Frame.Command = cmd;
-                        RaiseModelChanged();
-                    });
-                var convertCommand = new FrameConvertCommand(action);
-                return convertCommand;
-            }
+            get { return _actionGroup; }
         }
-
-        public FrameConvertCommand ToFadeColor
-        {
-            get
-            {
-                var action = new Action<FrameViewModel>(
-                    fm =>
-                    {
-                        var length = (short) fm.FrameLength.TotalSeconds;
-                        var cmd = new FadeColor(fm.FillBrush1, fm.FillBrush2, length){Channel = Command.DefaultChannel};
-                        fm.Frame.Command = cmd;
-                        RaiseModelChanged();
-                    });
-                var convertCommand = new FrameConvertCommand(action);
-                return convertCommand;
-            }
-        }
-
-        public FrameConvertCommand ToBlinkColor
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        #endregion
 
         //поля для связи с логикой
         public Frame Frame

@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ActionCommands\ActionGroup.cs" />
     <Compile Include="Controls\FrameEditor.xaml.cs">
       <DependentUpon>FrameEditor.xaml</DependentUpon>
     </Compile>
@@ -62,8 +63,9 @@
       <DependentUpon>SequenceEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolToSelectionBackground.cs" />
-    <Compile Include="ActionCommands\FrameConvertCommand.cs" />
+    <Compile Include="ActionCommands\CommonCommand.cs" />
     <Compile Include="Converters\TimeSpanToShortTime.cs" />
+    <Compile Include="FrameBuffer.cs" />
     <Compile Include="FrameBuilder.cs" />
     <Compile Include="ViewModels\FrameViewModel.cs" />
     <Page Include="Controls\FrameEditor.xaml">

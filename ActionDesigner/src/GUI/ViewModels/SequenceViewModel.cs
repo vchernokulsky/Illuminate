@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Data;
+using System.Windows.Input;
+using Intems.LightDesigner.GUI.ActionCommands;
 using Intems.LightPlayer.BL;
 using Intems.LightPlayer.BL.Commands;
 
@@ -15,6 +16,8 @@ namespace Intems.LightDesigner.GUI.ViewModels
     {
         [NonSerialized]
         private readonly ObservableCollection<FrameViewModel> _frameViewModels;
+        [NonSerialized]
+        private readonly ActionGroup _actionGroup;
 
         //последовательность управляющих фреймов
         private readonly FrameSequence _sequence;
@@ -22,6 +25,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
         public SequenceViewModel()
         {
             _frameViewModels = new ObservableCollection<FrameViewModel>();
+            _actionGroup = new ActionGroup(this);
 
             _sequence = new FrameSequence();
             _sequence.SequenceChanged += OnSequenceChanged;
@@ -43,6 +47,11 @@ namespace Intems.LightDesigner.GUI.ViewModels
             get { return _frameViewModels; }
         }
 
+        public ICommand CopyAction
+        {
+            get { return null; }
+        }
+
         public void NewFrame(string buttonTag)
         {
             CmdEnum cmdEnum;
@@ -59,7 +68,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
         public void Add(Frame frame)
         {
             //добавляем вьюху
-            var frameModel = new FrameViewModel(frame);
+            var frameModel = CreateFrameViewModel(frame);
             frameModel.ModelChanged += OnSequenceChanged;
             _frameViewModels.Add(frameModel);
             //добавляем фрейм в последовательность
@@ -73,7 +82,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
             if (idx >= 0 && frames.Any())
                 _sequence.Frames.InsertRange(idx + 1, frames);
 
-            foreach (var frameView in frames.Select(frame => new FrameViewModel(frame)))
+            foreach (var frameView in frames.Select(CreateFrameViewModel))
             {
                 frameView.ModelChanged += OnSequenceChanged;
                 _frameViewModels.Insert(++idx, frameView);
@@ -86,6 +95,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
             foreach (var viewModel in FrameViewModels)
                 viewModel.IsSelected = false;
         }
+
         public IEnumerable<Frame> SelectGroup(FrameViewModel frameView)
         {
             var selectedFrames = new List<Frame>();
@@ -112,26 +122,6 @@ namespace Intems.LightDesigner.GUI.ViewModels
                 selectedFrames = queue.ToList();
             }
             return selectedFrames;
-        }
-
-        public void CopySelected()
-        {
-//            _buffer.Clear();
-//            foreach (var model in FrameViewModels.Where(model => model.IsSelected))
-//            {
-//                var frameClone = (Frame)model.Frame.Clone();
-//                _buffer.Add(frameClone);
-//            }
-        }
-
-        public void ConvertFrame(FrameViewModel view, Frame frame)
-        {
-            int idx = _frameViewModels.IndexOf(view);
-            if (idx >= 0)
-            {
-                _sequence.ChangeFrame(view.Frame, frame);
-                _frameViewModels[idx] = new FrameViewModel(frame);
-            }
         }
 
         //загрузка/сохранение последовательности фреймов
@@ -172,6 +162,12 @@ namespace Intems.LightDesigner.GUI.ViewModels
         }
 
         //PRIVATE METHODS
+        private FrameViewModel CreateFrameViewModel(Frame frame)
+        {
+            var viewModel = new FrameViewModel(frame, _actionGroup);
+            return viewModel;
+        }
+
         private void OnSequenceChanged(object sender, EventArgs eventArgs)
         {
             var view = CollectionViewSource.GetDefaultView(_frameViewModels);
