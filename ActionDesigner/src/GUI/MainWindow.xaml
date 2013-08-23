@@ -23,11 +23,19 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal">
+                <Button HorizontalAlignment="Left" MinWidth="35" VerticalAlignment="Center"
+                        Content="New" Click="OnNewProjectClick"/>
+                <TextBlock VerticalAlignment="Center" Margin="10, 0, 0, 0"
+                            Text="Chanels count:"/>
+                <TextBox x:Name="_txtChannelCount" HorizontalAlignment="Left" VerticalAlignment="Center"
+                         MinWidth="20" Text="3"/>
+            </StackPanel>
             <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button HorizontalAlignment="Right" MinWidth="80" MinHeight="20"
-                        Content="Save" Click="OnSaveBtnClick" />
+                        Content="Save" />
                 <Button HorizontalAlignment="Right" MinWidth="80" MinHeight="20"
-                        Content="Load" Click="OnLoadBtnClick"/>
+                        Content="Load" />
             </StackPanel>
         </Grid>
         <!-- Контейнер каналов управления -->

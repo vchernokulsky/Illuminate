@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Intems.LightDesigner.GUI.ViewModels;
@@ -14,53 +15,25 @@ namespace Intems.LightDesigner.GUI
         private const string TargetFileFilter = "Light composition file|*.cmps";
         //private readonly SequenceViewModel _viewModel = new SequenceViewModel();
 
-        private readonly SequenceContainerViewModel _containerViewModel;
+        private SequenceContainerViewModel _containerViewModel;
 
         public MainWindow()
         {
             InitializeComponent();
-            _containerViewModel = new SequenceContainerViewModel();
-
-            DataContext = _containerViewModel;
         }
 
-        private void OnSaveBtnClick(object sender, RoutedEventArgs e)
+        private void OnNewProjectClick(object sender, RoutedEventArgs e)
         {
-//            var saveDlg = new SaveFileDialog {Filter = TargetFileFilter, DefaultExt = "*.cmps", AddExtension = true};
-//            if (saveDlg.ShowDialog().Value)
-//                _viewModel.SaveToFile(saveDlg.FileName);
-        }
+            var sChnCount = _txtChannelCount.Text;
 
-        private void OnLoadBtnClick(object sender, RoutedEventArgs e)
-        {
-//            var openDlg = new OpenFileDialog(){Filter = TargetFileFilter};
-//            if (openDlg.ShowDialog().Value)
-//                _viewModel.LoadFromFile(openDlg.FileName);
-        }
-
-        private void OnCellClick(object sender, MouseButtonEventArgs e)
-        {
-            var curCell = sender as Grid;
-            if (curCell == null) return;
-
-            var frameView = curCell.Tag as FrameViewModel;
-            if (frameView == null) return;
-
-            //_viewModel.CurrentView = frameView;
-            switch (Keyboard.Modifiers)
+            if (!String.IsNullOrEmpty(sChnCount))
             {
-                case ModifierKeys.Shift:
-                    //_viewModel.SelectGroup(frameView);
-                    break;
-
-                case ModifierKeys.Control:
-                    frameView.IsSelected ^= true;
-                    break;
-
-                case ModifierKeys.None:
-                    //_viewModel.ClearSelection();
-                    frameView.IsSelected ^= true;
-                    break;
+                int channelCount;
+                if (Int32.TryParse(sChnCount, out channelCount))
+                {
+                    _containerViewModel = new SequenceContainerViewModel(channelCount);
+                    DataContext = _containerViewModel;
+                }
             }
         }
     }

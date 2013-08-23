@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Intems.LightPlayer.BL;
 
-namespace Intems.LightDesigner.GUI
+namespace Intems.LightDesigner.GUI.Common
 {
     public class FrameBuffer
     {

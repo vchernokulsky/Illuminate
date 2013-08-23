@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Input;
+using Intems.LightDesigner.GUI.Common;
 using Intems.LightDesigner.GUI.ViewModels;
 using Intems.LightPlayer.BL;
 

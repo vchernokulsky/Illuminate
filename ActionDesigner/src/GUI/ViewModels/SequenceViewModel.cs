@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Data;
-using System.Windows.Input;
 using Intems.LightDesigner.GUI.ActionCommands;
 using Intems.LightPlayer.BL;
 using Intems.LightPlayer.BL.Commands;
@@ -45,11 +44,6 @@ namespace Intems.LightDesigner.GUI.ViewModels
         public IList<FrameViewModel> FrameViewModels
         {
             get { return _frameViewModels; }
-        }
-
-        public ICommand CopyAction
-        {
-            get { return null; }
         }
 
         public void NewFrame(string buttonTag)
@@ -122,43 +116,6 @@ namespace Intems.LightDesigner.GUI.ViewModels
                 selectedFrames = queue.ToList();
             }
             return selectedFrames;
-        }
-
-        //загрузка/сохранение последовательности фреймов
-        public void SaveToFile(string fileName)
-        {
-            try
-            {
-                using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read))
-                {
-                    _sequence.SequenceChanged -= OnSequenceChanged;
-                    var bf = new BinaryFormatter();
-                    bf.Serialize(stream, _sequence);
-                    _sequence.SequenceChanged += OnSequenceChanged;
-                }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-            }
-        }
-
-        public void LoadFromFile(string fileName)
-        {
-            using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                var bf = new BinaryFormatter();
-                var obj = bf.Deserialize(stream);
-
-                var sequence = obj as FrameSequence;
-                if (sequence != null)
-                {
-                    _frameViewModels.Clear();
-                    _sequence.Clear();
-
-                    foreach (var frame in sequence.Frames) Add(frame);
-                }
-            }
         }
 
         //PRIVATE METHODS
