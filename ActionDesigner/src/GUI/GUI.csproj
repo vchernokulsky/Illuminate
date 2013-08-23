@@ -63,7 +63,7 @@
       <DependentUpon>SequenceEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolToSelectionBackground.cs" />
-    <Compile Include="ActionCommands\CommonCommand.cs" />
+    <Compile Include="ActionCommands\BaseCommand.cs" />
     <Compile Include="Converters\TimeSpanToShortTime.cs" />
     <Compile Include="Common\FrameBuffer.cs" />
     <Compile Include="Common\FrameBuilder.cs" />

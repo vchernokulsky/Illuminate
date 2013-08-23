@@ -7,7 +7,7 @@
         xmlns:Controls="clr-namespace:Intems.LightDesigner.GUI.Controls"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance ViewModels:SequenceContainerViewModel}"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Lightshow Designer" Height="350" Width="525">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

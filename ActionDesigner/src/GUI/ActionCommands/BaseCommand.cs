@@ -4,11 +4,11 @@ using Intems.LightDesigner.GUI.ViewModels;
 
 namespace Intems.LightDesigner.GUI.ActionCommands
 {
-    public class CommonCommand : ICommand
+    public class BaseCommand : ICommand
     {
         private readonly Action<FrameViewModel> _action;
 
-        public CommonCommand(Action<FrameViewModel> action)
+        public BaseCommand(Action<FrameViewModel> action)
         {
             _action = action;
         }

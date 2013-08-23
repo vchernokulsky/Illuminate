@@ -28,7 +28,7 @@ namespace Intems.LightDesigner.GUI.ActionCommands
                         var frames = _sequenceViewModel.FrameViewModels.Where(model => model.IsSelected).Select(model => (Frame) model.Frame.Clone()).ToList();
                         _frameBuffer.Copy(frames);
                     });
-                var copyCommand = new CommonCommand(action);
+                var copyCommand = new BaseCommand(action);
                 return copyCommand;
             }
         }
@@ -46,7 +46,7 @@ namespace Intems.LightDesigner.GUI.ActionCommands
                             _sequenceViewModel.InsertAfter(frame, bufferedFrames);
                         }
                         );
-            var pasteCommand = new CommonCommand(action);
+            var pasteCommand = new BaseCommand(action);
                 return pasteCommand;
             }
         }

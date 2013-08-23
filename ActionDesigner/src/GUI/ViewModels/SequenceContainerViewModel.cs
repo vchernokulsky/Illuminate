@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using Intems.LightPlayer.BL;
 
 namespace Intems.LightDesigner.GUI.ViewModels
@@ -40,6 +42,15 @@ namespace Intems.LightDesigner.GUI.ViewModels
         public IEnumerable<SequenceViewModel> Sequences
         {
             get { return _sequenceDict.Values; }
+        }
+
+        public void SaveToFile(string fileName)
+        {
+            using (var fs = new FileStream(fileName, FileMode.CreateNew, FileAccess.Write))
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(fs, _sequenceCollection);
+            }
         }
     }
 }
