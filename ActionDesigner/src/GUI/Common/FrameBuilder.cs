@@ -5,7 +5,7 @@ using Intems.LightDesigner.GUI.ViewModels;
 using Intems.LightPlayer.BL;
 using Intems.LightPlayer.BL.Commands;
 
-namespace Intems.LightDesigner.GUI
+namespace Intems.LightDesigner.GUI.Common
 {
     public class FrameBuilder
     {
@@ -66,6 +66,11 @@ namespace Intems.LightDesigner.GUI
             if (cmd != null)
                 result = new Frame(TimeSpan.FromSeconds(0.0), DefaultLength) { Command = cmd };
             return result;
+        }
+
+        public void Clear()
+        {
+            _channelMap.Clear();
         }
 
         private readonly Dictionary<SequenceViewModel, int> _channelMap;

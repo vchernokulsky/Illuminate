@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Intems.LightDesigner.GUI.Common;
 using Intems.LightPlayer.BL;
 
 namespace Intems.LightDesigner.GUI.ViewModels
@@ -10,14 +11,14 @@ namespace Intems.LightDesigner.GUI.ViewModels
         private SequenceCollection _sequenceCollection;
 
         private readonly FrameBuilder _frameBuilder;
-        private readonly Dictionary<int, SequenceViewModel> _sequenceDict;
+        private readonly Dictionary<int, SequenceViewModel> _sequenceDictionary;
 
 
         public SequenceContainerViewModel() 
         {
             _frameBuilder = new FrameBuilder();
             _sequenceCollection = new SequenceCollection();
-            _sequenceDict = new Dictionary<int, SequenceViewModel>();
+            _sequenceDictionary = new Dictionary<int, SequenceViewModel>();
         }
 
         public SequenceContainerViewModel(int channelCount) : this()
@@ -26,7 +27,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
             {
                 var sequenceViewModel = new SequenceViewModel(_frameBuilder);
                 _frameBuilder.RegisterSequence(i, sequenceViewModel);
-                _sequenceDict.Add(i, sequenceViewModel);
+                _sequenceDictionary.Add(i, sequenceViewModel);
                 //формируем коллекцию последовательностей фреймов
                 _sequenceCollection.Sequences.Add(sequenceViewModel.Sequence);
             }
@@ -34,33 +35,37 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
         public IEnumerable<int> Channels
         {
-            get { return _sequenceDict.Keys; }
+            get { return _sequenceDictionary.Keys; }
         }
 
         public IEnumerable<SequenceViewModel> Sequences
         {
-            get { return _sequenceDict.Values; }
+            get { return _sequenceDictionary.Values; }
         }
 
         public void SaveToFile(string fileName)
         {
             using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
-                foreach (var viewModel in _sequenceDict.Values)
+                foreach (var viewModel in _sequenceDictionary.Values)
                     viewModel.Unsubscribe();
 
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(fs, _sequenceCollection);
                 fs.Flush();
 
-                foreach (var viewModel in _sequenceDict.Values)
+                foreach (var viewModel in _sequenceDictionary.Values)
                     viewModel.Subscribe();
             }
         }
 
         public void LoadFromFile(string fileName)
         {
-            _sequenceDict.Clear();
+            //очищаем коллекции
+            _frameBuilder.Clear();
+            _sequenceDictionary.Clear();
+            _sequenceCollection.Clear();
+
             using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
             {
                 var formatter = new BinaryFormatter();
@@ -72,7 +77,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
                 {
                     var sequenceViewModel = new SequenceViewModel(sequence, _frameBuilder);
                     _frameBuilder.RegisterSequence(i, sequenceViewModel);
-                    _sequenceDict.Add(i, sequenceViewModel);
+                    _sequenceDictionary.Add(i, sequenceViewModel);
                     i++;
                 }
             }

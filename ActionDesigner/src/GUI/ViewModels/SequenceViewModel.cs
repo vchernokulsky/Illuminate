@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Data;
 using Intems.LightDesigner.GUI.ActionCommands;
+using Intems.LightDesigner.GUI.Common;
 using Intems.LightPlayer.BL;
 using Intems.LightPlayer.BL.Commands;
 
@@ -36,8 +37,13 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
         public SequenceViewModel(FrameSequence sequence, FrameBuilder builder) : this(builder)
         {
-            foreach (var frame in sequence.Frames) 
-                Add(frame);
+            _sequence = sequence;
+            foreach (var frameModel in _sequence.Frames.Select(CreateFrameViewModel))
+            {
+                frameModel.ModelChanged += OnSequenceChanged;
+                _frameViewModels.Add(frameModel);
+            }
+            _sequence.UpdateAll();
         }
 
         public FrameSequence Sequence
