@@ -33,9 +33,9 @@
             </StackPanel>
             <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button HorizontalAlignment="Right" MinWidth="80" MinHeight="20"
-                        Content="Save" />
+                        Content="Save" Click="OnSaveButtonClick"/>
                 <Button HorizontalAlignment="Right" MinWidth="80" MinHeight="20"
-                        Content="Load" />
+                        Content="Load" Click="OnLoadButtonClick"/>
             </StackPanel>
         </Grid>
         <!-- Контейнер каналов управления -->

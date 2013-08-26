@@ -34,6 +34,12 @@ namespace Intems.LightDesigner.GUI.ViewModels
             _frameBuilder = builder;
         }
 
+        public SequenceViewModel(FrameSequence sequence, FrameBuilder builder) : this(builder)
+        {
+            foreach (var frame in sequence.Frames) 
+                Add(frame);
+        }
+
         public FrameSequence Sequence
         {
             get { return _sequence; }
@@ -114,6 +120,21 @@ namespace Intems.LightDesigner.GUI.ViewModels
                 selectedFrames = queue.ToList();
             }
             return selectedFrames;
+        }
+
+        // подписка/отписка на все события для сохранения
+        public void Unsubscribe()
+        {
+            foreach (var viewModel in FrameViewModels)
+                viewModel.ModelChanged -= OnSequenceChanged;
+            _sequence.SequenceChanged -= OnSequenceChanged;
+        }
+
+        public void Subscribe()
+        {
+            foreach (var viewModel in FrameViewModels)
+                viewModel.ModelChanged += OnSequenceChanged;
+            _sequence.SequenceChanged += OnSequenceChanged;
         }
 
         //PRIVATE METHODS

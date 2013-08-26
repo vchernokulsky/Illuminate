@@ -7,23 +7,21 @@ namespace Intems.LightDesigner.GUI.ViewModels
 {
     public class SequenceContainerViewModel
     {
-        private readonly SequenceCollection _sequenceCollection;
+        private SequenceCollection _sequenceCollection;
 
         private readonly FrameBuilder _frameBuilder;
         private readonly Dictionary<int, SequenceViewModel> _sequenceDict;
 
 
-        public SequenceContainerViewModel() : this(1)
+        public SequenceContainerViewModel() 
         {
+            _frameBuilder = new FrameBuilder();
+            _sequenceCollection = new SequenceCollection();
+            _sequenceDict = new Dictionary<int, SequenceViewModel>();
         }
 
-        public SequenceContainerViewModel(int channelCount)
+        public SequenceContainerViewModel(int channelCount) : this()
         {
-            _sequenceCollection = new SequenceCollection();
-
-            _frameBuilder = new FrameBuilder();
-            _sequenceDict = new Dictionary<int, SequenceViewModel>();
-
             for (int i = 0; i < channelCount; i++)
             {
                 var sequenceViewModel = new SequenceViewModel(_frameBuilder);
@@ -46,10 +44,37 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
         public void SaveToFile(string fileName)
         {
-            using (var fs = new FileStream(fileName, FileMode.CreateNew, FileAccess.Write))
+            using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
+                foreach (var viewModel in _sequenceDict.Values)
+                    viewModel.Unsubscribe();
+
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(fs, _sequenceCollection);
+                fs.Flush();
+
+                foreach (var viewModel in _sequenceDict.Values)
+                    viewModel.Subscribe();
+            }
+        }
+
+        public void LoadFromFile(string fileName)
+        {
+            _sequenceDict.Clear();
+            using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+            {
+                var formatter = new BinaryFormatter();
+                _sequenceCollection = (SequenceCollection) formatter.Deserialize(fs);
+                fs.Flush();
+
+                int i = 0;
+                foreach (var sequence in _sequenceCollection.Sequences)
+                {
+                    var sequenceViewModel = new SequenceViewModel(sequence, _frameBuilder);
+                    _frameBuilder.RegisterSequence(i, sequenceViewModel);
+                    _sequenceDict.Add(i, sequenceViewModel);
+                    i++;
+                }
             }
         }
     }

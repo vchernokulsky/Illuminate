@@ -36,5 +36,25 @@ namespace Intems.LightDesigner.GUI
                 }
             }
         }
+
+        private void OnSaveButtonClick(object sender, RoutedEventArgs e)
+        {
+            var saveDlg = new SaveFileDialog {AddExtension = true, DefaultExt = "*.cmps", Filter = "Composition files | *.cmps"};
+            if (saveDlg.ShowDialog().Value)
+                _containerViewModel.SaveToFile(saveDlg.FileName);
+        }
+
+        private void OnLoadButtonClick(object sender, RoutedEventArgs e)
+        {
+            var openDlg = new OpenFileDialog {Filter = "Composition files | *.cmps"};
+            if (openDlg.ShowDialog().Value)
+            {
+                if(_containerViewModel == null)
+                    _containerViewModel = new SequenceContainerViewModel();
+
+                _containerViewModel.LoadFromFile(openDlg.FileName);
+                DataContext = _containerViewModel;
+            }
+        }
     }
 }
