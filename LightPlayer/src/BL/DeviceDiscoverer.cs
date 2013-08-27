@@ -43,7 +43,7 @@ namespace Intems.LightPlayer.BL
                 var point = new IPEndPoint(IPAddress.Loopback, Port);
                 var dataBytes = _client.Receive(ref point);
                 var answer = Encoding.ASCII.GetString(dataBytes);
-                var newDevice = new Device(point.Address.ToString(), point.Port);
+                var newDevice = new Device(point);
                 _devices.Add(newDevice);
 
                 Console.WriteLine(answer);

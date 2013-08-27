@@ -16,8 +16,6 @@ namespace Intems.LightPlayer.BL
 
         private readonly IWavePlayer _player;
         private readonly SequenceCollection _sequenceCollection;
-        private IEnumerable<Device> _devices;
-
 
         private readonly IPackageSender _sender;
         private FrameSequence _sequence;
@@ -44,6 +42,16 @@ namespace Intems.LightPlayer.BL
 
             _packageSenders = senders;
             _sequenceCollection = sequenceCollection;
+            _player = player;
+        }
+
+        private IEnumerable<Device> _devices;
+        public FrameProcessor(IEnumerable<Device> devices, IWavePlayer player)
+        {
+            _timer = new Timer(TimeInterval);
+            _timer.Elapsed += OnTimerElapsed;
+
+            _devices = devices;
             _player = player;
         }
 
@@ -82,19 +90,19 @@ namespace Intems.LightPlayer.BL
             Start();
         }
 
-        private readonly TimeSpan _prevTime = TimeSpan.FromSeconds(0);
+        private readonly TimeSpan _prevTime = TimeSpan.FromSeconds(0.0);
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
             lock (_locker)
             {
                 var time = _prevTime;
-
                 if (AudioReader != null)
                     time = AudioReader.CurrentTime;
                 else
                     time += TimeSpan.FromMilliseconds(TimeInterval);
 
-                SetTime(time);
+                //set current time for all devices
+                foreach (var device in _devices) device.SetTime(time);
             }
         }
     }
