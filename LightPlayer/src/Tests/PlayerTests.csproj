@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllCommandsTest.cs" />
-    <Compile Include="FrameProcessorTest.cs" />
     <Compile Include="FrameSequenceTest.cs" />
     <Compile Include="FrameTest.cs" />
     <Compile Include="JsonSerializationTest.cs" />

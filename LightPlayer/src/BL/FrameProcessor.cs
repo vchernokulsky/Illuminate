@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Timers;
-using Intems.LightPlayer.Transport;
 using NAudio.Wave;
 
 namespace Intems.LightPlayer.BL
@@ -15,60 +13,22 @@ namespace Intems.LightPlayer.BL
         private readonly object _locker = new object();
 
         private readonly IWavePlayer _player;
-        private readonly SequenceCollection _sequenceCollection;
 
-        private readonly IPackageSender _sender;
-        private FrameSequence _sequence;
-
-        public FrameProcessor(IPackageSender sender, FrameSequence sequence)
+        public FrameProcessor(IWavePlayer player)
         {
             _timer = new Timer(TimeInterval);
             _timer.Elapsed += OnTimerElapsed;
 
-            _sender = sender;
-            _sequence = sequence;
-        }
-
-        public FrameProcessor(IPackageSender sender, IWavePlayer player, FrameSequence sequence) : this(sender, sequence)
-        {
             _player = player;
         }
 
-        private readonly IEnumerable<IPackageSender> _packageSenders;
-        public FrameProcessor(IEnumerable<IPackageSender> senders, IWavePlayer player, SequenceCollection sequenceCollection)
+        private readonly IEnumerable<Device> _devices;
+        public FrameProcessor(IEnumerable<Device> devices, IWavePlayer player) : this(player)
         {
-            _timer = new Timer(TimeInterval);
-            _timer.Elapsed += OnTimerElapsed;
-
-            _packageSenders = senders;
-            _sequenceCollection = sequenceCollection;
-            _player = player;
-        }
-
-        private IEnumerable<Device> _devices;
-        public FrameProcessor(IEnumerable<Device> devices, IWavePlayer player)
-        {
-            _timer = new Timer(TimeInterval);
-            _timer.Elapsed += OnTimerElapsed;
-
             _devices = devices;
-            _player = player;
         }
 
         public AudioFileReader AudioReader { get; set; }
-
-        public void SetTime(TimeSpan time)
-        {
-            if (_packageSenders != null && _packageSenders.Any())
-            {
-                var frames = _sequenceCollection.FramesByTime(time);
-                foreach (var sender in _packageSenders)
-                {
-                    var packages = frames.Select(frm => frm.Command.GetBytes()).Select(bytes => new Package(bytes)).ToList();
-                    sender.SendPackages(packages);
-                }
-            }
-        }
 
         public void Start()
         {
@@ -86,7 +46,6 @@ namespace Intems.LightPlayer.BL
 
         public void Start(FrameSequence sequence)
         {
-            _sequence = sequence;
             Start();
         }
 

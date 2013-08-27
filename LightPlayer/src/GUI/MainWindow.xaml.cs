@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
@@ -20,11 +21,10 @@ namespace Intems.LightPlayer.GUI
     public partial class MainWindow : Window
     {
         private FrameSequence _sequence;
-        private IPackageSender _sender;
+        private readonly FrameProcessor _processor;
+        private IEnumerable<Device> _devices;
 
         private readonly IWavePlayer _player = new WaveOutEvent();
-
-        private readonly FrameProcessor _processor;
 
         public MainWindow()
         {
@@ -32,7 +32,7 @@ namespace Intems.LightPlayer.GUI
             InitializePackageSender();
             InitializeDataContext();
 
-            _processor = new FrameProcessor(_sender, _player, _sequence);
+            _processor = new FrameProcessor(_player);
         }
 
         private void InitializePackageSender()
@@ -41,11 +41,11 @@ namespace Intems.LightPlayer.GUI
             {
                 var port = new SerialPort("COM5", 115200, Parity.None, 8, StopBits.One);
                 port.Open();
-                _sender = new SerialportSender(port);
+                new SerialportSender(port);
             }
             else
             {
-                _sender = new FakePackageSender();
+                new FakePackageSender();
             }
         }
 
