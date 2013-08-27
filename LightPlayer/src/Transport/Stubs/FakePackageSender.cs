@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Intems.LightPlayer.Transport.Stubs
@@ -18,6 +19,11 @@ namespace Intems.LightPlayer.Transport.Stubs
             _writer.Write(dt.ToString("mm:ss.fff") + "    :    ");
             _writer.WriteLine(package.ToString());
             _writer.Flush();
+        }
+
+        public void SendPackages(IEnumerable<Package> packages)
+        {
+            throw new NotImplementedException();
         }
     }
 }

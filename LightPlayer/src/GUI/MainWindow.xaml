@@ -17,13 +17,14 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            
+
             <!-- Выбор композиции -->
             <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,5,0"
                        Text="MP3 file:"/>
@@ -31,9 +32,11 @@
                      TextWrapping="Wrap" Text="{Binding AudioFileName}" />
             <Button Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" 
                     Content="Choose" Click="OnBtnAudioChooseClick"/>
+            <Line Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
+                  X1="0" Y1="0" Y2="0" X2="10" Stroke="Black" Stretch="Fill" />
 
             <!-- Информация об устройстве -->
-            <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+            <ItemsControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
                           ItemsSource="{Binding Devices}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -48,12 +51,12 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <!-- Адрес устройства -->
-                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,5,0"
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10, 0, 5, 0"
                                        Text="Dev address:"/>
                             <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 10, 5, 10"
                                        Text="{Binding Address}"/>
                             <!-- Выбор схемы иллюминации -->
-                            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,5,0"
+                            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10, 0, 5, 0"
                                        Text="Light schema:"/>
                             <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10, 10, 5, 10"
                                      TextWrapping="Wrap" Text="{Binding CompositionFile}" />

@@ -13,9 +13,9 @@ namespace Intems.LightPlayer.GUI.ViewModels
             _device = device;
         }
 
-        public string Address { get{return _device.Address;} }
+        public string Address { get{return _device.EndPoint.Address.ToString();} }
 
-        public int Port { get { return _device.Port; } }
+        public int Port { get { return _device.EndPoint.Port; } }
 
         public string SerialPortName { get; set; }
 

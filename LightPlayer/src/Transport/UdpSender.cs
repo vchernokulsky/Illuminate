@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 
@@ -30,6 +31,11 @@ namespace Intems.LightPlayer.Transport
                     Console.WriteLine(ex);
                 }
             }
+        }
+
+        public void SendPackages(IEnumerable<Package> packages)
+        {
+            throw new NotImplementedException();
         }
 
         public string Address

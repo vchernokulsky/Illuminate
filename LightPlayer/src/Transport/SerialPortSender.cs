@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Ports;
 
@@ -38,6 +39,11 @@ namespace Intems.LightPlayer.Transport
                 Console.WriteLine(ex);
                 throw;
             }
+        }
+
+        public void SendPackages(IEnumerable<Package> packages)
+        {
+            throw new NotImplementedException();
         }
 
         private void WriteLog(Package package)
