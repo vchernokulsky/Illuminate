@@ -18,8 +18,14 @@ namespace Intems.LightPlayer.BL
 
         public Device(string addr, int port)
         {
-//            _sender = new UdpSender(addr, port);
+            Address = addr;
+            Port = port;
+
+            _sender = new UdpSender(addr, port);
         }
+
+        public string Address { get; set; }
+        public int Port { get; set; }
 
         public void SendPackage(Package package)
         {

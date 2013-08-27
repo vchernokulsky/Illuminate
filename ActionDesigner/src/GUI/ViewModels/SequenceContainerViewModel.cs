@@ -61,10 +61,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
         public void LoadFromFile(string fileName)
         {
-            //очищаем коллекции
-            _frameBuilder.Clear();
-            _sequenceDictionary.Clear();
-            _sequenceCollection.Clear();
+            ResetDataContext();
 
             using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
             {
@@ -81,6 +78,14 @@ namespace Intems.LightDesigner.GUI.ViewModels
                     i++;
                 }
             }
+        }
+
+        private void ResetDataContext()
+        {
+            _sequenceCollection.Clear();
+
+            _frameBuilder.Clear();
+            _sequenceDictionary.Clear();
         }
     }
 }

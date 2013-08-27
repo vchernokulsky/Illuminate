@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Gui="clr-namespace:Intems.LightPlayer.GUI"
         xmlns:ViewModels="clr-namespace:Intems.LightPlayer.GUI.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" d:DataContext="{d:DesignInstance ViewModels:MainViewModel}">
@@ -33,21 +32,32 @@
             <Button Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" 
                     Content="Choose" Click="OnBtnAudioChooseClick"/>
 
+            <!-- Информация об устройстве -->
             <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
                           ItemsSource="{Binding Devices}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Tag="{Binding .}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
+                            <!-- Адрес устройства -->
                             <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,5,0"
+                                       Text="Dev address:"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 10, 5, 10"
+                                       Text="{Binding Address}"/>
+                            <!-- Выбор схемы иллюминации -->
+                            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,5,0"
                                        Text="Light schema:"/>
-                            <TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10, 10, 5, 10"
+                            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10, 10, 5, 10"
                                      TextWrapping="Wrap" Text="{Binding CompositionFile}" />
-                            <Button Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" 
+                            <Button Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" 
                                     Content="Choose" Tag="{Binding .}" Click="OnBtnFrameChooseClick"/>
                         </Grid>
                     </DataTemplate>
@@ -62,9 +72,9 @@
             </Grid.ColumnDefinitions>
 
             <Button HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" MinHeight="23" 
-                    Content="Start" Click="OnBtnStart_Click"/>
+                    Content="Start" Click="OnButtonStartClick"/>
             <Button Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" MinHeight="23" 
-                    Content="Stop" Click="OnBtnStop_Click"/>
+                    Content="Stop" Click="OnButtonStopClick"/>
         </Grid>
 
     </Grid>

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using Intems.LightPlayer.BL;
 
 namespace Intems.LightPlayer.GUI.ViewModels
 {
@@ -20,7 +21,12 @@ namespace Intems.LightPlayer.GUI.ViewModels
         public MainViewModel()
         {
             _devices = new List<DeviceViewModel>();
-            _devices.Add(new DeviceViewModel());
+        }
+
+        public MainViewModel(IEnumerable<Device> devices) : this()
+        {
+            foreach (var device in devices)
+                _devices.Add(new DeviceViewModel(device));
         }
 
         private string _audioFileName;

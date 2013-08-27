@@ -30,7 +30,8 @@ namespace Intems.LightPlayer.GUI
         {
             InitializeComponent();
             InitializePackageSender();
-            DataContext = new MainViewModel();
+            InitializeDataContext();
+
             _processor = new FrameProcessor(_sender, _player, _sequence);
         }
 
@@ -45,8 +46,16 @@ namespace Intems.LightPlayer.GUI
             else
             {
                 _sender = new FakePackageSender();
-                Console.WriteLine("Sender stub was create because can't find target COM port");
             }
+        }
+
+        private void InitializeDataContext()
+        {
+            var discoverer = new DeviceDiscoverer();
+            var devices = discoverer.Discover();
+            var viewModel = new MainViewModel(devices);
+
+            DataContext = viewModel;
         }
 
         private void OnBtnAudioChooseClick(object sender, RoutedEventArgs e)
@@ -79,7 +88,7 @@ namespace Intems.LightPlayer.GUI
             }
         }
 
-        private void OnBtnStart_Click(object sender, RoutedEventArgs e)
+        private void OnButtonStartClick(object sender, RoutedEventArgs e)
         {
             var vm = (MainViewModel)DataContext;
             if (!String.IsNullOrEmpty(vm.AudioFileName))
@@ -93,7 +102,7 @@ namespace Intems.LightPlayer.GUI
             }
         }
 
-        private void OnBtnStop_Click(object sender, RoutedEventArgs e)
+        private void OnButtonStopClick(object sender, RoutedEventArgs e)
         {
             _processor.Stop();
         }
