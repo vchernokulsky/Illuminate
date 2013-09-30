@@ -34,11 +34,6 @@ namespace Intems.LightPlayer.GUI
             DataContext = new MainViewModel();
         }
 
-//        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-//        {
-//
-//        }
-
         private void OnDeviceFindButtonClick(object sender, RoutedEventArgs e)
         {
             var viewModel = DataContext as MainViewModel;
