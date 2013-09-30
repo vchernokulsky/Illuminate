@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="Intems.LightDesigner.GUI.Controls.SequenceEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:Converters="clr-namespace:Intems.LightDesigner.GUI.Converters"
+             xmlns:ViewModels="clr-namespace:Intems.LightDesigner.GUI.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" 
+             d:DataContext="{d:DesignInstance ViewModels:SequenceViewModel}">
+    <UserControl.Resources>
+        <Converters:BoolToSelectionBackground x:Key="CellBackgroundConverter" Selected="LightSlateGray" Unselected="White"/>
+        <Converters:TimeSpanToShortTime x:Key="ToShortTimeConverter"/>
+    </UserControl.Resources>
+
+    <Grid Margin="0, 0, 3, 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
+                        x:Name="_btnSet" Tag="SetColor" Content="SET" Click="OnAddClick"/>
+            <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
+                        x:Name="_btnFade" Tag="Fade" Content="FADE" Click="OnAddClick"/>
+            <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
+                        x:Name="_btnBlink" Tag="Blink" Content="BLINK" Click="OnAddClick"/>
+        </StackPanel>
+
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding FrameViewModels}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="ViewModels:FrameViewModel">
+                    <Grid>
+                        <Border BorderThickness="2" BorderBrush="Blue">
+                            <Grid Margin="5,5,5,5" Tag="{Binding .}" MouseLeftButtonDown="OnMouseLeftButtonDown"
+                                  Background="{Binding IsSelected, Converter={StaticResource CellBackgroundConverter}}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.ContextMenu>
+                                    <ContextMenu Tag="{Binding .}">
+                                        <MenuItem Header="Copy" DataContext="{Binding ActionGroup}" 
+                                                  Command="{Binding CopySelected}" 
+                                                  CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                                        <MenuItem Header="Paste" DataContext="{Binding ActionGroup}" 
+                                                  Command="{Binding Paste}" 
+                                                  CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+                                    </ContextMenu>
+                                </Grid.ContextMenu>
+
+                                <!-- Разметка ячейки -->
+                                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,0,10,0"
+                                       FontSize="14" Text="{Binding FrameBegin, Converter={StaticResource ToShortTimeConverter}}"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                                     FontSize="14" Text="{Binding FrameLength, Converter={StaticResource ToShortTimeConverter}}"
+                                     Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" />
+                                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                       Text="{Binding CmdType}" TextAlignment="Center"/>
+                                <xctk:ColorPicker Grid.Row="2" Grid.Column="0" MinWidth="20" MinHeight="20" 
+                                              Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}"
+                                              SelectedColor="{Binding FillBrush1}"/>
+                                <xctk:ColorPicker Grid.Row="2" Grid.Column="1" MinWidth="20" MinHeight="20" 
+                                              Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}"
+                                              SelectedColor="{Binding FillBrush2}" Visibility="{Binding FadeVisibility}"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

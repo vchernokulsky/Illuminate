@@ -42,5 +42,13 @@ namespace Intems.LightPlayer.GUI.ViewModels
             get { return _devices; }
             set { _devices = value; RaisePropertyChanged("Devices"); }
         }
+
+        public void UpdateDevices(ICollection<Device> devices)
+        {
+            _devices.Clear();
+            foreach (var device in devices)
+                _devices.Add(new DeviceViewModel(device));
+            RaisePropertyChanged("Devices");
+        }
     }
 }

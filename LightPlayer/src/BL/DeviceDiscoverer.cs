@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 
 namespace Intems.LightPlayer.BL
 {
@@ -15,6 +14,7 @@ namespace Intems.LightPlayer.BL
         private readonly UdpClient _client;
         private readonly IPEndPoint _broadcastEndPoint;
 
+        private readonly int _expectedDevCount;
         private readonly List<Device> _devices;
 
         public DeviceDiscoverer() : this(Port)
@@ -29,7 +29,12 @@ namespace Intems.LightPlayer.BL
             _broadcastEndPoint = new IPEndPoint(IPAddress.Broadcast, port);
         }
 
-        public IEnumerable<Device> Discover()
+        public DeviceDiscoverer(int port, int expectedDevCount) : this(port)
+        {
+            _expectedDevCount = expectedDevCount;
+        }
+
+        public ICollection<Device> Discover()
         {
             try
             {
@@ -48,10 +53,13 @@ namespace Intems.LightPlayer.BL
         {
             try
             {
-                var point = new IPEndPoint(IPAddress.Loopback, Port);
-                var dataBytes = _client.Receive(ref point);
-                var newDevice = new Device(point);
-                _devices.Add(newDevice);
+                for (int i = 0; i < _expectedDevCount; i++)
+                {
+                    var remoteEp = new IPEndPoint(IPAddress.Loopback, Port);
+                    byte[] dataBytes = _client.Receive(ref remoteEp);
+                    var newDevice = new Device(remoteEp);
+                    _devices.Add(newDevice);
+                }
             }
             catch (Exception exception)
             {

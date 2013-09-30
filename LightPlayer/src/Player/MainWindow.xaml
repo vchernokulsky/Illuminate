@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ViewModels="clr-namespace:Intems.LightPlayer.GUI.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" d:DataContext="{d:DesignInstance ViewModels:MainViewModel}">
+        d:DataContext="{d:DesignInstance ViewModels:MainViewModel}"
+        Title="MainWindow" Height="350" Width="525" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -35,6 +36,11 @@
             <Line Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
                   X1="0" Y1="0" Y2="0" X2="10" Stroke="Black" Stretch="Fill" />
 
+            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"  Text="Expected device count:"/>
+            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="20" Text="5"/>
+            <Button Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="30" MinHeight="15" 
+                    Content="Find" Click="OnDeviceFindButtonClick"/>
+            
             <!-- Информация об устройстве -->
             <ItemsControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
                           ItemsSource="{Binding Devices}">

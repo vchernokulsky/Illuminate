@@ -29,33 +29,27 @@ namespace Intems.LightPlayer.GUI
         public MainWindow()
         {
             InitializeComponent();
-            InitializePackageSender();
-            InitializeDataContext();
 
             _processor = new FrameProcessor(_player);
+            DataContext = new MainViewModel();
         }
 
-        private void InitializePackageSender()
-        {
-            if (SerialPort.GetPortNames().Contains("COM5"))
-            {
-                var port = new SerialPort("COM5", 115200, Parity.None, 8, StopBits.One);
-                port.Open();
-                new SerialportSender(port);
-            }
-            else
-            {
-                new FakePackageSender();
-            }
-        }
+//        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+//        {
+//
+//        }
 
-        private void InitializeDataContext()
+        private void OnDeviceFindButtonClick(object sender, RoutedEventArgs e)
         {
-            var discoverer = new DeviceDiscoverer();
-            var devices = discoverer.Discover();
-            var viewModel = new MainViewModel(devices);
+            var viewModel = DataContext as MainViewModel;
 
-            DataContext = viewModel;
+            if (viewModel != null)
+            {
+                var discoverer = new DeviceDiscoverer(15200, 1);
+                var devices = discoverer.Discover();
+
+                viewModel.UpdateDevices(devices);
+            }
         }
 
         private void OnBtnAudioChooseClick(object sender, RoutedEventArgs e)
