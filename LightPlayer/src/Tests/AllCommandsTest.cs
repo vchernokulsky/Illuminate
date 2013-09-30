@@ -41,7 +41,7 @@ namespace Tests
 
             var color1 = Color.FromRgb(128, 128, 128);
             var color2 = Color.FromRgb(255, 255, 255);
-            var cmd = new FadeColor(color1, color2, 10);
+            var cmd = new FadeColor(color1, color2, 10){Channel = 1, Length = 1};
 
             var actual = cmd.GetBytes();
             CollectionAssert.AreEqual(expected, actual);
