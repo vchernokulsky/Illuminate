@@ -43,6 +43,13 @@ namespace Intems.LightPlayer.GUI.ViewModels
             set { _devices = value; RaisePropertyChanged("Devices"); }
         }
 
+        private int _deviceCount = 5;
+        public int DeviceCount
+        {
+            get { return _deviceCount; }
+            set { _deviceCount = value; RaisePropertyChanged("DeviceCount"); }
+        }
+
         public void UpdateDevices(ICollection<Device> devices)
         {
             _devices.Clear();

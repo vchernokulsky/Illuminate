@@ -11,6 +11,8 @@ namespace DeviceStub
         private readonly int _port;
         private readonly UdpClient _client;
 
+        private readonly object _locker = new object();
+
         public UdpDevStub(int id, int port)
         {
             _id = id;
@@ -23,15 +25,18 @@ namespace DeviceStub
         {
             while (true)
             {
-                var endpoint = new IPEndPoint(IPAddress.Any, 15000);
-                var dataBytes = _client.Receive(ref endpoint);
-                var senderInfo = String.Format("Sender (ADDR:{0}; PORT:{1})", endpoint.Address, endpoint.Port);
-                var requestData = Encoding.ASCII.GetString(dataBytes);
-                Console.WriteLine(requestData + "  |  " + senderInfo);
+                lock (_locker)
+                {
+                    var endpoint = new IPEndPoint(IPAddress.Any, 15000);
+                    var dataBytes = _client.Receive(ref endpoint);
+                    var senderInfo = String.Format("Sender (ADDR:{0}; PORT:{1})", endpoint.Address, endpoint.Port);
+                    var requestData = Encoding.ASCII.GetString(dataBytes);
+                    Console.WriteLine(requestData + "  |  " + senderInfo);
 
-                var str = String.Format("ADDR:{0};PORT:{1};ID:{2}", "127.0.0.1", _port, _id);
-                var response = Encoding.ASCII.GetBytes(str);
-                _client.Send(response, response.Length, endpoint);
+                    var str = String.Format("ADDR:{0};PORT:{1};ID:{2}", "127.0.0.1", _port, _id);
+                    var response = Encoding.ASCII.GetBytes(str);
+                    _client.Send(response, response.Length, endpoint);
+                }
             }
         }
     }

@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Ports;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using Intems.LightPlayer.BL;
 using Intems.LightPlayer.GUI.ViewModels;
-using Intems.LightPlayer.Transport;
-using Intems.LightPlayer.Transport.Stubs;
 using Microsoft.Win32;
 using NAudio.Wave;
 
@@ -40,7 +36,7 @@ namespace Intems.LightPlayer.GUI
 
             if (viewModel != null)
             {
-                var discoverer = new DeviceDiscoverer(15200, 1);
+                var discoverer = new DeviceDiscoverer(15200, viewModel.DeviceCount);
                 var devices = discoverer.Discover();
 
                 viewModel.UpdateDevices(devices);

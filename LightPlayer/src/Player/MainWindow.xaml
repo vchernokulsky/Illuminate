@@ -19,6 +19,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -33,11 +34,11 @@
                      TextWrapping="Wrap" Text="{Binding AudioFileName}" />
             <Button Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" 
                     Content="Choose" Click="OnBtnAudioChooseClick"/>
-            <Line Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
-                  X1="0" Y1="0" Y2="0" X2="10" Stroke="Black" Stretch="Fill" />
+            <Line Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center"
+                  X1="0" Y1="10" X2="10" Y2="10"  Stroke="Black" Stretch="Fill" />
 
             <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"  Text="Expected device count:"/>
-            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="20" Text="5"/>
+            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="20" Text="{Binding DeviceCount}"/>
             <Button Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="30" MinHeight="15" 
                     Content="Find" Click="OnDeviceFindButtonClick"/>
             

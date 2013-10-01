@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace DeviceStub
 {
@@ -14,8 +15,10 @@ namespace DeviceStub
             const int startPort = 15200;
             for (int i = 0; i < stubCount; i++)
             {
-                _devStubs[i] = new UdpDevStub(i, startPort + i);
-                _devStubs[i].WaitData();
+                int idx = i;
+                _devStubs[i] = new UdpDevStub(idx, startPort + idx);
+                var th = new Thread(() => _devStubs[idx].WaitData());
+                th.Start();
             }
 
             Console.ReadKey();
