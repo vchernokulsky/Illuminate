@@ -21,6 +21,7 @@ namespace Intems.LightPlayer.GUI
         private IEnumerable<Device> _devices;
 
         private readonly IWavePlayer _player = new WaveOutEvent();
+        private const int Port = 15000;
 
         public MainWindow()
         {
@@ -36,7 +37,7 @@ namespace Intems.LightPlayer.GUI
 
             if (viewModel != null)
             {
-                var discoverer = new DeviceDiscoverer(15200, viewModel.DeviceCount);
+                var discoverer = new DeviceDiscoverer(Port, viewModel.DeviceCount);
                 var devices = discoverer.Discover();
 
                 viewModel.UpdateDevices(devices);

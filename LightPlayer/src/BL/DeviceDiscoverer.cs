@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 namespace Intems.LightPlayer.BL
 {
@@ -25,7 +26,8 @@ namespace Intems.LightPlayer.BL
         {
             _devices = new List<Device>();
 
-            _client = new UdpClient();
+            var ep = new IPEndPoint(IPAddress.Any, 0);
+            _client = new UdpClient(ep);
             _broadcastEndPoint = new IPEndPoint(IPAddress.Broadcast, port);
         }
 
@@ -49,17 +51,26 @@ namespace Intems.LightPlayer.BL
             return _devices;
         }
 
+        private readonly object _locker = new object();
         private void WaitForAnswer()
         {
             try
             {
                 for (int i = 0; i < _expectedDevCount; i++)
                 {
-                    var remoteEp = new IPEndPoint(IPAddress.Loopback, Port);
-                    byte[] dataBytes = _client.Receive(ref remoteEp);
-                    var newDevice = new Device(remoteEp);
-                    _devices.Add(newDevice);
+                    var remoteEp = new IPEndPoint(IPAddress.Any, Port);
+                    _client.BeginReceive(asyncRes =>
+                    {
+                        lock (_locker)
+                        {
+                            _client.EndReceive(asyncRes, ref remoteEp);
+                            var newDevice = new Device(remoteEp);
+                            _devices.Add(newDevice);
+                        }
+                    }, null);
                 }
+                //TODO: надо как-то "правильно" ожидать завершение опроса
+                Thread.Sleep(3000);
             }
             catch (Exception exception)
             {

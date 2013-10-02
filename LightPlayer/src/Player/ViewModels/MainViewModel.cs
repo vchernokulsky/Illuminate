@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Data;
 using Intems.LightPlayer.BL;
 
 namespace Intems.LightPlayer.GUI.ViewModels
@@ -54,8 +55,11 @@ namespace Intems.LightPlayer.GUI.ViewModels
         {
             _devices.Clear();
             foreach (var device in devices)
-                _devices.Add(new DeviceViewModel(device));
-            RaisePropertyChanged("Devices");
+            {
+                var devViewModel = new DeviceViewModel(device);
+                _devices.Add(devViewModel);
+            }
+            CollectionViewSource.GetDefaultView(_devices).Refresh();
         }
     }
 }
