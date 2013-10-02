@@ -17,6 +17,22 @@ namespace Intems.LightPlayer.GUI.ViewModels
 
         public string SerialPortName { get; set; }
 
-        public string CompositionFile { get; set; }
+        public Device Device
+        {
+            get { return _device; }
+        }
+
+        private string _compositionFile;
+        public string CompositionFile
+        {
+            get { return _compositionFile; }
+            set { _compositionFile = value; RaisePropertyChanged("CompositionFile"); }
+        }
+
+        public void SetSequenceCollection(SequenceCollection collection)
+        {
+            if(_device != null)
+                _device.SequenceCollection = collection;
+        }
     }
 }

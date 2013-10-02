@@ -16,7 +16,7 @@ namespace Intems.LightPlayer.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private FrameSequence _sequence;
+        private SequenceCollection _sequenceCollection;
         private readonly FrameProcessor _processor;
         private IEnumerable<Device> _devices;
 
@@ -48,23 +48,29 @@ namespace Intems.LightPlayer.GUI
         {
             var dlg = new OpenFileDialog {Filter = "Аудио файлы(*.mp3, *.wav)|*.mp3;*.wav"};
             if (dlg.ShowDialog().Value)
-                ((MainViewModel)DataContext).AudioFileName = dlg.FileName;
+            {
+                var viewModel = (MainViewModel) DataContext;
+                viewModel.AudioFileName = dlg.FileName;
+            }
         }
 
         private void OnBtnFrameChooseClick(object sender, RoutedEventArgs e)
         {
-            var dev = (DeviceViewModel)((Button) sender).Tag;
+            var deviceViewModel = (DeviceViewModel)((Button) sender).Tag;
 
             var dlg = new OpenFileDialog();
             if (dlg.ShowDialog().Value)
             {
-                dev.CompositionFile = dlg.FileName;
+                deviceViewModel.CompositionFile = dlg.FileName;
                 try
                 {
-                    using (Stream stream = new FileStream(dev.CompositionFile, FileMode.Open))
+                    using (Stream stream = new FileStream(deviceViewModel.CompositionFile, FileMode.Open))
                     {
                         var bf = new BinaryFormatter();
-                        _sequence = (FrameSequence)bf.Deserialize(stream);
+                        //_sequenceCollection = (SequenceCollection)bf.Deserialize(stream);
+                        var collection = (SequenceCollection)bf.Deserialize(stream);
+                        deviceViewModel.SetSequenceCollection(collection);
+                        _processor.AddDevice(deviceViewModel.Device);
                     }
                 }
                 catch (Exception ex)
@@ -84,7 +90,7 @@ namespace Intems.LightPlayer.GUI
 
                 //start processing composition
                 _processor.AudioReader = provider;
-                _processor.Start(_sequence);
+                _processor.Start(null);
             }
         }
 

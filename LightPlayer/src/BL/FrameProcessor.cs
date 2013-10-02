@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Timers;
 using NAudio.Wave;
 
@@ -20,15 +21,21 @@ namespace Intems.LightPlayer.BL
             _timer.Elapsed += OnTimerElapsed;
 
             _player = player;
+            _devices = new Collection<Device>();
         }
 
-        private readonly IEnumerable<Device> _devices;
-        public FrameProcessor(IEnumerable<Device> devices, IWavePlayer player) : this(player)
+        private readonly ICollection<Device> _devices;
+        public FrameProcessor(ICollection<Device> devices, IWavePlayer player) : this(player)
         {
             _devices = devices;
         }
 
         public AudioFileReader AudioReader { get; set; }
+
+        public void AddDevice(Device device)
+        {
+            _devices.Add(device);
+        }
 
         public void Start()
         {

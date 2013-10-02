@@ -35,7 +35,8 @@ namespace Intems.LightPlayer.Transport
 
         public void SendPackages(IEnumerable<Package> packages)
         {
-            throw new NotImplementedException();
+            foreach (var package in packages)
+                SendPackage(package);
         }
 
         public string Address
