@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using Radario.Common;
 
 namespace Intems.LightPlayer.BL
 {
@@ -16,6 +17,8 @@ namespace Intems.LightPlayer.BL
         private readonly IPEndPoint _broadcastEndPoint;
 
         private readonly int _expectedDevCount;
+        private int _timeout = 3000;
+
         private readonly List<Device> _devices;
 
         public DeviceDiscoverer() : this(Port)
@@ -46,7 +49,7 @@ namespace Intems.LightPlayer.BL
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                SimpleLog.Log.Error(ex.Message, ex);
             }
             return _devices;
         }
@@ -69,12 +72,20 @@ namespace Intems.LightPlayer.BL
                         }
                     }, null);
                 }
-                //TODO: надо как-то "правильно" ожидать завершение опроса
-                Thread.Sleep(3000);
+
+                bool isTimeout = false;
+                bool isAllAnswersCollected = false;
+                while(!isAllAnswersCollected && !isTimeout)
+                {
+                    isAllAnswersCollected = _devices.Count == _expectedDevCount;
+                    isTimeout = ((_timeout -= 50) <= 0);
+                    Thread.Sleep(50);
+                }
+
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                Console.WriteLine(exception);
+                SimpleLog.Log.Error(ex.Message, ex);
             }
         }
     }

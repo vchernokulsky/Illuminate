@@ -8,6 +8,7 @@ using Intems.LightPlayer.BL;
 using Intems.LightPlayer.GUI.ViewModels;
 using Microsoft.Win32;
 using NAudio.Wave;
+using Radario.Common;
 
 namespace Intems.LightPlayer.GUI
 {
@@ -75,7 +76,7 @@ namespace Intems.LightPlayer.GUI
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    SimpleLog.Log.Error(ex.Message, ex);
                 }
             }
         }

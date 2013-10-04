@@ -37,6 +37,12 @@ namespace Intems.LightPlayer.BL
             return _sequences.Select(sequence => sequence.FrameByTime(time)).Where(frame => frame != null).ToArray();
         }
 
+        public void RewindAll()
+        {
+            foreach (var sequence in _sequences)
+                sequence.Rewind();
+        }
+
         public void Clear()
         {
             _sequences.Clear();

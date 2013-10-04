@@ -34,21 +34,23 @@
                      TextWrapping="Wrap" Text="{Binding AudioFileName}" />
             <Button Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" 
                     Content="Choose" Click="OnBtnAudioChooseClick"/>
-            <Line Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center"
-                  X1="0" Y1="10" X2="10" Y2="10"  Stroke="Black" Stretch="Fill" />
 
             <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"  Text="Expected device count:"/>
             <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="20" Text="{Binding DeviceCount}"/>
             <Button Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="30" MinHeight="15" 
                     Content="Find" Click="OnDeviceFindButtonClick"/>
-            
+
+            <Rectangle Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0, 5, 0, 0"
+                                       Fill="Black" Height="1" />
+
             <!-- Информация об устройстве -->
-            <ItemsControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+            <ItemsControl Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
                           ItemsSource="{Binding Devices}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Tag="{Binding .}">
                             <Grid.RowDefinitions>
+                                <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
@@ -69,6 +71,9 @@
                                      TextWrapping="Wrap" Text="{Binding CompositionFile}" />
                             <Button Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" 
                                     Content="Choose" Tag="{Binding .}" Click="OnBtnFrameChooseClick"/>
+
+                            <Rectangle Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                                       Fill="Black" Height="1" />
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

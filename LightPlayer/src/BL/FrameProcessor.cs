@@ -48,7 +48,14 @@ namespace Intems.LightPlayer.BL
         {
             _timer.Stop();
             if (_player != null)
+            {
                 _player.Stop();
+                if (_devices != null)
+                {
+                    foreach (var device in _devices)
+                        device.SequenceCollection.RewindAll();
+                }
+            }
         }
 
         public void Start(FrameSequence sequence)
