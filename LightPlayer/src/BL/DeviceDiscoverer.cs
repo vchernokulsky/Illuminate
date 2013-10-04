@@ -39,6 +39,11 @@ namespace Intems.LightPlayer.BL
             _expectedDevCount = expectedDevCount;
         }
 
+        public DeviceDiscoverer(int port, int expectedDevCount, int timeout) : this(port, expectedDevCount)
+        {
+            _timeout = timeout;
+        }
+
         public ICollection<Device> Discover()
         {
             try
@@ -72,20 +77,26 @@ namespace Intems.LightPlayer.BL
                         }
                     }, null);
                 }
-
-                bool isTimeout = false;
-                bool isAllAnswersCollected = false;
-                while(!isAllAnswersCollected && !isTimeout)
-                {
-                    isAllAnswersCollected = _devices.Count == _expectedDevCount;
-                    isTimeout = ((_timeout -= 50) <= 0);
-                    Thread.Sleep(50);
-                }
-
+                CollectAnswersOrTimeout();
             }
             catch (Exception ex)
             {
                 SimpleLog.Log.Error(ex.Message, ex);
+            }
+        }
+
+        private void CollectAnswersOrTimeout()
+        {
+            bool isTimeout = false;
+            bool isAllAnswersCollected = false;
+            while (!isAllAnswersCollected && !isTimeout)
+            {
+                lock (_locker)
+                {
+                    isAllAnswersCollected = _devices.Count == _expectedDevCount;
+                    isTimeout = ((_timeout -= 50) <= 0);
+                }
+                Thread.Sleep(50);
             }
         }
     }
