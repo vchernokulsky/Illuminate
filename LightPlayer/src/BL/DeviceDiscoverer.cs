@@ -78,6 +78,11 @@ namespace Intems.LightPlayer.BL
                     }, null);
                 }
                 CollectAnswersOrTimeout();
+
+                //TODO: remove hardcoded device
+                var ep = new IPEndPoint(IPAddress.Parse("192.168.1.10"), 9750);
+                var dev = new Device(ep);
+                _devices.Add(dev);
             }
             catch (Exception ex)
             {

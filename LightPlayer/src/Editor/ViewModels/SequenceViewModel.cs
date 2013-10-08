@@ -46,6 +46,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
             _sequence.UpdateAll();
         }
 
+
         public FrameSequence Sequence
         {
             get { return _sequence; }
@@ -82,10 +83,9 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
         public void InsertAfter(Frame currentFrame, IEnumerable<Frame> frames)
         {
-            var idx = _sequence.Frames.IndexOf(currentFrame);
-            if (idx >= 0 && frames.Any())
-                _sequence.Frames.InsertRange(idx + 1, frames);
+            _sequence.InsertRangeAfter(currentFrame, frames);
 
+            var idx = _sequence.Frames.IndexOf(currentFrame);
             foreach (var frameView in frames.Select(CreateFrameViewModel))
             {
                 frameView.ModelChanged += OnSequenceChanged;

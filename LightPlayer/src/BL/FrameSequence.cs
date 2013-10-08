@@ -75,6 +75,17 @@ namespace Intems.LightPlayer.BL
             }
         }
 
+        public void InsertRangeAfter(Frame currentFrame, IEnumerable<Frame> frames)
+        {
+            int idx = _frames.IndexOf(currentFrame);
+            if (idx >= 0 && frames.Any())
+            {
+                _frames.InsertRange(idx + 1, frames);
+                for (int i = idx + 1; i < _frames.Count; i++)
+                    _frames[i].FrameChanged+=OnFrameChanged;
+            }
+        }
+
         public void ChangeFrame(Frame target, Frame newFrame)
         {
             lock (_locker)

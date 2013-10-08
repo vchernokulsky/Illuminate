@@ -49,10 +49,10 @@ namespace Intems.LightDesigner.GUI
             var openDlg = new OpenFileDialog {Filter = "Composition files | *.cmps"};
             if (openDlg.ShowDialog().Value)
             {
-                if(_containerViewModel == null)
-                    _containerViewModel = new SequenceContainerViewModel();
-
+                //if(_containerViewModel == null)
+                _containerViewModel = new SequenceContainerViewModel();
                 _containerViewModel.LoadFromFile(openDlg.FileName);
+
                 DataContext = _containerViewModel;
             }
         }

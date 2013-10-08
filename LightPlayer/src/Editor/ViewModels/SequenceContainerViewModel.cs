@@ -23,11 +23,12 @@ namespace Intems.LightDesigner.GUI.ViewModels
 
         public SequenceContainerViewModel(int channelCount) : this()
         {
+            //каналы всегда нумеруем с единицы!!!
             for (int i = 0; i < channelCount; i++)
             {
                 var sequenceViewModel = new SequenceViewModel(_frameBuilder);
-                _frameBuilder.RegisterSequence(i, sequenceViewModel);
-                _sequenceDictionary.Add(i, sequenceViewModel);
+                _frameBuilder.RegisterSequence(i + 1, sequenceViewModel);
+                _sequenceDictionary.Add(i + 1, sequenceViewModel);
                 //формируем коллекцию последовательностей фреймов
                 _sequenceCollection.Sequences.Add(sequenceViewModel.Sequence);
             }
