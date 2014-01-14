@@ -201,8 +201,10 @@ namespace Intems.Illuminate.HardwareTester
 
         private void OnBtnSend_Click(object sender, EventArgs e)
         {
-            var param = CreateCommonParams();
-            var pkg = new Package(1, (byte)_cmdEnum, param);
+            var builder = new CommandBuilder(_startColor, _stopColor, txtTime.Text, txtFreq.Text);
+            var param = builder.CreateCommonParams(_cmdEnum);
+            var chnNum = Int32.Parse(txtChannel.Text);
+            var pkg = new Package((byte)chnNum, (byte)_cmdEnum, param);
             Console.WriteLine(pkg);
 
             if (!_useUdpProtocol)
@@ -235,49 +237,6 @@ namespace Intems.Illuminate.HardwareTester
             var port = Int32.Parse(fullAddr[1]);
             var ep = new IPEndPoint(address, port);
             return ep;
-        }
-
-        private byte[] CreateCommonParams()
-        {
-            var param = new byte[] {};
-            switch (_cmdEnum)
-            {
-                case CmdEnum.SetColor:
-                    param = new[] {(byte) 0x00, _startColor.R, (byte) 0x00, _startColor.G, (byte) 0x00, _startColor.B};
-                    break;
-                case CmdEnum.Fade:
-                    param = CreateFadeParam();
-                    break;
-                case CmdEnum.Blink:
-                    int freqs = Int32.Parse(txtFreq.Text);
-                    param = new[]
-                    {
-                        (byte) 0x00, _startColor.R, (byte) 0x00, _startColor.G, (byte) 0x00, _startColor.B, (byte) (freqs >> 8),
-                        (byte) freqs
-                    };
-                    break;
-                case CmdEnum.TurnOn:
-                    param = new byte[] {};
-                    break;
-                case CmdEnum.TurnOff:
-                    param = new byte[] {};
-                    break;
-            }
-            return param;
-        }
-
-        private byte[] CreateFadeParam()
-        {
-            var fadeParam = new List<byte>();
-            fadeParam.AddRange(new[] { (byte)0x00, _startColor.R, (byte)0x00, _startColor.G, (byte)0x00, _startColor.B });
-            fadeParam.AddRange(new[] { (byte)0x00, _stopColor.R, (byte)0x00, _stopColor.G, (byte)0x00, _stopColor.B });
-            var ticks = new byte[2];
-            int second = Int32.Parse(txtTime.Text);
-            ticks[0] = (byte) (second * 10 >> 8);
-            ticks[1] = (byte) (second*10);
-            fadeParam.AddRange(ticks);
-
-            return fadeParam.ToArray();
         }
 
         private void SetSendingState()

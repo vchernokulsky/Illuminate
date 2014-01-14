@@ -70,6 +70,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.txtAddrAndPort = new System.Windows.Forms.TextBox();
             this.chkUseUdp = new System.Windows.Forms.CheckBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtChannel = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -448,7 +450,7 @@
             // 
             this.btnSend.Enabled = false;
             this.btnSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSend.Location = new System.Drawing.Point(455, 435);
+            this.btnSend.Location = new System.Drawing.Point(455, 455);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(195, 39);
             this.btnSend.TabIndex = 8;
@@ -484,11 +486,31 @@
             this.chkUseUdp.UseVisualStyleBackColor = true;
             this.chkUseUdp.CheckedChanged += new System.EventHandler(this.OnUdpCheckedChanged);
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(460, 429);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(57, 13);
+            this.label10.TabIndex = 12;
+            this.label10.Text = "Channel N";
+            // 
+            // txtChannel
+            // 
+            this.txtChannel.Location = new System.Drawing.Point(523, 426);
+            this.txtChannel.Name = "txtChannel";
+            this.txtChannel.Size = new System.Drawing.Size(127, 20);
+            this.txtChannel.TabIndex = 13;
+            this.txtChannel.Text = "1";
+            this.txtChannel.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(662, 522);
+            this.Controls.Add(this.txtChannel);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.chkUseUdp);
             this.Controls.Add(this.txtAddrAndPort);
             this.Controls.Add(this.label9);
@@ -559,6 +581,8 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtAddrAndPort;
         private System.Windows.Forms.CheckBox chkUseUdp;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtChannel;
     }
 }
 
