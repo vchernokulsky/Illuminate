@@ -43,7 +43,6 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CmdBuilder.cs" />
     <Compile Include="CommandBuilder.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
