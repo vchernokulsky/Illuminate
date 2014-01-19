@@ -5,16 +5,16 @@ using System.Linq;
 namespace Intems.LightPlayer.BL
 {
     [Serializable]
-    public class SequenceCollection
+    public class FrameSequenceCollection
     {
         private readonly IList<FrameSequence> _sequences;
 
-        public SequenceCollection()
+        public FrameSequenceCollection()
         {
             _sequences = new List<FrameSequence>();
         }
 
-        public SequenceCollection(IList<FrameSequence> sequences)
+        public FrameSequenceCollection(IList<FrameSequence> sequences)
         {
             _sequences = sequences;
         }

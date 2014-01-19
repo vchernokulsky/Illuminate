@@ -17,7 +17,7 @@ namespace Intems.LightPlayer.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private SequenceCollection _sequenceCollection;
+        private FrameSequenceCollection _sequenceCollection;
         private readonly FrameProcessor _processor;
         private IEnumerable<Device> _devices;
 
@@ -69,7 +69,7 @@ namespace Intems.LightPlayer.GUI
                     {
                         var bf = new BinaryFormatter();
                         //_sequenceCollection = (SequenceCollection)bf.Deserialize(stream);
-                        var collection = (SequenceCollection)bf.Deserialize(stream);
+                        var collection = (FrameSequenceCollection)bf.Deserialize(stream);
                         deviceViewModel.SetSequenceCollection(collection);
                         _processor.AddDevice(deviceViewModel.Device);
                     }

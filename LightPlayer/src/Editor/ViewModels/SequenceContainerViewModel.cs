@@ -8,7 +8,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
 {
     public class SequenceContainerViewModel
     {
-        private SequenceCollection _sequenceCollection;
+        private FrameSequenceCollection _sequenceCollection;
 
         private readonly FrameBuilder _frameBuilder;
         private readonly Dictionary<int, SequenceViewModel> _sequenceDictionary;
@@ -17,7 +17,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
         public SequenceContainerViewModel() 
         {
             _frameBuilder = new FrameBuilder();
-            _sequenceCollection = new SequenceCollection();
+            _sequenceCollection = new FrameSequenceCollection();
             _sequenceDictionary = new Dictionary<int, SequenceViewModel>();
         }
 
@@ -67,7 +67,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
             using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
             {
                 var formatter = new BinaryFormatter();
-                _sequenceCollection = (SequenceCollection) formatter.Deserialize(fs);
+                _sequenceCollection = (FrameSequenceCollection) formatter.Deserialize(fs);
                 fs.Flush();
 
                 int i = 0;

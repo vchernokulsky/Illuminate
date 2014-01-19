@@ -29,7 +29,7 @@ namespace Intems.LightPlayer.GUI.ViewModels
             set { _compositionFile = value; RaisePropertyChanged("CompositionFile"); }
         }
 
-        public void SetSequenceCollection(SequenceCollection collection)
+        public void SetSequenceCollection(FrameSequenceCollection collection)
         {
             if(_device != null)
                 _device.SequenceCollection = collection;

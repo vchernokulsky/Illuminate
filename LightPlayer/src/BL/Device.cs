@@ -11,7 +11,7 @@ namespace Intems.LightPlayer.BL
     {
         private readonly IPEndPoint _ipEndPoint;
         private readonly IPackageSender _sender;
-        private SequenceCollection _sequenceCollection;
+        private FrameSequenceCollection _sequenceCollection;
 
 
         public Device(string portName)
@@ -34,7 +34,7 @@ namespace Intems.LightPlayer.BL
             _sender = new UdpSender(_ipEndPoint.Address.ToString(), _ipEndPoint.Port);
         }
 
-        public Device(IPEndPoint point, SequenceCollection collection) : this(point)
+        public Device(IPEndPoint point, FrameSequenceCollection collection) : this(point)
         {
             _sequenceCollection = collection;
         }
@@ -44,7 +44,7 @@ namespace Intems.LightPlayer.BL
             get { return _ipEndPoint; }
         }
 
-        public SequenceCollection SequenceCollection
+        public FrameSequenceCollection SequenceCollection
         {
             get { return _sequenceCollection; }
             set { _sequenceCollection = value; }
