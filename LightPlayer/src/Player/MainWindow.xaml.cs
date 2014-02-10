@@ -18,7 +18,7 @@ namespace Intems.LightPlayer.GUI
     public partial class MainWindow : Window
     {
         private FrameSequenceCollection _sequenceCollection;
-        private readonly FrameProcessor _processor;
+        private FrameProcessor _processor;
         private IEnumerable<Device> _devices;
 
         private readonly IWavePlayer _player = new WaveOutEvent();
@@ -28,7 +28,7 @@ namespace Intems.LightPlayer.GUI
         {
             InitializeComponent();
 
-            _processor = new FrameProcessor(_player);
+            //_processor = new FrameProcessor(_player);
             DataContext = new MainViewModel();
         }
 
@@ -40,7 +40,7 @@ namespace Intems.LightPlayer.GUI
             {
                 var discoverer = new DeviceDiscoverer(Port, viewModel.DeviceCount);
                 var devices = discoverer.Discover();
-
+                _processor = new FrameProcessor(devices, _player);
                 viewModel.UpdateDevices(devices);
             }
         }
@@ -68,7 +68,6 @@ namespace Intems.LightPlayer.GUI
                     using (Stream stream = new FileStream(deviceViewModel.CompositionFile, FileMode.Open))
                     {
                         var bf = new BinaryFormatter();
-                        //_sequenceCollection = (SequenceCollection)bf.Deserialize(stream);
                         var collection = (FrameSequenceCollection)bf.Deserialize(stream);
                         deviceViewModel.SetSequenceCollection(collection);
                         _processor.AddDevice(deviceViewModel.Device);
@@ -76,6 +75,7 @@ namespace Intems.LightPlayer.GUI
                 }
                 catch (Exception ex)
                 {
+                    MessageBox.Show("Ошибка при загрузке композиции", "Ошибка");
                     SimpleLog.Log.Error(ex.Message, ex);
                 }
             }
@@ -98,6 +98,12 @@ namespace Intems.LightPlayer.GUI
         private void OnButtonStopClick(object sender, RoutedEventArgs e)
         {
             _processor.Stop();
+        }
+
+        private void OnBtnLoadConfigClick(object sender, RoutedEventArgs e)
+        {
+            var vm = (MainViewModel) DataContext;
+            vm.IsLoadDeviceConfig = Visibility;
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Intems.LightPlayer.BL;
+using Intems.LightPlayer.BL.Commands;
+using Intems.LightPlayer.Transport;
 
 namespace Intems.LightPlayer.GUI.ViewModels
 {
@@ -27,6 +29,15 @@ namespace Intems.LightPlayer.GUI.ViewModels
         {
             get { return _compositionFile; }
             set { _compositionFile = value; RaisePropertyChanged("CompositionFile"); }
+        }
+
+        public void TurnOff()
+        {
+            if (_device == null) return;
+
+            var cmd = new TurnOff();
+            var package = new Package(cmd.GetBytes());
+            _device.SendPackage(package);
         }
 
         public void SetSequenceCollection(FrameSequenceCollection collection)

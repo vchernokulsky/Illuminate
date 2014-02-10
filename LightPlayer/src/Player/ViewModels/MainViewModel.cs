@@ -1,22 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
+using System.Windows;
 using System.Windows.Data;
 using Intems.LightPlayer.BL;
 
 namespace Intems.LightPlayer.GUI.ViewModels
 {
-    internal abstract class BaseViewModel : INotifyPropertyChanged
-    {
-        public virtual event PropertyChangedEventHandler PropertyChanged;
-
-        protected void RaisePropertyChanged(string propName)
-        {
-            var pc = PropertyChanged;
-            if (pc != null)
-                pc(this, new PropertyChangedEventArgs(propName));
-        }
-    }
-
     internal class MainViewModel : BaseViewModel
     {
         public MainViewModel()
@@ -28,6 +16,13 @@ namespace Intems.LightPlayer.GUI.ViewModels
         {
             foreach (var device in devices)
                 _devices.Add(new DeviceViewModel(device));
+        }
+
+        private Visibility _isLoadDeviceVisile = Visibility.Collapsed;
+        public Visibility IsLoadDeviceConfig
+        {
+            get { return _isLoadDeviceVisile; }
+            set { _isLoadDeviceVisile = value; RaisePropertyChanged("IsLoadDeviceConfig"); }
         }
 
         private string _audioFileName;
@@ -56,8 +51,8 @@ namespace Intems.LightPlayer.GUI.ViewModels
             _devices.Clear();
             foreach (var device in devices)
             {
-                var devViewModel = new DeviceViewModel(device);
-                _devices.Add(devViewModel);
+                var deviceViewModel = new DeviceViewModel(device);
+                _devices.Add(deviceViewModel);
             }
             CollectionViewSource.GetDefaultView(_devices).Refresh();
         }

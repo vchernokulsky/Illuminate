@@ -78,16 +78,27 @@ namespace Intems.LightPlayer.BL
                     }, null);
                 }
                 CollectAnswersOrTimeout();
-
                 //TODO: remove hardcoded device
-                var ep = new IPEndPoint(IPAddress.Parse("192.168.1.10"), 9750);
-                var dev = new Device(ep);
-                _devices.Add(dev);
+                CreateDevices();
             }
             catch (Exception ex)
             {
                 SimpleLog.Log.Error(ex.Message, ex);
             }
+        }
+
+        private void CreateDevices()
+        {
+            var ep1 = new IPEndPoint(IPAddress.Parse("192.168.1.101"), 9750);
+            var dev1 = new Device(ep1);
+            var ep2 = new IPEndPoint(IPAddress.Parse("192.168.1.102"), 9750);
+            var dev2 = new Device(ep2);
+            var ep3 = new IPEndPoint(IPAddress.Parse("192.168.1.103"), 9750);
+            var dev3 = new Device(ep3);
+
+            _devices.Add(dev1);
+            _devices.Add(dev2);
+            _devices.Add(dev3);
         }
 
         private void CollectAnswersOrTimeout()
