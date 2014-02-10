@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BroadcastSender.cs" />
     <Compile Include="Stubs\FakePackageSender.cs" />
     <Compile Include="IPackageSender.cs" />
     <Compile Include="Package.cs" />
