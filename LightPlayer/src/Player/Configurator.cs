@@ -6,7 +6,6 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Linq;
 using Intems.LightPlayer.BL;
-using Intems.LightPlayer.GUI.ViewModels;
 
 namespace Intems.LightPlayer.GUI
 {
@@ -62,7 +61,8 @@ namespace Intems.LightPlayer.GUI
                 var device = new Device(addr, Int32.Parse(port));
 
                 LoadComposition(file, device);
-                devices.Add(new Tuple<Device, string>(device, file));
+
+                devices.Add(new Tuple<Device, string>(device, Path.GetFullPath(file)));
                 _devices.Add(device);
             }
             return devices;
