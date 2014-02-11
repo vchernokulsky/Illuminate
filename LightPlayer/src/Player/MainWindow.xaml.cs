@@ -56,7 +56,7 @@ namespace Intems.LightPlayer.GUI
         {
             var deviceViewModel = (DeviceViewModel)((Button) sender).Tag;
 
-            var dlg = new OpenFileDialog();
+            var dlg = new OpenFileDialog { Filter = "Аудио файлы(*.cmps)|*.cmps" }; ;
             if (dlg.ShowDialog().Value)
             {
                 deviceViewModel.CompositionFile = dlg.FileName;
