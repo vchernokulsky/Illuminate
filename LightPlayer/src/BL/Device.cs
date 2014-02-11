@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO.Ports;
 using System.Linq;
 using System.Net;
@@ -23,11 +24,6 @@ namespace Intems.LightPlayer.BL
 #endif
         }
 
-        public Device(string addr, int port)
-        {
-            _sender = new UdpSender(addr, port);
-        }
-
         public Device(IPEndPoint point)
         {
             _ipEndPoint = new IPEndPoint(point.Address, point.Port);
@@ -37,6 +33,13 @@ namespace Intems.LightPlayer.BL
         public Device(IPEndPoint point, FrameSequenceCollection collection) : this(point)
         {
             _sequenceCollection = collection;
+        }
+
+        public Device(string addr, int port)
+        {
+            var ipAddr = IPAddress.Parse(addr);
+            _ipEndPoint = new IPEndPoint(ipAddr, port);
+            _sender = new UdpSender(_ipEndPoint.Address.ToString(), _ipEndPoint.Port);
         }
 
         public IPEndPoint IPEndPoint
@@ -68,6 +71,20 @@ namespace Intems.LightPlayer.BL
         {
             if(_sender != null)
                 _sender.SendPackages(packages);
+        }
+
+        public override bool Equals(object obj)
+        {
+            var isEqual = false;
+            var dev = obj as Device;
+            if (dev != null)
+                isEqual = _ipEndPoint.Address == dev.IPEndPoint.Address;
+            return isEqual;
+        }
+
+        public override int GetHashCode()
+        {
+            return (_ipEndPoint.Address + _ipEndPoint.Port.ToString(CultureInfo.InvariantCulture)).GetHashCode();
         }
     }
 }

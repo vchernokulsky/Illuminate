@@ -41,8 +41,8 @@
                 <Button x:Name="_btnLoadConfig" Height="23" Click="OnBtnLoadConfigClick">Load</Button>
             </StackPanel>
             <Controls:DiscoverControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-                                      Padding="10" Visibility="{Binding IsLoadDeviceConfig}">
-            </Controls:DiscoverControl>
+                                      DataContext="{Binding DeviceConfigurationModel}"
+                                      Padding="10" Visibility="{Binding Visibility}" />
 
 <!--            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"  Text="Expected device count:"/>-->
 <!--            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="20" Text="{Binding DeviceCount}"/>-->
@@ -55,7 +55,7 @@
 
             <!-- Информация об устройстве -->
             <ItemsControl Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
-                          ItemsSource="{Binding Devices}">
+                          ItemsSource="{Binding DeviceViewModels}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Tag="{Binding .}">

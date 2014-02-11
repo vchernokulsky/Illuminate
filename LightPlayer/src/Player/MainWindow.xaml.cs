@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
@@ -17,33 +16,31 @@ namespace Intems.LightPlayer.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private FrameSequenceCollection _sequenceCollection;
-        private FrameProcessor _processor;
-        private IEnumerable<Device> _devices;
-
-        private readonly IWavePlayer _player = new WaveOutEvent();
-        private const int Port = 15000;
+        private readonly FrameProcessor _processor;
+        private readonly IWavePlayer _player;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            //_processor = new FrameProcessor(_player);
+            _player = new WaveOutEvent();
+            _processor = new FrameProcessor(_player);
+
             DataContext = new MainViewModel();
         }
 
-        private void OnDeviceFindButtonClick(object sender, RoutedEventArgs e)
-        {
-            var viewModel = DataContext as MainViewModel;
-
-            if (viewModel != null)
-            {
-                var discoverer = new DeviceDiscoverer(Port, viewModel.DeviceCount);
-                var devices = discoverer.Discover();
-                _processor = new FrameProcessor(devices, _player);
-                viewModel.UpdateDevices(devices);
-            }
-        }
+//        private void OnDeviceFindButtonClick(object sender, RoutedEventArgs e)
+//        {
+//            var viewModel = DataContext as MainViewModel;
+//
+//            if (viewModel != null)
+//            {
+//                var discoverer = new DeviceDiscoverer(Port, viewModel.DeviceCount);
+//                var devices = discoverer.Discover();
+//                _processor = new FrameProcessor(devices, _player);
+//                viewModel.UpdateDevices(devices);
+//            }
+//        }
 
         private void OnBtnAudioChooseClick(object sender, RoutedEventArgs e)
         {
@@ -51,7 +48,7 @@ namespace Intems.LightPlayer.GUI
             if (dlg.ShowDialog().Value)
             {
                 var viewModel = (MainViewModel) DataContext;
-                viewModel.AudioFileName = dlg.FileName;
+                viewModel.DeviceConfigurationModel.FileName = dlg.FileName;
             }
         }
 
@@ -70,7 +67,7 @@ namespace Intems.LightPlayer.GUI
                         var bf = new BinaryFormatter();
                         var collection = (FrameSequenceCollection)bf.Deserialize(stream);
                         deviceViewModel.SetSequenceCollection(collection);
-                        _processor.AddDevice(deviceViewModel.Device);
+                        _processor.AddOrUpdateDevice(deviceViewModel.Device);
                     }
                 }
                 catch (Exception ex)
@@ -84,9 +81,9 @@ namespace Intems.LightPlayer.GUI
         private void OnButtonStartClick(object sender, RoutedEventArgs e)
         {
             var vm = (MainViewModel)DataContext;
-            if (!String.IsNullOrEmpty(vm.AudioFileName))
+            if (!String.IsNullOrEmpty(vm.DeviceConfigurationModel.FileName))
             {
-                var provider = new AudioFileReader(vm.AudioFileName);
+                var provider = new AudioFileReader(vm.DeviceConfigurationModel.FileName);
                 _player.Init(provider);
 
                 //start processing composition
@@ -97,13 +94,15 @@ namespace Intems.LightPlayer.GUI
 
         private void OnButtonStopClick(object sender, RoutedEventArgs e)
         {
-            _processor.Stop();
+            if(_processor != null)
+                _processor.Stop();
         }
 
         private void OnBtnLoadConfigClick(object sender, RoutedEventArgs e)
         {
             var vm = (MainViewModel) DataContext;
-            vm.IsLoadDeviceConfig = Visibility;
+            if (vm != null)
+                vm.DeviceConfigurationModel.Visibility = Visibility.Visible;
         }
     }
 }

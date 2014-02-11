@@ -1,42 +1,45 @@
-﻿using System.Collections.Generic;
-using System.Windows;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Data;
 using Intems.LightPlayer.BL;
+using NAudio.Wave;
 
 namespace Intems.LightPlayer.GUI.ViewModels
 {
     internal class MainViewModel : BaseViewModel
     {
+        private IWavePlayer _player;
+        private FrameProcessor _processor;
+
         public MainViewModel()
         {
-            _devices = new List<DeviceViewModel>();
+            _deviceViewModels = new List<DeviceViewModel>();
+
+            _player = new WaveOutEvent();
+            _processor = new FrameProcessor(_player);
+
+            var action = new Action<IEnumerable<Device>>(UpdateDevices);
+            _deviceConfigurationModel = new DeviceConfigurationModel(_processor, action);
         }
 
         public MainViewModel(IEnumerable<Device> devices) : this()
         {
             foreach (var device in devices)
-                _devices.Add(new DeviceViewModel(device));
+                _deviceViewModels.Add(new DeviceViewModel(device));
         }
 
-        private Visibility _isLoadDeviceVisile = Visibility.Collapsed;
-        public Visibility IsLoadDeviceConfig
+        private DeviceConfigurationModel _deviceConfigurationModel;
+        public DeviceConfigurationModel DeviceConfigurationModel
         {
-            get { return _isLoadDeviceVisile; }
-            set { _isLoadDeviceVisile = value; RaisePropertyChanged("IsLoadDeviceConfig"); }
+            get { return _deviceConfigurationModel; }
+            set { _deviceConfigurationModel = value; RaisePropertyChanged("DeviceConfigModel"); }
         }
 
-        private string _audioFileName;
-        public string AudioFileName
+        private ICollection<DeviceViewModel> _deviceViewModels;
+        public  ICollection<DeviceViewModel> DeviceViewModels
         {
-            get { return _audioFileName; }
-            set { _audioFileName = value; RaisePropertyChanged("AudioFileName"); }
-        }
-
-        private ICollection<DeviceViewModel> _devices;
-        public  ICollection<DeviceViewModel> Devices
-        {
-            get { return _devices; }
-            set { _devices = value; RaisePropertyChanged("Devices"); }
+            get { return _deviceViewModels; }
+            set { _deviceViewModels = value; RaisePropertyChanged("Devices"); }
         }
 
         private int _deviceCount = 5;
@@ -46,15 +49,15 @@ namespace Intems.LightPlayer.GUI.ViewModels
             set { _deviceCount = value; RaisePropertyChanged("DeviceCount"); }
         }
 
-        public void UpdateDevices(ICollection<Device> devices)
+        public void UpdateDevices(IEnumerable<Device> devices)
         {
-            _devices.Clear();
+            _deviceViewModels.Clear();
             foreach (var device in devices)
             {
                 var deviceViewModel = new DeviceViewModel(device);
-                _devices.Add(deviceViewModel);
+                _deviceViewModels.Add(deviceViewModel);
             }
-            CollectionViewSource.GetDefaultView(_devices).Refresh();
+            CollectionViewSource.GetDefaultView(_deviceViewModels).Refresh();
         }
     }
 }
