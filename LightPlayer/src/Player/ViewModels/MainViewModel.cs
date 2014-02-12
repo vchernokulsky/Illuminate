@@ -24,6 +24,7 @@ namespace Intems.LightPlayer.GUI.ViewModels
             _deviceConfigurationModel = new DeviceConfigurationModel(_processor, action);
 
             _startCommand = new StartCompositionCommand(_player, _processor);
+            _stopCommand = new StopCompositionCommand(_player, _processor);
         }
 
         public MainViewModel(IEnumerable<Device> devices) : this()
@@ -36,6 +37,12 @@ namespace Intems.LightPlayer.GUI.ViewModels
         public ICommand StartCommand
         {
             get { return _startCommand; }
+        }
+
+        private readonly ICommand _stopCommand;
+        public ICommand StopCommand
+        {
+            get { return _stopCommand; }
         }
 
         private DeviceConfigurationModel _deviceConfigurationModel;

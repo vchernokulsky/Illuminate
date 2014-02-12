@@ -102,7 +102,7 @@
             <Button HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" MinHeight="23" 
                     Content="Start" Command="{Binding StartCommand}" CommandParameter="{Binding DeviceConfigurationModel}" />
             <Button Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" MinHeight="23" 
-                    Content="Stop" Click="OnButtonStopClick"/>
+                    Content="Stop" Command="{Binding StopCommand}"/>
         </Grid>
 
     </Grid>

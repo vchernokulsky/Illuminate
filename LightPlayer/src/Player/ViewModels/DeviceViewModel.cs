@@ -37,7 +37,7 @@ namespace Intems.LightPlayer.GUI.ViewModels
         {
             get
             {
-                var command = new FindDeviceCommand(){};
+                var command = new FindDeviceCommand(_device);
                 return command;
             }
         }

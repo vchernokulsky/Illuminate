@@ -80,6 +80,8 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\Commands\FindDeviceCommand.cs" />
     <Compile Include="ViewModels\Commands\StartCompositionCommand.cs" />
+    <Compile Include="ViewModels\Commands\StopCompositionCommand.cs" />
+    <Compile Include="ViewModels\Commands\TurnOffDeviceCommand.cs" />
     <Compile Include="ViewModels\DeviceConfigurationModel.cs" />
     <Compile Include="ViewModels\DeviceViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
