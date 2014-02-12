@@ -86,5 +86,10 @@ namespace Intems.LightPlayer.BL
         {
             return (_ipEndPoint.Address + _ipEndPoint.Port.ToString(CultureInfo.InvariantCulture)).GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return _ipEndPoint.Address + " : " + _ipEndPoint.Port.ToString(CultureInfo.InvariantCulture);
+        }
     }
 }

@@ -32,7 +32,7 @@
             <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,5,0"
                        Text="MP3 file:"/>
             <TextBox Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10,10,5,10"
-                     TextWrapping="Wrap" Text="{Binding AudioFileName}" />
+                     TextWrapping="Wrap" Text="" />
             <Button Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" 
                     Content="Choose" Click="OnBtnAudioChooseClick"/>
 
@@ -73,7 +73,10 @@
                             <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10, 0, 5, 0"
                                        Text="Dev address:"/>
                             <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 10, 5, 10"
-                                       Text="{Binding Address}"/>
+                                       Text="{Binding Device}"/>
+                            <Button Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" 
+                                    Command="{Binding FindDeviceCommand}" CommandParameter="{Binding Device}" 
+                                    Content="Find" />
                             <!-- Выбор схемы иллюминации -->
                             <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10, 0, 5, 0"
                                        Text="Light schema:"/>
@@ -90,14 +93,14 @@
             </ItemsControl>
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" DataContext="{Binding .}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <Button HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" MinHeight="23" 
-                    Content="Start" Click="OnButtonStartClick"/>
+                    Content="Start" Command="{Binding StartCommand}" CommandParameter="{Binding DeviceConfigurationModel}" />
             <Button Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="75" MinHeight="23" 
                     Content="Stop" Click="OnButtonStopClick"/>
         </Grid>

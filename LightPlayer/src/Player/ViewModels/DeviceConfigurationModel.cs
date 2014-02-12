@@ -10,8 +10,7 @@ namespace Intems.LightPlayer.GUI.ViewModels
     internal class DeviceConfigurationModel : BaseViewModel
     {
         private static FrameProcessor _processor;
-        private static Action<IEnumerable<Device>> _updateAction;
-        private static Action<IEnumerable<Tuple<Device, string>>> _updateAction1;
+        private static Action<IEnumerable<Tuple<Device, string>>> _updateAction;
 
         class LoadConfigCommand : ICommand
         {
@@ -28,8 +27,9 @@ namespace Intems.LightPlayer.GUI.ViewModels
                 {
                     var cfg = new Configurator(dlg.FileName, _processor);
                     var deviceConfigurations = cfg.GetDeviceConfiguration();
-                    if(_updateAction1 != null)
-                        _updateAction1.Invoke(deviceConfigurations);
+                    cfg.ConfigureProcessor();
+                    if(_updateAction != null)
+                        _updateAction.Invoke(deviceConfigurations);
                 }
             }
         }
@@ -39,15 +39,10 @@ namespace Intems.LightPlayer.GUI.ViewModels
             _processor = processor;
         }
 
-        public DeviceConfigurationModel(FrameProcessor processor, Action<IEnumerable<Device>> updateAction) : this(processor)
-        {
-            _updateAction = updateAction;
-        }
-
         public DeviceConfigurationModel(FrameProcessor processor, Action<IEnumerable<Tuple<Device, string>>> updateAction)
             : this(processor)
         {
-            _updateAction1 = updateAction;
+            _updateAction = updateAction;
         }
 
         private Visibility _visibility = Visibility.Collapsed;

@@ -15,7 +15,7 @@ namespace Intems.LightPlayer.GUI
 
         private readonly string _configPath;
         private readonly FrameProcessor _processor;
-        private ICollection<Device> _devices;
+        private readonly ICollection<Device> _devices;
 
         public Configurator(string path)
         {

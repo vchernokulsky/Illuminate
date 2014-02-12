@@ -2,9 +2,8 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using Microsoft.Win32;
 
-namespace Radario.Common
+namespace Intems.LightPlayer.BL
 {
     public class SimpleLog : IDisposable
     {

@@ -1,5 +1,7 @@
-﻿using Intems.LightPlayer.BL;
+﻿using System.Windows.Input;
+using Intems.LightPlayer.BL;
 using Intems.LightPlayer.BL.Commands;
+using Intems.LightPlayer.GUI.ViewModels.Commands;
 using Intems.LightPlayer.Transport;
 
 namespace Intems.LightPlayer.GUI.ViewModels
@@ -29,6 +31,15 @@ namespace Intems.LightPlayer.GUI.ViewModels
         {
             get { return _compositionFile; }
             set { _compositionFile = value; RaisePropertyChanged("CompositionFile"); }
+        }
+
+        public ICommand FindDeviceCommand
+        {
+            get
+            {
+                var command = new FindDeviceCommand(){};
+                return command;
+            }
         }
 
         public void TurnOff()

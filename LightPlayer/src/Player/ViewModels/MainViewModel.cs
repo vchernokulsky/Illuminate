@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Data;
+using System.Windows.Input;
 using Intems.LightPlayer.BL;
+using Intems.LightPlayer.GUI.ViewModels.Commands;
 using NAudio.Wave;
 
 namespace Intems.LightPlayer.GUI.ViewModels
@@ -18,16 +20,22 @@ namespace Intems.LightPlayer.GUI.ViewModels
             _player = new WaveOutEvent();
             _processor = new FrameProcessor(_player);
 
-            //var action = new Action<IEnumerable<Device>>(UpdateDevices);
-            //_deviceConfigurationModel = new DeviceConfigurationModel(_processor, action);
             var action = new Action<IEnumerable<Tuple<Device, string>>>(UpdateDevices);
             _deviceConfigurationModel = new DeviceConfigurationModel(_processor, action);
+
+            _startCommand = new StartCompositionCommand(_player, _processor);
         }
 
         public MainViewModel(IEnumerable<Device> devices) : this()
         {
             foreach (var device in devices)
                 _deviceViewModels.Add(new DeviceViewModel(device));
+        }
+
+        private readonly ICommand _startCommand;
+        public ICommand StartCommand
+        {
+            get { return _startCommand; }
         }
 
         private DeviceConfigurationModel _deviceConfigurationModel;
