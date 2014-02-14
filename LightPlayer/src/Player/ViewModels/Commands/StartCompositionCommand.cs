@@ -23,12 +23,12 @@ namespace Intems.LightPlayer.GUI.ViewModels.Commands
 
         public void Execute(object parameter)
         {
-            var obj = parameter as DeviceConfigurationModel;
-            if (obj != null)
+            var model = parameter as MainViewModel;
+            if (model != null)
             {
-                if (!String.IsNullOrEmpty(obj.FileName))
+                if (!String.IsNullOrEmpty(model.TrackFilename))
                 {
-                    var provider = new AudioFileReader(obj.FileName);
+                    var provider = new AudioFileReader(model.TrackFilename);
                     _player.Init(provider);
 
                     //start processing composition

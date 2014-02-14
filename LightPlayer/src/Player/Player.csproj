@@ -82,8 +82,8 @@
     <Compile Include="ViewModels\Commands\StartCompositionCommand.cs" />
     <Compile Include="ViewModels\Commands\StopCompositionCommand.cs" />
     <Compile Include="ViewModels\Commands\TurnOffDeviceCommand.cs" />
-    <Compile Include="ViewModels\DeviceConfigurationModel.cs" />
     <Compile Include="ViewModels\DeviceViewModel.cs" />
+    <Compile Include="ViewModels\Commands\LoadConfigCommand.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

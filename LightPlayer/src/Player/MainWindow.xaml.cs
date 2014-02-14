@@ -47,7 +47,7 @@ namespace Intems.LightPlayer.GUI
             if (dlg.ShowDialog().Value)
             {
                 var viewModel = (MainViewModel) DataContext;
-                viewModel.DeviceConfigurationModel.FileName = dlg.FileName;
+                viewModel.TrackFilename = dlg.FileName;
             }
         }
 
@@ -77,19 +77,19 @@ namespace Intems.LightPlayer.GUI
             }
         }
 
-        private void OnButtonStartClick(object sender, RoutedEventArgs e)
-        {
-            var vm = (MainViewModel)DataContext;
-            if (!String.IsNullOrEmpty(vm.DeviceConfigurationModel.FileName))
-            {
-                var provider = new AudioFileReader(vm.DeviceConfigurationModel.FileName);
-                _player.Init(provider);
-
-                //start processing composition
-                _processor.AudioReader = provider;
-                _processor.Start(null);
-            }
-        }
+//        private void OnButtonStartClick(object sender, RoutedEventArgs e)
+//        {
+//            var vm = (MainViewModel)DataContext;
+//            if (!String.IsNullOrEmpty(vm.DeviceConfigurationModel.FileName))
+//            {
+//                var provider = new AudioFileReader(vm.DeviceConfigurationModel.FileName);
+//                _player.Init(provider);
+//
+//                //start processing composition
+//                _processor.AudioReader = provider;
+//                _processor.Start(null);
+//            }
+//        }
 
         private void OnButtonStopClick(object sender, RoutedEventArgs e)
         {
@@ -97,11 +97,11 @@ namespace Intems.LightPlayer.GUI
                 _processor.Stop();
         }
 
-        private void OnBtnLoadConfigClick(object sender, RoutedEventArgs e)
-        {
-            var vm = (MainViewModel) DataContext;
-            if (vm != null)
-                vm.DeviceConfigurationModel.Visibility = Visibility.Visible;
-        }
+//        private void OnBtnLoadConfigClick(object sender, RoutedEventArgs e)
+//        {
+//            var vm = (MainViewModel) DataContext;
+//            if (vm != null)
+//                vm.DeviceConfigurationModel.Visibility = Visibility.Visible;
+//        }
     }
 }

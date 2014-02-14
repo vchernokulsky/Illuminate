@@ -15,6 +15,28 @@ namespace Intems.LightPlayer.GUI.ViewModels
             _device = device;
         }
 
+        #region COMMANDS
+
+        public ICommand FindDeviceCommand
+        {
+            get
+            {
+                var command = new FindDeviceCommand(_device);
+                return command;
+            }
+        }
+
+        public ICommand TurnOffDeviceCommand
+        {
+            get
+            {
+                var command = new TurnOffDeviceCommand();
+                return command;
+            }
+        }
+
+        #endregion
+
         public string Address { get{return _device.IPEndPoint.Address.ToString();} }
 
         public int Port { get { return _device.IPEndPoint.Port; } }
@@ -31,15 +53,6 @@ namespace Intems.LightPlayer.GUI.ViewModels
         {
             get { return _compositionFile; }
             set { _compositionFile = value; RaisePropertyChanged("CompositionFile"); }
-        }
-
-        public ICommand FindDeviceCommand
-        {
-            get
-            {
-                var command = new FindDeviceCommand(_device);
-                return command;
-            }
         }
 
         public void TurnOff()

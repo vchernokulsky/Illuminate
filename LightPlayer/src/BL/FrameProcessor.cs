@@ -63,21 +63,27 @@ namespace Intems.LightPlayer.BL
 
         public void Start()
         {
-            _timer.Start();
-            if(_player != null)
-                _player.Play();
+            lock (_locker)
+            {
+                _timer.Start();
+                if (_player != null)
+                    _player.Play();
+            }
         }
 
         public void Stop()
         {
-            _timer.Stop();
-            if (_player != null)
+            lock (_locker)
             {
-                _player.Stop();
-                if (_devices != null)
+                _timer.Stop();
+                if (_player != null)
                 {
-                    foreach (var device in _devices)
-                        device.SequenceCollection.RewindAll();
+                    _player.Stop();
+                    if (_devices != null)
+                    {
+                        foreach (var device in _devices)
+                            device.SequenceCollection.RewindAll();
+                    }
                 }
             }
         }

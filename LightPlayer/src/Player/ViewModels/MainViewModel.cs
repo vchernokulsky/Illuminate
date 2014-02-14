@@ -20,9 +20,6 @@ namespace Intems.LightPlayer.GUI.ViewModels
             _player = new WaveOutEvent();
             _processor = new FrameProcessor(_player);
 
-            var action = new Action<IEnumerable<Tuple<Device, string>>>(UpdateDevices);
-            _deviceConfigurationModel = new DeviceConfigurationModel(_processor, action);
-
             _startCommand = new StartCompositionCommand(_player, _processor);
             _stopCommand = new StopCompositionCommand(_player, _processor);
         }
@@ -32,6 +29,8 @@ namespace Intems.LightPlayer.GUI.ViewModels
             foreach (var device in devices)
                 _deviceViewModels.Add(new DeviceViewModel(device));
         }
+
+        #region COMMANDS
 
         private readonly ICommand _startCommand;
         public ICommand StartCommand
@@ -45,11 +44,21 @@ namespace Intems.LightPlayer.GUI.ViewModels
             get { return _stopCommand; }
         }
 
-        private DeviceConfigurationModel _deviceConfigurationModel;
-        public DeviceConfigurationModel DeviceConfigurationModel
+        public ICommand ConfigLoadCommand
         {
-            get { return _deviceConfigurationModel; }
-            set { _deviceConfigurationModel = value; RaisePropertyChanged("DeviceConfigModel"); }
+            get
+            {
+                return new LoadConfigCommand(_processor, UpdateDevices);
+            }
+        }
+
+        #endregion
+
+        private string _trackFilename;
+        public string TrackFilename
+        {
+            get { return _trackFilename; }
+            set { _trackFilename = value; RaisePropertyChanged("TrackFilename"); }
         }
 
         private ICollection<DeviceViewModel> _deviceViewModels;

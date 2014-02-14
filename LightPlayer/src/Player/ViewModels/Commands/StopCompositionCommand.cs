@@ -7,7 +7,7 @@ namespace Intems.LightPlayer.GUI.ViewModels.Commands
 {
     internal class StopCompositionCommand : ICommand
     {
-        private IWavePlayer _player;
+        private readonly IWavePlayer _player;
         private readonly FrameProcessor _processor;
 
         public StopCompositionCommand(IWavePlayer player, FrameProcessor processor)
@@ -23,6 +23,9 @@ namespace Intems.LightPlayer.GUI.ViewModels.Commands
 
         public void Execute(object parameter)
         {
+            if(_player != null)
+                _player.Stop();
+
             if (_processor != null)
                 _processor.Stop();
         }
