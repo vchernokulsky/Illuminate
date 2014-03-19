@@ -47,6 +47,9 @@
 
                                 <Grid.ContextMenu>
                                     <ContextMenu Tag="{Binding .}">
+                                        <MenuItem Header="Delete" DataContext="{Binding ActionGroup}"
+                                                  Command="{Binding Delete}"
+                                                  CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
                                         <MenuItem Header="Copy" DataContext="{Binding ActionGroup}" 
                                                   Command="{Binding CopySelected}" 
                                                   CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>

@@ -41,7 +41,7 @@ namespace Intems.LightPlayer.Transport
 
         public string Address
         {
-            get { return _endPoint.Address.MapToIPv4().ToString(); }
+            get { return _endPoint.Address.ToString(); }
         }
 
         public int Port

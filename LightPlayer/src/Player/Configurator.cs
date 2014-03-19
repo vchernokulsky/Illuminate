@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows;
 using System.Xml.Linq;
 using Intems.LightPlayer.BL;
 
@@ -60,10 +61,19 @@ namespace Intems.LightPlayer.GUI
 
                 var device = new Device(addr, Int32.Parse(port));
 
-                LoadComposition(file, device);
+                try
+                {
+                    LoadComposition(file, device);
 
-                devices.Add(new Tuple<Device, string>(device, Path.GetFullPath(file)));
-                _devices.Add(device);
+                    devices.Add(new Tuple<Device, string>(device, Path.GetFullPath(file)));
+                    _devices.Add(device);
+                }
+                catch (Exception ex)
+                {
+                    var msg = "Ошибка загрузки композиции, проверьте конфигурационный файл.";
+                    MessageBox.Show(msg);
+                    SimpleLog.Log.Error(msg, ex);
+                }
             }
             return devices;
         }
@@ -72,6 +82,14 @@ namespace Intems.LightPlayer.GUI
         {
             try
             {
+                var fullFilePath = Path.GetFullPath(file);
+                if (!File.Exists(fullFilePath))
+                {
+                    var msg = String.Format("Отсутствует файл: {0}. Проверьте файл конфигурации", fullFilePath);
+                    MessageBox.Show(msg, "Ошибка", MessageBoxButton.OK);
+                    return;
+                }
+                //if exist try to load
                 using (var stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     var bf = new BinaryFormatter();

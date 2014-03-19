@@ -18,6 +18,17 @@ namespace Intems.LightDesigner.GUI.ActionCommands
             _sequenceViewModel = sequenceViewModel;
         }
 
+        public ICommand Delete
+        {
+            get
+            {
+                var action = new Action<FrameViewModel>(
+                    frameViewModel => _sequenceViewModel.Remove(frameViewModel.Frame));
+                var deleteCommand = new BaseCommand(action);
+                return deleteCommand;
+            }
+        }
+
         public ICommand CopySelected
         {
             get

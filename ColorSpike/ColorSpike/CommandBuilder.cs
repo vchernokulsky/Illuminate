@@ -28,11 +28,11 @@ namespace Intems.Illuminate.HardwareTester
             _startColor = startColor;
             _stopColor = stopColor;
 
-            int seconds = Int32.Parse(time);
+            int seconds = !String.IsNullOrEmpty(time) ? Int32.Parse(time) : 0;
             _ticksInBytes[0] = (byte)(seconds * 10 >> 8);
             _ticksInBytes[1] = (byte)(seconds * 10);
 
-            int freqs = Int32.Parse(freq);
+            int freqs = !String.IsNullOrEmpty(freq) ? Int32.Parse(freq) : 0;
             _blinkFreqInBytes[0] = (byte) (freqs >> 8);
             _blinkFreqInBytes[1] = (byte) (freqs);
         }

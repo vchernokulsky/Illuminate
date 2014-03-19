@@ -81,6 +81,17 @@ namespace Intems.LightDesigner.GUI.ViewModels
             _sequence.UpdateAll();
         }
 
+        public void Remove(Frame currentFrame)
+        {
+            var frameViewModel = _frameViewModels.First(x => x.Frame == currentFrame);
+            if (frameViewModel != null)
+            {
+                _frameViewModels.Remove(frameViewModel);
+                _sequence.Frames.Remove(currentFrame);
+                _sequence.UpdateAll();
+            }
+        }
+
         public void InsertAfter(Frame currentFrame, IEnumerable<Frame> frames)
         {
             _sequence.InsertRangeAfter(currentFrame, frames);
