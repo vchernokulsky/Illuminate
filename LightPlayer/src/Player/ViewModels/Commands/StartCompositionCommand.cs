@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using Intems.LightPlayer.BL;
 using NAudio.Wave;
@@ -24,17 +25,20 @@ namespace Intems.LightPlayer.GUI.ViewModels.Commands
         public void Execute(object parameter)
         {
             var model = parameter as MainViewModel;
-            if (model != null)
-            {
-                if (!String.IsNullOrEmpty(model.TrackFilename))
-                {
-                    var provider = new AudioFileReader(model.TrackFilename);
-                    _player.Init(provider);
+            if (model == null) return;
 
-                    //start processing composition
-                    _processor.AudioReader = provider;
-                    _processor.Start(null);
-                }
+            if (!String.IsNullOrEmpty(model.TrackFilename))
+            {
+                var provider = new AudioFileReader(model.TrackFilename);
+                _player.Init(provider);
+
+                //start processing composition
+                _processor.AudioReader = provider;
+                _processor.Start(null);
+            }
+            else
+            {
+                MessageBox.Show("Не выбран файл для воспроизведения.","Ошибка", MessageBoxButton.OK);
             }
         }
 

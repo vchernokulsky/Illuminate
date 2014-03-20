@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Input;
+using Intems.LightDesigner.GUI.ActionCommands;
 using Intems.LightDesigner.GUI.Common;
-using Intems.LightDesigner.GUI.ViewModels;
 using Intems.LightPlayer.BL;
 
-namespace Intems.LightDesigner.GUI.ActionCommands
+namespace Intems.LightDesigner.GUI.ViewModels.Commands
 {
     public class ActionGroup 
     {

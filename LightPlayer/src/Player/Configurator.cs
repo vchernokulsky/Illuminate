@@ -68,11 +68,19 @@ namespace Intems.LightPlayer.GUI
                     devices.Add(new Tuple<Device, string>(device, Path.GetFullPath(file)));
                     _devices.Add(device);
                 }
+                catch (FileNotFoundException fnfex)
+                {
+                    var msg = String.Format("Отсутствует файл: {0}, проверьте конфигурационный файл.", fnfex.FileName);
+                    SimpleLog.Log.Error(msg, fnfex);
+                    MessageBox.Show(msg, "Ошибка", MessageBoxButton.OK);
+                    break;
+                }
                 catch (Exception ex)
                 {
-                    var msg = "Ошибка загрузки композиции, проверьте конфигурационный файл.";
-                    MessageBox.Show(msg);
+                    var msg = "Ошибка загрузки композиции, возможно файл повреждён.";
                     SimpleLog.Log.Error(msg, ex);
+                    MessageBox.Show(msg);
+                    break;
                 }
             }
             return devices;
@@ -80,26 +88,11 @@ namespace Intems.LightPlayer.GUI
 
         private static void LoadComposition(string file, Device device)
         {
-            try
+            using (var stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                var fullFilePath = Path.GetFullPath(file);
-                if (!File.Exists(fullFilePath))
-                {
-                    var msg = String.Format("Отсутствует файл: {0}. Проверьте файл конфигурации", fullFilePath);
-                    MessageBox.Show(msg, "Ошибка", MessageBoxButton.OK);
-                    return;
-                }
-                //if exist try to load
-                using (var stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    var bf = new BinaryFormatter();
-                    var fsc = (FrameSequenceCollection) bf.Deserialize(stream);
-                    device.SequenceCollection = fsc;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Can't read composition from configuration file", ex);
+                var bf = new BinaryFormatter();
+                var fsc = (FrameSequenceCollection) bf.Deserialize(stream);
+                device.SequenceCollection = fsc;
             }
         }
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Data;
 using Intems.LightDesigner.GUI.ActionCommands;
 using Intems.LightDesigner.GUI.Common;
+using Intems.LightDesigner.GUI.ViewModels.Commands;
 using Intems.LightPlayer.BL;
 using Intems.LightPlayer.BL.Commands;
 

@@ -7,7 +7,7 @@
         xmlns:Controls="clr-namespace:Intems.LightPlayer.GUI.Controls"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance ViewModels:MainViewModel}"
-        Title="MainWindow" Height="350" Width="525" >
+        Title="Illumination player" Height="350" Width="525" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -41,8 +41,9 @@
                 <Button x:Name="_btnLoadConfig" Height="23" Command="{Binding ConfigLoadCommand}" >Load</Button>
             </StackPanel>
 
+            <Label Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" >Active devices</Label>
             <Rectangle Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" 
-                       VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0, 5, 0, 0"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0, 15, 0, 0"
                        Fill="Black" Height="1" />
 
             <!-- Информация об устройстве -->
