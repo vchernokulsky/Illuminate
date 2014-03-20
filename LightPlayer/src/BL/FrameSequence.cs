@@ -63,7 +63,8 @@ namespace Intems.LightPlayer.BL
 
         public void UpdateAll()
         {
-            UpdateFrom(_frames.First());
+            var firstFrame = _frames.First();
+            UpdateFrom(firstFrame);
         }
 
         public void Push(Frame frame)

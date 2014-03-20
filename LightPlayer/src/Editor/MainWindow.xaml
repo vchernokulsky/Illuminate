@@ -39,19 +39,23 @@
             </StackPanel>
         </Grid>
         <!-- Контейнер каналов управления -->
-        <ScrollViewer Grid.Row="1" Grid.Column="1">
-            <ItemsControl ItemsSource="{Binding Sequences}" HorizontalAlignment="Left">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Controls:SequenceEditor DataContext="{Binding .}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+        <!-- <ScrollViewer Grid.Row="1" Grid.Column="1"> -->
+        <ItemsControl Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Sequences}" HorizontalAlignment="Left">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="10" BorderBrush="BurlyWood" CornerRadius="5,5,0,0">
+                        <ScrollViewer>
+                            <Controls:SequenceEditor DataContext="{Binding .}" />
+                        </ScrollViewer>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <!-- </ScrollViewer> -->
     </Grid>
 </Window>

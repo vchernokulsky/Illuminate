@@ -9,8 +9,8 @@ namespace Intems.LightDesigner.GUI.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var val = (TimeSpan) value;
-            var sMin = String.Format("{00:0}", val.TotalMinutes);
-            var sSec = String.Format("{00:0}", val.TotalSeconds);
+            var sMin = String.Format("{00:0}", val.Minutes);
+            var sSec = String.Format("{00:0}", val.Seconds);
             sMin = sMin.Length < 2 ? "0" + sMin : sMin;
             sSec = sSec.Length < 2 ? "0" + sSec : sSec;
 

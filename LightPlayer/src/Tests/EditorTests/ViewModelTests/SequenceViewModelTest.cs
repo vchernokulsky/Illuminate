@@ -42,20 +42,21 @@ namespace Intems.LightDesigner.Tests.ViewModelTests
         [Test]
         public void InsertAfterFirtsFrame()
         {
-            var frameForInsert = new Frame {Command = new SetColor()};
+            var expected = new Frame {Command = new SetColor()};
             var frames = new[]
             {
-                new Frame {Command = new FadeColor()}, new Frame {Command = new BlinkColor()},
+                new Frame {Command = new FadeColor()}, 
+                new Frame {Command = new BlinkColor()},
                 new Frame {Command = new SetColor()}
             };
             foreach (var frame in frames)
                 _sequenceViewModel.Add(frame);
 
             var first = frames.First();
-            _sequenceViewModel.InsertAfter(first, new []{frameForInsert});
+            _sequenceViewModel.InsertAfter(first, new []{expected});
 
             var actual = _sequenceViewModel.FrameViewModels[1].Frame;
-            Assert.AreEqual(frameForInsert, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]

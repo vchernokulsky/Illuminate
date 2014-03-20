@@ -16,8 +16,8 @@
 
     <Grid>
         <Border BorderThickness="2" BorderBrush="Blue">
-            <Grid Margin="5,5,5,5" Tag="{Binding .}" MouseLeftButtonDown="OnCellClick" 
-                              Background="{Binding IsSelected, Converter={StaticResource CellBackgroundConverter}}">
+            <Grid Margin="5,5,5,5" Tag="{Binding .}" 
+                  Background="{Binding IsSelected, Converter={StaticResource CellBackgroundConverter}}">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
