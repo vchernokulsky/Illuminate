@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using Intems.LightDesigner.GUI.ActionCommands;
 using Intems.LightDesigner.GUI.ViewModels.Commands;
 using Intems.LightPlayer.BL;
 using Intems.LightPlayer.BL.Commands;

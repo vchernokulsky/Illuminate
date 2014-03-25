@@ -19,6 +19,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <!--
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
             <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
                         x:Name="_btnSet" Tag="SetColor" Content="SET" Click="OnAddClick"/>
@@ -27,7 +28,8 @@
             <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
                         x:Name="_btnBlink" Tag="Blink" Content="BLINK" Click="OnAddClick"/>
         </StackPanel>
-
+-->
+        
         <ItemsControl Grid.Row="1" ItemsSource="{Binding FrameViewModels}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="ViewModels:FrameViewModel">
@@ -67,10 +69,10 @@
                                      Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" />
                                 <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                        Text="{Binding CmdType}" TextAlignment="Center"/>
-                                <xctk:ColorPicker Grid.Row="2" Grid.Column="0" MinWidth="20" MinHeight="20" 
+                                <xctk:ColorPicker Grid.Row="2" Grid.Column="0" MinWidth="20" MinHeight="20" MaxWidth="30" MaxHeight="25"
                                               Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}"
                                               SelectedColor="{Binding FillBrush1}"/>
-                                <xctk:ColorPicker Grid.Row="2" Grid.Column="1" MinWidth="20" MinHeight="20" 
+                                <xctk:ColorPicker Grid.Row="2" Grid.Column="1" MinWidth="20" MinHeight="20" MaxWidth="30" MaxHeight="25"
                                               Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}"
                                               SelectedColor="{Binding FillBrush2}" Visibility="{Binding FadeVisibility}"/>
                             </Grid>

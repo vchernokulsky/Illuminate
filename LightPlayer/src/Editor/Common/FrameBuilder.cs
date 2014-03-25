@@ -48,6 +48,7 @@ namespace Intems.LightDesigner.GUI.Common
                 ? _channelMap[targetSequence]
                 : Command.DefaultChannel;
 
+            Frame result = null;
             Command cmd = null;
             switch (cmdEnum)
             {
@@ -62,7 +63,6 @@ namespace Intems.LightDesigner.GUI.Common
                     cmd = new BlinkColor(Colors.Black, 50) { Channel = (byte) channelNum };
                     break;
             }
-            Frame result = null;
             if (cmd != null)
                 result = new Frame(TimeSpan.FromSeconds(0.0), DefaultLength) { Command = cmd };
             return result;
@@ -76,6 +76,7 @@ namespace Intems.LightDesigner.GUI.Common
         private readonly Dictionary<SequenceViewModel, int> _channelMap;
         public void RegisterSequence(int channelNum, SequenceViewModel sequenceViewModel)
         {
+            sequenceViewModel.ChannelNum = channelNum;
             _channelMap.Add(sequenceViewModel, channelNum);
         }
     }

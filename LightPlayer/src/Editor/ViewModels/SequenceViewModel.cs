@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Data;
-using Intems.LightDesigner.GUI.ActionCommands;
+using System.Windows.Input;
 using Intems.LightDesigner.GUI.Common;
 using Intems.LightDesigner.GUI.ViewModels.Commands;
 using Intems.LightPlayer.BL;
@@ -47,6 +47,7 @@ namespace Intems.LightDesigner.GUI.ViewModels
             _sequence.UpdateAll();
         }
 
+        public int ChannelNum { get; set; }
 
         public FrameSequence Sequence
         {
@@ -56,6 +57,16 @@ namespace Intems.LightDesigner.GUI.ViewModels
         public IList<FrameViewModel> FrameViewModels
         {
             get { return _frameViewModels; }
+        }
+
+        public ICommand Create
+        {
+            get
+            {
+                var action = new Action<string>(NewFrame);
+                var command = new BaseCommand<string>(action);
+                return command;
+            }
         }
 
         public void NewFrame(string buttonTag)

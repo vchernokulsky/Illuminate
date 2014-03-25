@@ -11,12 +11,14 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+
         <!-- Верхняя панелька -->
         <Grid Grid.Row="0" Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -38,9 +40,9 @@
                         Content="Load" Click="OnLoadButtonClick"/>
             </StackPanel>
         </Grid>
-        <!-- Контейнер каналов управления -->
-        <!-- <ScrollViewer Grid.Row="1" Grid.Column="1"> -->
-        <ItemsControl Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Sequences}" HorizontalAlignment="Left">
+
+        <!-- Фиксированная шапка -->
+        <ItemsControl Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Sequences}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" />
@@ -48,14 +50,49 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderThickness="10" BorderBrush="BurlyWood" CornerRadius="5,5,0,0">
-                        <ScrollViewer>
-                            <Controls:SequenceEditor DataContext="{Binding .}" />
-                        </ScrollViewer>
+                    <Border Margin="2, 0, 0, 0" HorizontalAlignment="Stretch"
+                            BorderThickness="1, 3, 1, 0" CornerRadius="2, 2, 0, 0"
+                            BorderBrush="CadetBlue">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                                        Orientation="Horizontal">
+                                <Button Content="SET" Command="{Binding Create}" CommandParameter="SetColor" />
+                                <Button Content="FADE" />
+                                <Button Content="BLINK" />
+                            </StackPanel>
+                            <Label Grid.Row="1" Grid.Column="0" Background="CadetBlue" Content="Channel: " />
+                            <Label Grid.Row="1" Grid.Column="1" Background="CadetBlue" Content="{Binding ChannelNum}" />
+                        </Grid>
                     </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <!-- </ScrollViewer> -->
+
+        <!-- Отображение последовательности команд в канале -->
+        <ScrollViewer Grid.Row="2" Grid.Column="1">
+            <ItemsControl ItemsSource="{Binding Sequences}" HorizontalAlignment="Left">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="2, 0, 0, 0"
+                                BorderThickness="2, 5, 2, 2" BorderBrush="BurlyWood" CornerRadius="2, 2, 0, 0">
+                            <Controls:SequenceEditor DataContext="{Binding .}" Width="90"/>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </Window>

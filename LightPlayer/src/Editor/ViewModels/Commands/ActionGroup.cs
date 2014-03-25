@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Input;
-using Intems.LightDesigner.GUI.ActionCommands;
 using Intems.LightDesigner.GUI.Common;
 using Intems.LightPlayer.BL;
 
@@ -24,7 +23,7 @@ namespace Intems.LightDesigner.GUI.ViewModels.Commands
             {
                 var action = new Action<FrameViewModel>(
                     frameViewModel => _sequenceViewModel.Remove(frameViewModel.Frame));
-                var deleteCommand = new BaseCommand(action);
+                var deleteCommand = new BaseCommand<FrameViewModel>(action);
                 return deleteCommand;
             }
         }
@@ -39,7 +38,7 @@ namespace Intems.LightDesigner.GUI.ViewModels.Commands
                         var frames = _sequenceViewModel.FrameViewModels.Where(model => model.IsSelected).Select(model => (Frame) model.Frame.Clone()).ToList();
                         _frameBuffer.Copy(frames);
                     });
-                var copyCommand = new BaseCommand(action);
+                var copyCommand = new BaseCommand<FrameViewModel>(action);
                 return copyCommand;
             }
         }
@@ -57,7 +56,7 @@ namespace Intems.LightDesigner.GUI.ViewModels.Commands
                             _sequenceViewModel.InsertAfter(frame, bufferedFrames);
                         }
                         );
-            var pasteCommand = new BaseCommand(action);
+            var pasteCommand = new BaseCommand<FrameViewModel>(action);
                 return pasteCommand;
             }
         }

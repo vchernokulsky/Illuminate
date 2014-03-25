@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Windows.Input;
-using Intems.LightDesigner.GUI.ViewModels;
 
-namespace Intems.LightDesigner.GUI.ActionCommands
+namespace Intems.LightDesigner.GUI.ViewModels.Commands
 {
-    public class BaseCommand : ICommand
+    public class BaseCommand<T> : ICommand where T : class
     {
-        private readonly Action<FrameViewModel> _action;
+        private readonly Action<T> _action;
 
-        public BaseCommand(Action<FrameViewModel> action)
+        public BaseCommand(Action<T> action)
         {
             _action = action;
         }
@@ -20,7 +19,7 @@ namespace Intems.LightDesigner.GUI.ActionCommands
 
         public void Execute(object parameter)
         {
-            var model = parameter as FrameViewModel;
+            var model = parameter as T;
             _action(model);
         }
 
