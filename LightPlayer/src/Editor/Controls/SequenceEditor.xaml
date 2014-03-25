@@ -7,7 +7,7 @@
              xmlns:Converters="clr-namespace:Intems.LightDesigner.GUI.Converters"
              xmlns:ViewModels="clr-namespace:Intems.LightDesigner.GUI.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="100"
+             d:DesignHeight="80" d:DesignWidth="120"
              d:DataContext="{d:DesignInstance ViewModels:SequenceViewModel}">
     <UserControl.Resources>
         <Converters:BoolToSelectionBackground x:Key="CellBackgroundConverter" Selected="LightSlateGray" Unselected="White"/>
