@@ -50,7 +50,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="2, 0, 0, 0" HorizontalAlignment="Stretch"
+                    <Border Margin="2, 0, 0, 0" HorizontalAlignment="Stretch" Width="120"
                             BorderThickness="1, 3, 1, 0" CornerRadius="2, 2, 0, 0"
                             BorderBrush="CadetBlue">
                         <Grid>
@@ -62,12 +62,17 @@
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                                        Orientation="Horizontal">
-                                <Button Content="SET" Command="{Binding Create}" CommandParameter="SetColor" />
-                                <Button Content="FADE" />
-                                <Button Content="BLINK" />
-                            </StackPanel>
+                            
+                            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Content="SET" Command="{Binding Create}" CommandParameter="SetColor" />
+                                <Button Grid.Column="1" Content="FADE" Command="{Binding Create}" CommandParameter="Fade" />
+                                <Button Grid.Column="2" Content="BLINK" Command="{Binding Create}" CommandParameter="Blink" />
+                            </Grid>
                             <Label Grid.Row="1" Grid.Column="0" Background="CadetBlue" Content="Channel: " />
                             <Label Grid.Row="1" Grid.Column="1" Background="CadetBlue" Content="{Binding ChannelNum}" />
                         </Grid>
@@ -86,9 +91,9 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Margin="2, 0, 0, 0"
-                                BorderThickness="2, 5, 2, 2" BorderBrush="BurlyWood" CornerRadius="2, 2, 0, 0">
-                            <Controls:SequenceEditor DataContext="{Binding .}" Width="90"/>
+                        <Border Margin="2, 0, 0, 0" Width="120"
+                                BorderThickness="2, 0, 2, 2" BorderBrush="CadetBlue" >
+                            <Controls:SequenceEditor DataContext="{Binding .}" />
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

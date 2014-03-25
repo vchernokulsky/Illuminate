@@ -7,34 +7,23 @@
              xmlns:Converters="clr-namespace:Intems.LightDesigner.GUI.Converters"
              xmlns:ViewModels="clr-namespace:Intems.LightDesigner.GUI.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="100" 
+             d:DesignHeight="100" d:DesignWidth="100"
              d:DataContext="{d:DesignInstance ViewModels:SequenceViewModel}">
     <UserControl.Resources>
         <Converters:BoolToSelectionBackground x:Key="CellBackgroundConverter" Selected="LightSlateGray" Unselected="White"/>
         <Converters:TimeSpanToShortTime x:Key="ToShortTimeConverter"/>
     </UserControl.Resources>
 
-    <Grid Margin="0, 0, 3, 0">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <!--
-        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
-                        x:Name="_btnSet" Tag="SetColor" Content="SET" Click="OnAddClick"/>
-            <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
-                        x:Name="_btnFade" Tag="Fade" Content="FADE" Click="OnAddClick"/>
-            <Button HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="50" MinHeight="20"
-                        x:Name="_btnBlink" Tag="Blink" Content="BLINK" Click="OnAddClick"/>
-        </StackPanel>
--->
-        
         <ItemsControl Grid.Row="1" ItemsSource="{Binding FrameViewModels}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="ViewModels:FrameViewModel">
                     <Grid>
-                        <Border BorderThickness="2" BorderBrush="Blue">
+                        <Border BorderThickness="0, 0, 0, 2" BorderBrush="CadetBlue">
                             <Grid Margin="5,5,5,5" Tag="{Binding .}" MouseLeftButtonDown="OnMouseLeftButtonDown"
                                   Background="{Binding IsSelected, Converter={StaticResource CellBackgroundConverter}}">
                                 <Grid.RowDefinitions>
@@ -69,10 +58,10 @@
                                      Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" />
                                 <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                        Text="{Binding CmdType}" TextAlignment="Center"/>
-                                <xctk:ColorPicker Grid.Row="2" Grid.Column="0" MinWidth="20" MinHeight="20" MaxWidth="30" MaxHeight="25"
+                                <xctk:ColorPicker Grid.Row="2" Grid.Column="0" MinWidth="20" MinHeight="20" MaxWidth="50" MaxHeight="25"
                                               Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}"
                                               SelectedColor="{Binding FillBrush1}"/>
-                                <xctk:ColorPicker Grid.Row="2" Grid.Column="1" MinWidth="20" MinHeight="20" MaxWidth="30" MaxHeight="25"
+                                <xctk:ColorPicker Grid.Row="2" Grid.Column="1" MinWidth="20" MinHeight="20" MaxWidth="50" MaxHeight="25"
                                               Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}"
                                               SelectedColor="{Binding FillBrush2}" Visibility="{Binding FadeVisibility}"/>
                             </Grid>
