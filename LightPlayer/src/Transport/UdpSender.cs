@@ -25,6 +25,7 @@ namespace Intems.LightPlayer.Transport
                 try
                 {
                     _socket.SendTo(package.ToArray(), _endPoint);
+                    Console.WriteLine(package);
                 }
                 catch (Exception ex)
                 {

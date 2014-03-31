@@ -30,7 +30,7 @@ namespace Intems.LightPlayer.GUI.ViewModels.Commands
             {
                 var cfg = new Configurator(dlg.FileName, _processor);
                 var deviceConfigurations = cfg.GetDeviceConfiguration();
-                //cfg.ConfigureProcessor();
+                cfg.ConfigureProcessor();
                 if (_updateAction != null)
                     _updateAction.Invoke(deviceConfigurations);
             }
