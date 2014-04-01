@@ -128,6 +128,17 @@ namespace Intems.LightDesigner.GUI.ViewModels
             }
         }
 
+        public Visibility BlinkVisibility
+        {
+            get
+            {
+                var result = Visibility.Collapsed;
+                if (_frame.Command is BlinkColor)
+                    result = Visibility.Visible;
+                return result;
+            }
+        }
+
         public TimeSpan FrameBegin
         {
             get { return _frame.StartTime; }

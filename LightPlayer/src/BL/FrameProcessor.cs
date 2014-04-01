@@ -56,6 +56,7 @@ namespace Intems.LightPlayer.BL
 
         public void SetDevices(IEnumerable<Device> devices)
         {
+            
             _devices.Clear();
             foreach (var device in devices)
                 _devices.Add(device);
