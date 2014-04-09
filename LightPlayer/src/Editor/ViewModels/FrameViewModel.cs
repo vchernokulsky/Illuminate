@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
@@ -37,20 +38,13 @@ namespace Intems.LightDesigner.GUI.ViewModels
             if (handler != null) handler(this, EventArgs.Empty);
         }
 
+        //поля для binding'а на формах
         private readonly ActionGroup _actionGroup;
         public ActionGroup ActionGroup
         {
             get { return _actionGroup; }
         }
 
-        //поля для связи с логикой
-        public Frame Frame
-        {
-            get { return _frame; }
-            set { _frame = value; }
-        }
-
-        //поля для binding'а на формах
         public string CmdType
         {
             get
@@ -139,6 +133,24 @@ namespace Intems.LightDesigner.GUI.ViewModels
             }
         }
 
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                RaiseModelChanged();
+            }
+        }
+
+
+        //поля для связи с логикой
+        public Frame Frame
+        {
+            get { return _frame; }
+            set { _frame = value; }
+        }
+
         public TimeSpan FrameBegin
         {
             get { return _frame.StartTime; }
@@ -150,13 +162,21 @@ namespace Intems.LightDesigner.GUI.ViewModels
             set { _frame.Length = value; }
         }
 
-        public bool IsSelected
+        public string BlinkFreq
         {
-            get { return _isSelected; }
+            get
+            {
+                var result = String.Empty;
+                var cmd = _frame.Command as BlinkColor;
+                if (cmd != null)
+                    result = cmd.Frequency.ToString(CultureInfo.InvariantCulture);
+                return result;
+            }
             set
             {
-                _isSelected = value;
-                RaiseModelChanged();
+                var cmd = _frame.Command as BlinkColor;
+                if (cmd != null)
+                    cmd.Frequency = Int16.Parse(value);
             }
         }
     }

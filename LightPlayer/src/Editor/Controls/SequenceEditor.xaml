@@ -66,7 +66,7 @@
                                               SelectedColor="{Binding FillBrush2}" Visibility="{Binding FadeVisibility}"/>
                                 <TextBox Grid.Row="2" Grid.Column="1" MinWidth="20" MinHeight="20" MaxWidth="50" MaxHeight="25"
                                          Background="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}"
-                                         Visibility="{Binding BlinkVisibility}"/>
+                                         Visibility="{Binding BlinkVisibility}" Text="{Binding BlinkFreq}"/>
                             </Grid>
                         </Border>
                     </Grid>
